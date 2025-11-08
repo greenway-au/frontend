@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="429406d3-5536-4f21-a3e1-d57260d9c608" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apps/marketing/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/.env.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/app/manifest.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/app/robots.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/app/sitemap.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/config/seo.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/lib/seo.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/public/humans.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/layout.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +134,7 @@
       <workItem from="1762589107494" duration="13000" />
       <workItem from="1762589158812" duration="577000" />
       <workItem from="1762589887174" duration="600000" />
-      <workItem from="1762596531394" duration="723000" />
+      <workItem from="1762596531394" duration="1449000" />
     </task>
     <servers />
   </component>
