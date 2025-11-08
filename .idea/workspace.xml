@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="429406d3-5536-4f21-a3e1-d57260d9c608" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/client/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/client/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ui/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/ui/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ui/src/styles/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,37 +41,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.client &gt; dev.executor&quot;: &quot;Run&quot;,
-    &quot;npm.provider &gt; dev.executor&quot;: &quot;Run&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.client > dev.executor": "Run",
+    "npm.marketing > dev.executor": "Run",
+    "npm.provider > dev.executor": "Run",
+    "prettierjs.PrettierConfiguration.Package": "/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/prettier",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
         <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
-        <entry key="com.intellij.reactbuddy.reactInspector" value="true" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
         <entry key="com.intellij.reactbuddy.storybook" value="false" />
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="npm.provider &gt; dev">
+  <component name="RunManager" selected="npm.marketing &gt; dev">
     <configuration name="client &gt; dev" type="js.build_tools.npm" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/apps/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="marketing &gt; dev" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/apps/marketing/package.json" />
       <command value="run" />
       <scripts>
         <script value="dev" />
@@ -93,8 +102,9 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="npm.provider &gt; dev" />
+      <item itemvalue="npm.marketing &gt; dev" />
       <item itemvalue="npm.client &gt; dev" />
+      <item itemvalue="npm.provider &gt; dev" />
     </list>
   </component>
   <component name="SharedIndexes">
@@ -114,7 +124,12 @@
       <workItem from="1758988607218" duration="250000" />
       <workItem from="1762070002708" duration="129000" />
       <workItem from="1762070238595" duration="2250000" />
-      <workItem from="1762072504569" duration="3946000" />
+      <workItem from="1762072504569" duration="4017000" />
+      <workItem from="1762533469920" duration="4098000" />
+      <workItem from="1762589107494" duration="13000" />
+      <workItem from="1762589158812" duration="577000" />
+      <workItem from="1762589887174" duration="600000" />
+      <workItem from="1762596531394" duration="723000" />
     </task>
     <servers />
   </component>

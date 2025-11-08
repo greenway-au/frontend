@@ -70,7 +70,7 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
 
-  apps/provider:
+  apps/marketing:
     dependencies:
       '@workspace/ui':
         specifier: workspace:*
@@ -116,7 +116,7 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
 
-  apps/web:
+  apps/provider:
     dependencies:
       '@workspace/ui':
         specifier: workspace:*
