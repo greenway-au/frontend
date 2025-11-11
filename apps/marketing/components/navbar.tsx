@@ -54,10 +54,10 @@ export function Navbar() {
           <div className="hidden items-center space-x-3 lg:flex">
             <ModeToggle />
             <Button variant="ghost" asChild className="font-medium">
-              <Link href="#faq">Sign In</Link>
+              <Link href="/coming-soon">Sign In</Link>
             </Button>
             <Button asChild className="shadow-md font-medium">
-              <Link href="#how-it-works">Get Started</Link>
+              <Link href="/coming-soon">Get Started</Link>
             </Button>
           </div>
 
@@ -87,10 +87,10 @@ export function Navbar() {
             ))}
             <div className="flex flex-col gap-3 px-4 pt-4">
               <Button variant="outline" asChild className="w-full">
-                <Link href="#faq">Sign In</Link>
+                <Link href="/coming-soon">Sign In</Link>
               </Button>
               <Button asChild className="w-full">
-                <Link href="#how-it-works">Get Started</Link>
+                <Link href="/coming-soon">Get Started</Link>
               </Button>
             </div>
           </div>
