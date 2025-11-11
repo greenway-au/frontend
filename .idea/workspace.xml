@@ -5,15 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="429406d3-5536-4f21-a3e1-d57260d9c608" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apps/marketing/.env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/app/manifest.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/app/robots.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/app/sitemap.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/config/seo.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/lib/seo.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/public/humans.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/footer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/navbar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/about-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/contact-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/cta-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/faq-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/hero-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/how-it-works-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/services-section.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/testimonials-section.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/marketing/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/ui/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ui/src/styles/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,26 +51,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.client > dev.executor": "Run",
-    "npm.marketing > dev.executor": "Run",
-    "npm.provider > dev.executor": "Run",
-    "prettierjs.PrettierConfiguration.Package": "/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/prettier",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.client &gt; dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.marketing &gt; dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.provider &gt; dev.executor&quot;: &quot;Run&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -107,8 +112,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="npm.marketing &gt; dev" />
       <item itemvalue="npm.client &gt; dev" />
+      <item itemvalue="npm.marketing &gt; dev" />
       <item itemvalue="npm.provider &gt; dev" />
     </list>
   </component>
@@ -134,7 +139,11 @@
       <workItem from="1762589107494" duration="13000" />
       <workItem from="1762589158812" duration="577000" />
       <workItem from="1762589887174" duration="600000" />
-      <workItem from="1762596531394" duration="1449000" />
+      <workItem from="1762596531394" duration="2960000" />
+      <workItem from="1762676607617" duration="699000" />
+      <workItem from="1762758804701" duration="168000" />
+      <workItem from="1762758996799" duration="83000" />
+      <workItem from="1762863408675" duration="2177000" />
     </task>
     <servers />
   </component>
