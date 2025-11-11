@@ -14,31 +14,35 @@ export function Navbar() {
     { href: '#about', label: 'About' },
     { href: '#how-it-works', label: 'How It Works' },
     { href: '#testimonials', label: 'Testimonials' },
-    { href: '#contact', label: 'Contact' },
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/98 backdrop-blur-sm shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
+        <div className="flex h-20 items-center justify-between">
+          {/* Logo - Left */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <span className="text-xl font-bold">G</span>
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md transition-transform group-hover:scale-105">
+                <span className="text-2xl font-bold">G</span>
               </div>
-              <span className="hidden text-xl font-bold sm:block">Greenway</span>
+              <div className="hidden flex-col sm:flex">
+                <span className="text-lg font-bold leading-tight tracking-tight">Greenway</span>
+                <span className="text-xs font-medium tracking-wider text-muted-foreground uppercase">
+                  Plan Management
+                </span>
+              </div>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-1">
+          {/* Desktop Navigation - Center */}
+          <div className="hidden lg:block">
+            <div className="flex items-center space-x-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  className="relative px-4 py-2 text-sm font-medium tracking-wide text-foreground/80 transition-colors hover:text-foreground after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                 >
                   {link.label}
                 </Link>
@@ -46,19 +50,19 @@ export function Navbar() {
             </div>
           </div>
 
-          {/* Right side buttons */}
-          <div className="hidden items-center space-x-2 md:flex">
+          {/* Right side - CTA & Theme */}
+          <div className="hidden items-center space-x-3 lg:flex">
             <ModeToggle />
-            <Button variant="outline" asChild>
-              <Link href="#contact">Sign In</Link>
+            <Button variant="ghost" asChild className="font-medium">
+              <Link href="#faq">Sign In</Link>
             </Button>
-            <Button asChild>
-              <Link href="#contact">Get Started</Link>
+            <Button asChild className="shadow-md font-medium">
+              <Link href="#how-it-works">Get Started</Link>
             </Button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex items-center space-x-2 md:hidden">
+          <div className="flex items-center space-x-2 lg:hidden">
             <ModeToggle />
             <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -69,24 +73,24 @@ export function Navbar() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden">
-          <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+        <div className="border-t lg:hidden">
+          <div className="space-y-1 px-4 py-4 sm:px-6">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="block rounded-md px-3 py-2 text-base font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                className="block rounded-md px-4 py-3 text-base font-medium text-foreground/80 transition-colors hover:bg-accent hover:text-foreground"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            <div className="flex flex-col gap-2 px-3 pt-4">
+            <div className="flex flex-col gap-3 px-4 pt-4">
               <Button variant="outline" asChild className="w-full">
-                <Link href="#contact">Sign In</Link>
+                <Link href="#faq">Sign In</Link>
               </Button>
               <Button asChild className="w-full">
-                <Link href="#contact">Get Started</Link>
+                <Link href="#how-it-works">Get Started</Link>
               </Button>
             </div>
           </div>

@@ -31,7 +31,8 @@ export function HowItWorksSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Getting Started is Easy</h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <div className="mt-6 h-1 w-24 bg-primary mx-auto"></div>
+          <p className="mt-6 text-lg text-muted-foreground">
             Three simple steps to professional NDIS plan management. No complexity, no confusion.
           </p>
         </div>

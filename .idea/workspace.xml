@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="429406d3-5536-4f21-a3e1-d57260d9c608" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/footer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/navbar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/about-section.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/contact-section.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/cta-section.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/faq-section.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/hero-section.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/how-it-works-section.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/services-section.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/sections/testimonials-section.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/marketing/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/ui/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ui/src/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/about-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/about-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/cta-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/cta-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/faq-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/faq-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/hero-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/hero-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/how-it-works-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/how-it-works-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/services-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/services-section.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,11 +138,27 @@
       <workItem from="1762676607617" duration="699000" />
       <workItem from="1762758804701" duration="168000" />
       <workItem from="1762758996799" duration="83000" />
-      <workItem from="1762863408675" duration="2177000" />
+      <workItem from="1762863408675" duration="3268000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat(marketing): checkpoint on first design" />
+    <MESSAGE value="feat(marketing): checkpoint on first design" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(marketing): checkpoint on first design" />
   </component>
 </project>

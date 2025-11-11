@@ -29,7 +29,7 @@ export function HeroSection() {
 
             <div className="flex flex-col gap-4 sm:flex-row">
               <Button size="lg" asChild className="group">
-                <Link href="#contact">
+                <Link href="#services">
                   Get Started Today
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>

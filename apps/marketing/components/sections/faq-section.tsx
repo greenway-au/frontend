@@ -1,5 +1,4 @@
 import { Card } from '@workspace/ui/components/card';
-import { HelpCircle } from 'lucide-react';
 
 const faqs = [
   {
@@ -36,35 +35,51 @@ const faqs = [
 
 export function FAQSection() {
   return (
-    <section className="border-b py-20 sm:py-28">
+    <section className="border-b py-24 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Frequently Asked Questions</h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Got questions? We've got answers. Here are some of the most common questions we receive.
+        {/* Header */}
+        <div className="mx-auto max-w-3xl text-center mb-16">
+          <h2 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">Frequently Asked Questions</h2>
+          <div className="h-1 w-24 bg-primary mx-auto mb-8"></div>
+          <p className="text-lg text-muted-foreground">
+            Here are answers to the most common questions we receive. If you need further assistance, please don't
+            hesitate to reach out.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-6 lg:grid-cols-2">
-          {faqs.map((faq) => (
-            <Card key={faq.question} className="p-6">
-              <div className="mb-3 flex items-start gap-3">
-                <HelpCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                <h3 className="font-semibold">{faq.question}</h3>
-              </div>
-              <p className="text-muted-foreground">{faq.answer}</p>
-            </Card>
-          ))}
+        {/* FAQ Grid */}
+        <div className="mx-auto max-w-5xl">
+          <div className="space-y-6">
+            {faqs.map((faq, index) => (
+              <Card key={index} className="p-8 hover:shadow-lg transition-shadow bg-card">
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <span className="text-sm font-semibold">{String(index + 1).padStart(2, '0')}</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold mb-3">{faq.question}</h3>
+                      <p className="text-base leading-relaxed text-muted-foreground">{faq.answer}</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-muted-foreground">
-            Still have questions?{' '}
-            <a href="#contact" className="font-medium text-primary hover:underline">
-              Contact us
-            </a>{' '}
-            and we'll be happy to help.
-          </p>
+        {/* Footer CTA */}
+        <div className="mt-16 text-center">
+          <div className="inline-block rounded-lg border bg-muted/50 px-8 py-6">
+            <p className="text-base text-foreground mb-2">Still have questions?</p>
+            <p className="text-muted-foreground">
+              We&apos;re here to help.{' '}
+              <a href="#contact" className="font-semibold text-primary hover:underline underline-offset-4">
+                Contact our team
+              </a>{' '}
+              for personalized assistance.
+            </p>
+          </div>
         </div>
       </div>
     </section>
