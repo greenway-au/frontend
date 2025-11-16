@@ -5,8 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="429406d3-5536-4f21-a3e1-d57260d9c608" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/apps/marketing/public/images/landing-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/public/images/landing-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/public/images/landing-3.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/app/coming-soon/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/coming-soon/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/footer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/marketing/components/navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/providers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/providers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/about-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/about-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/contact-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/contact-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/hero-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/hero-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/testimonials-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/testimonials-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/config/seo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/config/seo.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +79,11 @@
         <entry key="com.intellij.reactbuddy.storybook" value="false" />
       </map>
     </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/marketing/public/images" />
+    </key>
   </component>
   <component name="RunManager" selected="npm.marketing &gt; dev">
     <configuration name="client &gt; dev" type="js.build_tools.npm" nameIsGenerated="true">
@@ -131,7 +148,9 @@
       <workItem from="1762676607617" duration="699000" />
       <workItem from="1762758804701" duration="168000" />
       <workItem from="1762758996799" duration="83000" />
-      <workItem from="1762863408675" duration="3828000" />
+      <workItem from="1762863408675" duration="4459000" />
+      <workItem from="1763265812571" duration="367000" />
+      <workItem from="1763266838801" duration="1291000" />
     </task>
     <servers />
   </component>

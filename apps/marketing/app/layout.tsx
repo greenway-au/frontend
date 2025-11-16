@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 
 import '@workspace/ui/globals.css';
 
@@ -7,13 +7,15 @@ import { seoConfig } from '@/config/seo';
 import { generateMetadata, generateOrganizationSchema, generateWebsiteSchema } from '@/lib/seo';
 import type { Viewport } from 'next';
 
-const fontSans = Geist({
+const fontSans = Poppins({
   subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-sans',
 });
 
-const fontMono = Geist_Mono({
+const fontMono = Poppins({
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
   variable: '--font-mono',
 });
 

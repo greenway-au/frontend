@@ -26,7 +26,7 @@ const values = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="border-b bg-muted/30 py-24 sm:py-32">
+    <section id="about" className="border-b bg-white py-24 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center mb-16">

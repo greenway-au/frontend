@@ -5,7 +5,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t bg-background">
+    <footer className="border-t bg-white">
       <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand Column */}
@@ -139,10 +139,10 @@ export function Footer() {
               <li className="flex items-start space-x-3">
                 <Mail className="mt-0.5 h-5 w-5 flex-shrink-0 text-muted-foreground" />
                 <a
-                  href="mailto:support@greenwayplanmanagement.com.au"
+                  href="mailto:hello@greenwayplans.com.au"
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  support@greenwayplanmanagement.com.au
+                  hello@greenwayplans.com.au
                 </a>
               </li>
               <li className="flex items-start space-x-3">

@@ -79,8 +79,8 @@ export default function ComingSoonPage() {
             Visit our FAQ
           </Link>{' '}
           or reach out at{' '}
-          <a href="mailto:support@greenwayplanmanagement.com.au" className="font-medium text-primary hover:underline">
-            support@greenwayplanmanagement.com.au
+          <a href="mailto:hello@greenwayplans.com.au" className="font-medium text-primary hover:underline">
+            hello@greenwayplans.com.au
           </a>
         </p>
       </div>

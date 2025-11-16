@@ -40,10 +40,10 @@ export function ContactSection() {
                   <div>
                     <div className="font-medium">Email</div>
                     <a
-                      href="mailto:support@greenwayplanmanagement.com.au"
+                      href="mailto:hello@greenwayplans.com.au"
                       className="text-sm text-muted-foreground hover:text-foreground"
                     >
-                      support@greenwayplanmanagement.com.au
+                      hello@greenwayplans.com.au
                     </a>
                   </div>
                 </div>
