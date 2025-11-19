@@ -11,8 +11,8 @@ export function CTASection() {
             Ready to Simplify Your NDIS Journey?
           </h2>
           <p className="mt-6 text-lg opacity-90 sm:text-xl">
-            Join thousands of satisfied participants who trust Greenway with their NDIS plan management. Get started
-            today and experience the difference.
+            Join and hear from our satisfied participants who trust Greenway with their NDIS plan management. Get
+            started today and experience the difference.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -28,18 +28,18 @@ export function CTASection() {
               asChild
               className="w-full border-primary-foreground/20 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 sm:w-auto"
             >
-              <Link href="tel:+611300000000">Call Us: 1300 XXX XXX</Link>
+              <Link href="tel:+611300000000">Contact Us</Link>
             </Button>
           </div>
 
           <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm opacity-90">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5" />
-              <span>No setup fees</span>
+              <span>Easy set up</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5" />
-              <span>Cancel anytime</span>
+              <span>Ongoing Support</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5" />

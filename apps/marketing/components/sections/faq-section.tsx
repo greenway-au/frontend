@@ -4,22 +4,21 @@ const faqs = [
   {
     question: 'What is NDIS plan management?',
     answer:
-      'NDIS plan management is a service that handles the financial administration of your NDIS plan. We process invoices, pay service providers, track your budget, and provide regular reports, so you can focus on achieving your goals.',
+      'Plan management providers help participants manage the financial side of their NDIS plan. We process invoices, pay service providers, track your budget, and provide regular reports, so you can focus on achieving your goals.',
   },
   {
     question: 'How much does plan management cost?',
     answer:
-      'Plan management is funded by the NDIS and included in your plan at no cost to you. The fees are paid directly by the NDIA, so you can enjoy our services without any out-of-pocket expenses.',
+      'Plan management is funded by the NDIS and included in your plan at no cost to you. The fees are paid directly by the NDIA, with no out-of-pocket expenses for you.',
   },
   {
-    question: 'Can I choose my own service providers?',
+    question: 'What is the difference between Plan Managed, Self Managed, and Agency Managed?',
     answer:
-      'Yes! With plan management, you have the flexibility to choose both registered and non-registered NDIS providers. We can pay any provider you choose, giving you maximum choice and control.',
+      'Plan Managed lets you choose any provider while a plan manager handles payments Self Managed means you manage everything yourself. Agency Managed limits you to registered providers with the NDIA paying invoices.',
   },
   {
-    question: 'How quickly can I switch to Greenway?',
-    answer:
-      "Switching is quick and easy! Once you complete our simple registration process, we can typically activate your account within 24-48 hours. We'll handle all the transition details for you.",
+    question: 'How quickly are invoiced paid?',
+    answer: 'We aim to process claims on the same day, but in some cases, payments may take 2–3 business days.',
   },
   {
     question: 'How do I track my budget?',
