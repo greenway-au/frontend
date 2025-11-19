@@ -28,7 +28,7 @@ export function CTASection() {
               asChild
               className="w-full border-primary-foreground/20 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 sm:w-auto"
             >
-              <Link href="tel:+611300000000">Contact Us</Link>
+              <Link href="#">Contact Us</Link>
             </Button>
           </div>
 

@@ -43,7 +43,7 @@ export function HeroSection() {
             <div className="relative h-full w-full">
               <div className="relative h-full min-h-[550px] overflow-hidden rounded-2xl border shadow-2xl">
                 <Image
-                  src="/images/landing-1.jpg"
+                  src="/images/landing-4.jpg"
                   alt="NDIS Plan Management Services"
                   fill
                   className="object-cover"

@@ -10,9 +10,9 @@ export function Navbar() {
 
   const navLinks = [
     { href: '#services', label: 'Services' },
-    { href: '#about', label: 'About' },
+    { href: '/about', label: 'About Us' },
     { href: '#how-it-works', label: 'How It Works' },
-    { href: '#testimonials', label: 'Testimonials' },
+    { href: '/coming-soon', label: 'Blogs' },
   ];
 
   return (

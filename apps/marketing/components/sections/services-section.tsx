@@ -1,4 +1,5 @@
 import { LayoutDashboard, Users, FileText } from 'lucide-react';
+import Image from 'next/image';
 
 const benefits = [
   {
@@ -66,22 +67,25 @@ export function ServicesSection() {
             {/* Right Side - Images */}
             <div className="relative h-80 lg:h-96 mx-auto max-w-lg">
               {/* Left - Group Image (Larger) */}
-              <div className="absolute top-1/2 -translate-y-1/2 left-0 w-36 h-36 sm:w-40 sm:h-40 rounded-full overflow-hidden shadow-xl bg-white">
-                <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-xs">
-                  Group Image
-                </div>
+              <div
+                className="absolute top-1/2 -translate-y-1/2 left-0 w-44 h-44 sm:w-48 sm:h-48 overflow-hidden shadow-xl"
+                style={{ borderRadius: '20% 80% 30% 70% / 75% 25% 75% 25%' }}
+              >
+                <Image src="/images/landing-1.jpg" alt="Group of people" fill className="object-cover" />
               </div>
               {/* Top Right - Desk Image */}
-              <div className="absolute top-0 right-8 sm:right-12 w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden shadow-xl bg-white">
-                <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-xs">
-                  Desk Image
-                </div>
+              <div
+                className="absolute top-0 right-8 sm:right-12 w-40 h-40 sm:w-44 sm:h-44 overflow-hidden shadow-xl"
+                style={{ borderRadius: '75% 25% 70% 30% / 30% 70% 30% 70%' }}
+              >
+                <Image src="/images/landing-2.jpg" alt="Person working at desk" fill className="object-cover" />
               </div>
               {/* Bottom Right - Consultation Image */}
-              <div className="absolute bottom-0 right-8 sm:right-12 w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden shadow-xl bg-white">
-                <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-xs">
-                  Consultation Image
-                </div>
+              <div
+                className="absolute bottom-0 right-8 sm:right-12 w-40 h-40 sm:w-44 sm:h-44 overflow-hidden shadow-xl"
+                style={{ borderRadius: '30% 70% 80% 20% / 70% 30% 65% 35%' }}
+              >
+                <Image src="/images/landing-3.jpg" alt="Consultation session" fill className="object-cover" />
               </div>
             </div>
           </div>
