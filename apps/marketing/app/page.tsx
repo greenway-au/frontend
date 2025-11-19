@@ -15,9 +15,9 @@ export default function RootPage() {
       <main className="flex-1">
         <HeroSection />
         <ServicesSection />
-        <AboutSection />
         <HowItWorksSection />
-        <TestimonialsSection />
+        {/*<TestimonialsSection />*/}
+        {/*<AboutSection />*/}
         <FAQSection />
         <CTASection />
       </main>

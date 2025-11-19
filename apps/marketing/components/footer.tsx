@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Linkedin, Mail, Phone, Twitter } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Mail, PaperclipIcon, Phone, Twitter } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -17,7 +17,7 @@ export function Footer() {
               <span className="text-xl font-bold">Greenway</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Professional NDIS plan management services helping participants maximize their funding and achieve their
+              NDIS plan management provider assisting participants with managing their funding and achieving their
               goals.
             </p>
             <div className="flex space-x-4">
@@ -60,45 +60,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Services Column */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Services</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="#services"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Plan Management
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#services"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Budget Tracking
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#services"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Provider Payments
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#services"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Support Coordination
-                </Link>
-              </li>
-            </ul>
-          </div>
-
           {/* Company Column */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Company</h3>
@@ -132,6 +93,31 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Legal Column */}
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Legal</h3>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/privacy" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/accessibility"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Accessibility
+                </Link>
+              </li>
+            </ul>
+          </div>
+
           {/* Contact Column */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">Contact</h3>
@@ -146,12 +132,21 @@ export function Footer() {
                 </a>
               </li>
               <li className="flex items-start space-x-3">
-                <Phone className="mt-0.5 h-5 w-5 flex-shrink-0 text-muted-foreground" />
+                <PaperclipIcon className="mt-0.5 h-5 w-5 flex-shrink-0 text-muted-foreground" />
                 <a
-                  href="tel:+611300000000"
+                  href="mailto:accounts@greenwayplans.com.au"
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  1300 XXX XXX
+                  accounts@greenwayplans.com.au
+                </a>
+              </li>
+              <li className="flex items-start space-x-3">
+                <Phone className="mt-0.5 h-5 w-5 flex-shrink-0 text-muted-foreground" />
+                <a
+                  href="tel:0421002313"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  0421 002 313
                 </a>
               </li>
             </ul>
@@ -163,19 +158,9 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">
               © {currentYear} Greenway Plan Management. All rights reserved.
             </p>
-            <div className="flex space-x-6">
-              <Link href="/privacy" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
-                Terms of Service
-              </Link>
-              <Link
-                href="/accessibility"
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Accessibility
-              </Link>
+            <div className="flex flex-wrap gap-x-6 gap-y-1 justify-end text-sm text-muted-foreground">
+              <p className="whitespace-nowrap">NDIS Registration Number: xxxxxxxxxx</p>
+              <p className="whitespace-nowrap">ABN: xx xxx xxx xxx</p>
             </div>
           </div>
         </div>

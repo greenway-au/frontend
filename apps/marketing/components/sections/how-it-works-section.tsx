@@ -33,7 +33,7 @@ export function HowItWorksSection() {
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Getting Started is Easy</h2>
           <div className="mt-6 h-1 w-24 bg-primary mx-auto"></div>
           <p className="mt-6 text-lg text-muted-foreground">
-            Three simple steps to professional NDIS plan management. No complexity, no confusion.
+            Our simple onboarding process is split into three stages, with support along the way.
           </p>
         </div>
 

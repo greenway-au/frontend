@@ -17,7 +17,7 @@ export function HeroSection() {
 
             <div className="space-y-6">
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-                Your NDIS Plan, <span className="text-primary">Managed Expertly</span>
+                Smarter NDIS <br /> plan management <br /> <span className="text-primary">that you can rely on</span>
               </h1>
               <p className="text-lg text-muted-foreground sm:text-xl">
                 Simple transparent and stress free plan management. Our team handles your invoices, tracks your budget,
@@ -43,7 +43,7 @@ export function HeroSection() {
             <div className="relative h-full w-full">
               <div className="relative h-full min-h-[550px] overflow-hidden rounded-2xl border shadow-2xl">
                 <Image
-                  src="/images/landing-1.jpg"
+                  src="/images/landing-4.jpg"
                   alt="NDIS Plan Management Services"
                   fill
                   className="object-cover"
