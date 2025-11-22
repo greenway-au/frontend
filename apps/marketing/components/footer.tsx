@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Facebook, Instagram, Linkedin, Mail, PaperclipIcon, Phone, Twitter } from 'lucide-react';
+import { Logo } from './logo';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -10,12 +11,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand Column */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <span className="text-xl font-bold">G</span>
-              </div>
-              <span className="text-xl font-bold">Greenway</span>
-            </div>
+            <Logo width={140} height={35} showAsLink={false} />
             <p className="text-sm text-muted-foreground">
               NDIS plan management provider assisting participants with managing their funding and achieving their
               goals.

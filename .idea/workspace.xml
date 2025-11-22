@@ -4,14 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="429406d3-5536-4f21-a3e1-d57260d9c608" name="Changes" comment="feat(marketing): modify contents and add a new about page">
-      <change afterPath="$PROJECT_DIR$/apps/marketing/public/images/landing-4.jpg" afterDir="false" />
+    <list default="true" id="429406d3-5536-4f21-a3e1-d57260d9c608" name="Changes" comment="feat(marketing): update contact links, images, and navbar for improved navigation">
+      <change afterPath="$PROJECT_DIR$/apps/marketing/components/logo.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/public/logos/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/public/logos/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/public/logos/logo_full.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/marketing/public/logos/logo_full.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/app/about/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/about/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/app/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/app/opengraph-image.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/marketing/components/footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/footer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/marketing/components/navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/cta-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/cta-section.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/hero-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/hero-section.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/components/sections/services-section.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/sections/services-section.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/public/file.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/public/globe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/public/next.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/public/vercel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/marketing/public/window.svg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,26 +53,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feat/marketing",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "npm.client > dev.executor": "Run",
-    "npm.marketing > dev.executor": "Run",
-    "npm.provider > dev.executor": "Run",
-    "prettierjs.PrettierConfiguration.Package": "/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/prettier",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/marketing&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.client &gt; dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.marketing &gt; dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.provider &gt; dev.executor&quot;: &quot;Run&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/zaibutcooler/Work/archaic/nids-platforms/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -75,6 +84,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/marketing/public/logos" />
+      <recent name="$PROJECT_DIR$/apps/marketing/app" />
       <recent name="$PROJECT_DIR$/apps/marketing/public/images" />
     </key>
   </component>
@@ -144,7 +155,9 @@
       <workItem from="1762863408675" duration="4459000" />
       <workItem from="1763265812571" duration="367000" />
       <workItem from="1763266838801" duration="3406000" />
-      <workItem from="1763538591738" duration="5625000" />
+      <workItem from="1763538591738" duration="6359000" />
+      <workItem from="1763625204336" duration="106000" />
+      <workItem from="1763794878626" duration="1378000" />
     </task>
     <task id="LOCAL-00001" summary="feat(marketing): update hero, navbar and seos as requested">
       <option name="closed" value="true" />
@@ -162,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763553335878</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat(marketing): update contact links, images, and navbar for improved navigation">
+      <option name="closed" value="true" />
+      <created>1763557476459</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763557476460</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,6 +205,15 @@
     <MESSAGE value="feat(marketing): checkpoint on first design" />
     <MESSAGE value="feat(marketing): update hero, navbar and seos as requested" />
     <MESSAGE value="feat(marketing): modify contents and add a new about page" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(marketing): modify contents and add a new about page" />
+    <MESSAGE value="feat(marketing): update contact links, images, and navbar for improved navigation" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(marketing): update contact links, images, and navbar for improved navigation" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

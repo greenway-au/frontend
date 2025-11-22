@@ -4,6 +4,7 @@ import { Button } from '@workspace/ui/components/button';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { Logo } from './logo';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,17 +22,7 @@ export function Navbar() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo - Left */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md transition-transform group-hover:scale-105">
-                <span className="text-2xl font-bold">G</span>
-              </div>
-              <div className="hidden flex-col sm:flex">
-                <span className="text-lg font-bold leading-tight tracking-tight">Greenway</span>
-                <span className="text-xs font-medium tracking-wider text-muted-foreground uppercase">
-                  Plan Management
-                </span>
-              </div>
-            </Link>
+            <Logo width={160} height={40} />
           </div>
 
           {/* Desktop Navigation - Center */}
