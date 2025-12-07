@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="429406d3-5536-4f21-a3e1-d57260d9c608" name="Changes" comment="feat(marketing): update contact links, images, and navbar for improved navigation">
-      <change afterPath="$PROJECT_DIR$/apps/marketing/components/logo.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/public/logos/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/public/logos/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/public/logos/logo_full.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/marketing/public/logos/logo_full.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/app/about/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/about/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/app/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/app/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/app/opengraph-image.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/components/footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/footer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/components/navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/marketing/components/navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/public/file.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/public/globe.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/public/next.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/public/vercel.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/marketing/public/window.svg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
