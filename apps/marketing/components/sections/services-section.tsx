@@ -10,7 +10,7 @@ const benefits = [
   {
     icon: Users,
     title: 'A team of experts',
-    description: 'Access to a highly skilled with extensive NDIS knowledge and an accounting background',
+    description: 'Access to a highly skilled team with extensive NDIS knowledge and an accounting background',
   },
   {
     icon: FileText,

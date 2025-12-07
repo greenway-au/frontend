@@ -28,7 +28,7 @@ const faqs = [
   {
     question: 'What if I need help or have questions?',
     answer:
-      "Our dedicated support team is here to help! Contact us by phone or email during business hours, and we'll respond promptly. We pride ourselves on providing personalized, friendly support.",
+      "Our dedicated support team is here to help! Contact us by phone or email during business hours, and we'll respond promptly. We pride ourselves on providing personalised, friendly support.",
   },
 ];
 
@@ -76,7 +76,7 @@ export function FAQSection() {
               <a href="#contact" className="font-semibold text-primary hover:underline underline-offset-4">
                 Contact our team
               </a>{' '}
-              for personalized assistance.
+              for personalised assistance.
             </p>
           </div>
         </div>
