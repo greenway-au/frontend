@@ -16,7 +16,7 @@ export function CTASection() {
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button size="lg" variant="secondary" asChild className="group w-full sm:w-auto">
+            <Button size="lg" variant="secondary" asChild className="group w-full sm:w-auto bg-white">
               <Link href="#how-it-works">
                 Get Started Now
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />

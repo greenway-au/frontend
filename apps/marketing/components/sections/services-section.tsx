@@ -65,7 +65,7 @@ export function ServicesSection() {
             </div>
 
             {/* Right Side - Images */}
-            <div className="relative h-80 lg:h-96 mx-auto max-w-lg">
+            <div className="relative h-86 lg:h-96 mx-auto max-w-lg">
               {/* Left - Group Image (Larger) */}
               <div
                 className="absolute top-1/2 -translate-y-1/2 left-0 w-44 h-44 sm:w-48 sm:h-48 overflow-hidden shadow-xl"
