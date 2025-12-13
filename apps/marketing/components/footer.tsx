@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Linkedin, Mail, PaperclipIcon, Phone, Twitter } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Mail, PaperclipIcon, Twitter } from 'lucide-react';
 import { Logo } from './logo';
 
 export function Footer() {
@@ -134,15 +134,6 @@ export function Footer() {
                   className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                 >
                   accounts@greenwayplans.com.au
-                </a>
-              </li>
-              <li className="flex items-start space-x-3">
-                <Phone className="mt-0.5 h-5 w-5 flex-shrink-0 text-muted-foreground" />
-                <a
-                  href="tel:0421002313"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  0421 002 313
                 </a>
               </li>
             </ul>
