@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="429406d3-5536-4f21-a3e1-d57260d9c608" name="Changes" comment="feat(marketing): update american words to aus words">
-      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="429406d3-5536-4f21-a3e1-d57260d9c608" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,6 +19,31 @@
     &quot;assignee&quot;: &quot;realzai&quot;
   }
 }</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1766990808" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="feat/marketing" />
+                    <option name="lastUsedInstant" value="1766990807" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/linkb15/turborepo-shadcn-ui-tailwind-4.git&quot;,
@@ -44,8 +66,7 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/marketing&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -71,8 +92,6 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/apps/marketing/public/logos" />
-      <recent name="$PROJECT_DIR$/apps/marketing/app" />
       <recent name="$PROJECT_DIR$/apps/marketing/public/images" />
     </key>
   </component>
@@ -116,7 +135,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-c7e53b3be11b-JavaScript-WS-253.28294.332" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.27397.92" />
       </set>
     </attachedChunks>
   </component>
@@ -141,53 +160,8 @@
       <workItem from="1762758996799" duration="83000" />
       <workItem from="1762863408675" duration="4459000" />
       <workItem from="1763265812571" duration="367000" />
-      <workItem from="1763266838801" duration="3406000" />
-      <workItem from="1763538591738" duration="6359000" />
-      <workItem from="1763625204336" duration="106000" />
-      <workItem from="1763794878626" duration="1378000" />
-      <workItem from="1765623634749" duration="42000" />
+      <workItem from="1763266838801" duration="1291000" />
     </task>
-    <task id="LOCAL-00001" summary="feat(marketing): update hero, navbar and seos as requested">
-      <option name="closed" value="true" />
-      <created>1763268302736</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1763268302736</updated>
-    </task>
-    <task id="LOCAL-00002" summary="feat(marketing): modify contents and add a new about page">
-      <option name="closed" value="true" />
-      <created>1763553335877</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1763553335878</updated>
-    </task>
-    <task id="LOCAL-00003" summary="feat(marketing): update contact links, images, and navbar for improved navigation">
-      <option name="closed" value="true" />
-      <created>1763557476459</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1763557476460</updated>
-    </task>
-    <task id="LOCAL-00004" summary="feat(marketing): update color scheme to be fit with logo">
-      <option name="closed" value="true" />
-      <created>1765094649939</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1765094649939</updated>
-    </task>
-    <task id="LOCAL-00005" summary="feat(marketing): fixed minor ui changes and hero section with background image">
-      <option name="closed" value="true" />
-      <created>1765097212635</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1765097212635</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,19 +181,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat(marketing): checkpoint on first design" />
     <MESSAGE value="feat(marketing): checkpoint on first design" />
-    <MESSAGE value="feat(marketing): update hero, navbar and seos as requested" />
-    <MESSAGE value="feat(marketing): modify contents and add a new about page" />
-    <MESSAGE value="feat(marketing): update contact links, images, and navbar for improved navigation" />
-    <MESSAGE value="feat(marketing): update color scheme to be fit with logo" />
-    <MESSAGE value="feat(marketing): fixed minor ui changes and hero section with background image" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(marketing): fixed minor ui changes and hero section with background image" />
-  </component>
-  <component name="github-copilot-workspace">
-    <instructionFileLocations>
-      <option value=".github/instructions" />
-    </instructionFileLocations>
-    <promptFileLocations>
-      <option value=".github/prompts" />
-    </promptFileLocations>
+    <option name="LAST_COMMIT_MESSAGE" value="feat(marketing): checkpoint on first design" />
   </component>
 </project>

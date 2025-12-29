@@ -6,11 +6,17 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "deploy": "./deploy.sh",
+    "deploy:client": "./deploy.sh client",
+    "deploy:marketing": "./deploy.sh marketing",
+    "deploy:portal": "./deploy.sh portal",
+    "deploy:all": "./deploy.sh all"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
+    "next": "^15.5.4",
     "prettier": "^3.6.2",
     "turbo": "^2.5.8",
     "typescript": "^5.9.2"
