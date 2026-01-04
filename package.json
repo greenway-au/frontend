@@ -8,9 +8,7 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "deploy": "./deploy.sh",
-    "deploy:client": "./deploy.sh client",
     "deploy:marketing": "./deploy.sh marketing",
-    "deploy:portal": "./deploy.sh portal",
     "deploy:dashboard": "./deploy.sh dashboard",
     "deploy:all": "./deploy.sh all"
   },

@@ -5,7 +5,7 @@
 
 set -e
 
-APPS=("client" "marketing" "portal" "dashboard")
+APPS=("marketing" "dashboard")
 VERCEL_JSON="vercel.json"
 
 deploy_app() {
@@ -68,4 +68,3 @@ else
   echo "Available apps: ${APPS[*]}"
   exit 1
 fi
-

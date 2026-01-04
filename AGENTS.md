@@ -1,18 +1,18 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `apps/client`, `apps/marketing`, and `apps/portal` are Next.js 15 front-ends; each owns its own `app/`, `components/`, and `public/` folders.
+- `apps/marketing` is the Next.js 15 front-end; `apps/dashboard` is TanStack Start; each owns its own `app/`, `components/`, and `public/` (or equivalent) folders.
 - `packages/ui` is the shared Tailwind 4 design system—export from `src/index.ts` and keep stories or demos inside `src/examples/`.
 - Shared linting and TypeScript baselines live in `packages/eslint-config` and `packages/typescript-config`; extend them rather than inlining rules.
 - Workspace plumbing (`turbo.json`, `pnpm-workspace.yaml`, `deploy.sh`, `vercel.json`) applies across every package.
 
 ## Build, Test, and Development Commands
 - `pnpm install` installs dependencies with pnpm 10 and wires workspace symlinks.
-- `pnpm dev --filter client` (swap the filter per app) runs the selected Next.js instance with Turbopack.
-- `pnpm build --filter portal` validates a production bundle; run before raising a pull request.
+- `pnpm dev --filter marketing` (swap the filter per app) runs the selected frontend with Turbopack.
+- `pnpm build --filter dashboard` validates a production bundle; run before raising a pull request.
 - `pnpm lint --filter ./...` executes ESLint with the shared config; treat warnings as actionable.
 - `pnpm format` applies Prettier to TS/TSX/MD; rely on it for formatting fixes.
-- `pnpm deploy:portal` (or `deploy:all`) executes `deploy.sh` for Vercel pushes.
+- `pnpm deploy:marketing` or `pnpm deploy:dashboard` (or `deploy:all`) executes `deploy.sh` for Vercel pushes.
 
 ## Coding Style & Naming Conventions
 - Prettier is the source of truth (2-space indent, single quotes); avoid hand-formatting.

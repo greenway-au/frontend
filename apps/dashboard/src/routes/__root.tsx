@@ -66,9 +66,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <div className="absolute -bottom-8 left-1/3 w-96 h-96 bg-primary/15 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
         </div>
 
-        <DashboardLayout>
-          {children}
-        </DashboardLayout>
+        <DashboardLayout>{children}</DashboardLayout>
 
         <TanStackDevtools
           config={{

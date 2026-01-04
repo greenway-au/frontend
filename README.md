@@ -1,11 +1,11 @@
 # NIDS Platforms
 
-A modern, scalable monorepo built with Turborepo, Next.js, shadcn/ui, and Tailwind CSS v4. This project architecture supports multiple interconnected applications (Client and Provider) with shared UI components and configurations.
+A modern, scalable monorepo built with Turborepo, Next.js, shadcn/ui, and Tailwind CSS v4. This project architecture supports multiple interconnected applications with shared UI components and configurations.
 
 ## 🚀 Project Structure
 
-- **apps/client** - Main client-facing application
-- **apps/provider** - Provider-facing application  
+- **apps/marketing** - Marketing site powered by Next.js
+- **apps/dashboard** - Internal dashboard built with TanStack Start
 - **packages/ui** - Shared UI component library with shadcn/ui
 - **packages/eslint-config** - Shared ESLint configurations
 - **packages/typescript-config** - Shared TypeScript configurations
@@ -43,7 +43,7 @@ This will start all applications in the monorepo with hot module reloading.
 To add shadcn/ui components to the shared UI package:
 
 ```bash
-pnpm dlx shadcn@latest add button -c apps/client
+pnpm dlx shadcn@latest add button -c apps/marketing
 ```
 
 Components will be placed in `packages/ui/src/components` and available across all applications.
@@ -65,4 +65,3 @@ import { Button } from '@workspace/ui/components/ui/button';
 ## 📄 License
 
 MIT
-
