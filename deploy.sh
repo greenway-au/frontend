@@ -5,7 +5,7 @@
 
 set -e
 
-APPS=("client" "marketing" "portal")
+APPS=("client" "marketing" "portal" "dashboard")
 VERCEL_JSON="vercel.json"
 
 deploy_app() {
@@ -14,8 +14,21 @@ deploy_app() {
 
   echo "🚀 Deploying ${app}..."
 
-  # Update vercel.json for this app
-  cat > $VERCEL_JSON << EOF
+  # Determine framework and output directory based on app type
+  if [ "$app" == "dashboard" ]; then
+    # TanStack Start uses Vite + Nitro server
+    cat > $VERCEL_JSON << EOF
+{
+  "\$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm turbo run build --filter=${app}",
+  "outputDirectory": "apps/${app}/.output/public",
+  "framework": null
+}
+EOF
+  else
+    # Next.js apps
+    cat > $VERCEL_JSON << EOF
 {
   "\$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "pnpm install",
@@ -24,6 +37,7 @@ deploy_app() {
   "framework": "nextjs"
 }
 EOF
+  fi
 
   # Remove existing .vercel link
   rm -rf .vercel
