@@ -1,4 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router';
+/**
+ * Dashboard Home Route
+ * Main dashboard page with stats and quick actions
+ */
+
+import { createFileRoute, Link } from '@tanstack/react-router';
 import {
   Card,
   CardContent,
@@ -6,9 +11,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@workspace/ui/components/card';
-import { Users, FileText, DollarSign, TrendingUp } from 'lucide-react';
+import { Button } from '@workspace/ui/components/button';
+import { Users, FileText, DollarSign, TrendingUp, Plus } from 'lucide-react';
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_dashboard/')({
   component: DashboardHome,
 });
 
@@ -76,9 +82,7 @@ function DashboardHome() {
                     <p className="text-sm font-medium">
                       New participant enrolled
                     </p>
-                    <p className="text-xs text-muted-foreground">
-                      2 hours ago
-                    </p>
+                    <p className="text-xs text-muted-foreground">2 hours ago</p>
                   </div>
                 </div>
               ))}
@@ -89,21 +93,28 @@ function DashboardHome() {
         <Card className="col-span-3">
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>
-              Common tasks and shortcuts
-            </CardDescription>
+            <CardDescription>Common tasks and shortcuts</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <button className="w-full rounded-lg border border-border bg-background px-4 py-3 text-left text-sm font-medium hover:bg-accent transition-colors">
-                Add New Participant
-              </button>
-              <button className="w-full rounded-lg border border-border bg-background px-4 py-3 text-left text-sm font-medium hover:bg-accent transition-colors">
-                Create Plan
-              </button>
-              <button className="w-full rounded-lg border border-border bg-background px-4 py-3 text-left text-sm font-medium hover:bg-accent transition-colors">
-                Generate Report
-              </button>
+              <Button variant="outline" className="w-full justify-start" asChild>
+                <Link to="/participants/new">
+                  <Plus className="mr-2 size-4" />
+                  Add New Participant
+                </Link>
+              </Button>
+              <Button variant="outline" className="w-full justify-start" asChild>
+                <Link to="/documents">
+                  <FileText className="mr-2 size-4" />
+                  Manage Documents
+                </Link>
+              </Button>
+              <Button variant="outline" className="w-full justify-start" asChild>
+                <Link to="/reports">
+                  <TrendingUp className="mr-2 size-4" />
+                  Generate Report
+                </Link>
+              </Button>
             </div>
           </CardContent>
         </Card>
