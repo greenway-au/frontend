@@ -21,21 +21,31 @@ export function useIsAuthenticated() {
   return useAtomValue(isAuthenticatedAtom);
 }
 
-/** Get user role */
-export function useUserRole() {
+/** Get user type */
+export function useUserType() {
   const user = useAtomValue(userAtom);
-  return user?.role ?? null;
+  return user?.userType ?? null;
 }
 
-/** Check if user has a specific role */
-export function useHasRole(role: string | string[]) {
-  const userRole = useUserRole();
-  if (!userRole) return false;
+/** Check if user is a specific type */
+export function useIsUserType(type: string | string[]) {
+  const userType = useUserType();
+  if (!userType) return false;
 
-  if (Array.isArray(role)) {
-    return role.includes(userRole);
+  if (Array.isArray(type)) {
+    return type.includes(userType);
   }
-  return userRole === role;
+  return userType === type;
+}
+
+/** Check if user is a client */
+export function useIsClient() {
+  return useIsUserType('client');
+}
+
+/** Check if user is a provider */
+export function useIsProvider() {
+  return useIsUserType('provider');
 }
 
 // Re-export query hooks for convenience

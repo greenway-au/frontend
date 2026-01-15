@@ -5,7 +5,7 @@
 
 export type {
   User,
-  UserRole,
+  UserType,
   AuthTokens,
   AuthState,
   LoginCredentials,

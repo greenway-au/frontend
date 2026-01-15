@@ -3,15 +3,15 @@
  * User, token, and auth state definitions
  */
 
-/** User roles in the system */
-export type UserRole = 'admin' | 'provider' | 'coordinator' | 'viewer';
+/** User types in the system */
+export type UserType = 'client' | 'provider';
 
 /** User entity */
 export interface User {
   id: string;
   email: string;
   name: string;
-  role: UserRole;
+  userType: UserType;
   avatar?: string;
   createdAt: string;
   updatedAt: string;
@@ -35,6 +35,7 @@ export interface RegisterData {
   email: string;
   password: string;
   name: string;
+  userType?: UserType;
 }
 
 /** Auth state for Jotai store */

@@ -134,10 +134,16 @@ export function LoginForm() {
           </form.Subscribe>
 
           {/* Forgot password link */}
-          <div className="text-center text-sm">
-            <a href="/forgot-password" className="text-primary hover:underline">
+          <div className="flex flex-col gap-2 text-center text-sm">
+            <a href="/forgot-password" className="text-muted-foreground hover:text-primary hover:underline">
               Forgot your password?
             </a>
+            <div>
+              <span className="text-muted-foreground">Don't have an account? </span>
+              <a href="/register" className="text-primary hover:underline font-medium">
+                Sign up
+              </a>
+            </div>
           </div>
         </form>
       </CardContent>

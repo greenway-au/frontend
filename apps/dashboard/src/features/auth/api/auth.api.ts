@@ -31,7 +31,8 @@ export const authApi = {
 
   /** Logout current user */
   logout: (): Promise<void> => {
-    return api.post(`${AUTH_BASE}/logout`);
+    // Client-side logout only for stateless JWT
+    return Promise.resolve();
   },
 
   /** Refresh access token */
@@ -45,7 +46,7 @@ export const authApi = {
 
   /** Get current user */
   me: (): Promise<User> => {
-    return api.get<User>('/api/v1/users/me');
+    return api.get<User>('/api/v1/auth/me');
   },
 
   /** Request password reset */

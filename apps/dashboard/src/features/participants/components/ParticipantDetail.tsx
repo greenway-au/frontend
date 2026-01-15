@@ -3,7 +3,6 @@
  * Full participant view with plans and actions
  */
 
-import { Link } from '@tanstack/react-router';
 import { Card, CardContent, CardHeader, CardTitle } from '@workspace/ui/components/card';
 import { Button } from '@workspace/ui/components/button';
 import {

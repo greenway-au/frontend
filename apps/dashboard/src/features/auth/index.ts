@@ -6,14 +6,17 @@
 // Components
 export { LoginForm } from './components/LoginForm';
 export { ProtectedRoute } from './components/ProtectedRoute';
+export { RegisterForm } from './components/RegisterForm';
 
 // Hooks
 export {
   useAuth,
   useUser,
   useIsAuthenticated,
-  useUserRole,
-  useHasRole,
+  useUserType,
+  useIsUserType,
+  useIsClient,
+  useIsProvider,
   useCurrentUser,
   useLogin,
   useLogout,
@@ -31,14 +34,16 @@ export {
 // Schemas
 export {
   loginSchema,
-  registerSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
   type LoginInput,
-  type RegisterInput,
   type ForgotPasswordInput,
   type ResetPasswordInput,
 } from './schemas/login.schema';
+export {
+  registerSchema,
+  type RegisterInput,
+} from './schemas/register.schema';
 
 // Types
 export type * from './types/auth.types';
