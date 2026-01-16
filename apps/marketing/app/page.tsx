@@ -8,7 +8,7 @@ import { HowItWorksSection } from '@/components/sections/how-it-works-section';
 import { ServicesSection } from '@/components/sections/services-section';
 import { TestimonialsSection } from '@/components/sections/testimonials-section';
 
-export default function RootPage() {
+export default function RootPage(): React.JSX.Element {
   return (
     <div className="flex min-h-screen flex-col relative">
       {/* Multi-color animated background */}

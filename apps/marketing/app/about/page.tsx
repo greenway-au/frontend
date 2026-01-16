@@ -3,7 +3,7 @@ import { Navbar } from '@/components/navbar';
 import { Card } from '@workspace/ui/components/card';
 import { Users, Target, Trophy, Heart } from 'lucide-react';
 
-export default function AboutPage() {
+export default function AboutPage(): React.JSX.Element {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />

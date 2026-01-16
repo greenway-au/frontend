@@ -5,8 +5,9 @@ import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Logo } from './logo';
+import { siteConfig } from '@/config/site';
 
-export function Navbar() {
+export function Navbar(): React.JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
@@ -43,10 +44,10 @@ export function Navbar() {
           {/* Right side - CTA */}
           <div className="hidden items-center space-x-3 lg:flex">
             <Button variant="ghost" asChild className="font-medium">
-              <Link href="/coming-soon">Sign In</Link>
+              <a href={siteConfig.links.login}>Sign In</a>
             </Button>
             <Button asChild className="shadow-md font-medium">
-              <Link href="/coming-soon">Dashboard</Link>
+              <a href={siteConfig.links.register}>Get Started</a>
             </Button>
           </div>
 
@@ -75,10 +76,10 @@ export function Navbar() {
             ))}
             <div className="flex flex-col gap-3 px-4 pt-4">
               <Button variant="outline" asChild className="w-full">
-                <Link href="/coming-soon">Sign In</Link>
+                <a href={siteConfig.links.login}>Sign In</a>
               </Button>
               <Button asChild className="w-full">
-                <Link href="/coming-soon">Dashboard</Link>
+                <a href={siteConfig.links.register}>Get Started</a>
               </Button>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,7 +9,7 @@ interface LogoProps {
   showAsLink?: boolean;
 }
 
-export function Logo({ className = '', width = 180, height = 45, showAsLink = true }: LogoProps) {
+export function Logo({ className = '', width = 180, height = 45, showAsLink = true }: LogoProps): React.JSX.Element {
   const logoImage = (
     <Image
       src="/logos/logo_full.svg"

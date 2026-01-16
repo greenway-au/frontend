@@ -25,7 +25,7 @@ const steps = [
   },
 ];
 
-export function HowItWorksSection() {
+export function HowItWorksSection(): React.JSX.Element {
   return (
     <section id="how-it-works" className="border-b py-20 sm:py-28">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

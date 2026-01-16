@@ -2,7 +2,7 @@ import { Button } from '@workspace/ui/components/button';
 import { ArrowLeft, Hammer, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
-export default function ComingSoonPage() {
+export default function ComingSoonPage(): React.JSX.Element {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-primary/5 via-background to-background px-4">
       <div className="mx-auto max-w-2xl text-center">

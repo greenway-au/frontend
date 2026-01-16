@@ -4,7 +4,7 @@ import { Input } from '@workspace/ui/components/input';
 import { Textarea } from '@workspace/ui/components/textarea';
 import { Mail, MapPin, Phone } from 'lucide-react';
 
-export function ContactSection() {
+export function ContactSection(): React.JSX.Element {
   return (
     <section id="contact" className="border-b py-20 sm:py-28">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

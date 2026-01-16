@@ -32,7 +32,7 @@ const faqs = [
   },
 ];
 
-export function FAQSection() {
+export function FAQSection(): React.JSX.Element {
   return (
     <section className="border-b py-24 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

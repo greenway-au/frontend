@@ -24,7 +24,7 @@ const values = [
   },
 ];
 
-export function AboutSection() {
+export function AboutSection(): React.JSX.Element {
   return (
     <section id="about" className="border-b bg-white py-24 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

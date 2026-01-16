@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Facebook, Instagram, Linkedin, Mail, PaperclipIcon, Twitter } from 'lucide-react';
 import { Logo } from './logo';
 
-export function Footer() {
+export function Footer(): React.JSX.Element {
   const currentYear = new Date().getFullYear();
 
   return (

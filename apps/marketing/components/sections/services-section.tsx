@@ -19,7 +19,7 @@ const benefits = [
   },
 ];
 
-export function ServicesSection() {
+export function ServicesSection(): React.JSX.Element {
   return (
     <section id="services" className="border-b">
       {/* Benefits Section */}

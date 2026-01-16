@@ -2,8 +2,9 @@ import { Button } from '@workspace/ui/components/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { siteConfig } from '@/config/site';
 
-export function HeroSection() {
+export function HeroSection(): React.JSX.Element {
   return (
     <section className="relative overflow-hidden border-b">
       {/* Background Image with Overlay */}
@@ -44,10 +45,10 @@ export function HeroSection() {
 
             <div className="flex flex-col gap-4 sm:flex-row">
               <Button size="lg" asChild className="group shadow-lg">
-                <Link href="#services">
+                <a href={siteConfig.links.register}>
                   Sign Up Now
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+                </a>
               </Button>
               <Button size="lg" variant="outline" asChild className="shadow-lg backdrop-blur-sm bg-background/80">
                 <Link href="#how-it-works">Get in Contact</Link>

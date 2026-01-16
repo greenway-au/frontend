@@ -46,7 +46,7 @@ const testimonials = [
   },
 ];
 
-export function TestimonialsSection() {
+export function TestimonialsSection(): React.JSX.Element {
   return (
     <section id="testimonials" className="border-b bg-white py-20 sm:py-28">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

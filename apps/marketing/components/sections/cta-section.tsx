@@ -1,8 +1,9 @@
 import { Button } from '@workspace/ui/components/button';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import { siteConfig } from '@/config/site';
 
-export function CTASection() {
+export function CTASection(): React.JSX.Element {
   return (
     <section className="border-b bg-primary py-20 text-primary-foreground sm:py-28">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,10 +18,10 @@ export function CTASection() {
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button size="lg" variant="secondary" asChild className="group w-full sm:w-auto bg-white">
-              <Link href="#how-it-works">
+              <a href={siteConfig.links.register}>
                 Get Started Now
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
+              </a>
             </Button>
             <Button
               size="lg"
@@ -28,7 +29,7 @@ export function CTASection() {
               asChild
               className="w-full border-primary-foreground/20 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 sm:w-auto"
             >
-              <Link href="#">Contact Us</Link>
+              <Link href="#how-it-works">Contact Us</Link>
             </Button>
           </div>
 
