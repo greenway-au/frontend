@@ -4,10 +4,16 @@
  */
 
 import { createFileRoute, Navigate } from '@tanstack/react-router';
+import { z } from 'zod';
 import { AuthLayout } from '@/components/layouts/AuthLayout';
 import { LoginForm, useIsAuthenticated } from '@/features/auth';
 
+const loginSearchSchema = z.object({
+  returnUrl: z.string().optional(),
+});
+
 export const Route = createFileRoute('/login')({
+  validateSearch: loginSearchSchema,
   component: LoginPage,
 });
 

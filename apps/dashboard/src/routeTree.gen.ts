@@ -9,18 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterProviderRouteImport } from './routes/register-provider'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/_dashboard'
 import { Route as DashboardIndexRouteImport } from './routes/_dashboard/index'
-import { Route as DashboardSettingsRouteImport } from './routes/_dashboard/settings'
-import { Route as DashboardReportsRouteImport } from './routes/_dashboard/reports'
-import { Route as DashboardOverviewRouteImport } from './routes/_dashboard/overview'
-import { Route as DashboardDocumentsRouteImport } from './routes/_dashboard/documents'
-import { Route as DashboardParticipantsIndexRouteImport } from './routes/_dashboard/participants/index'
-import { Route as DashboardParticipantsNewRouteImport } from './routes/_dashboard/participants/new'
-import { Route as DashboardParticipantsParticipantIdRouteImport } from './routes/_dashboard/participants/$participantId'
 
+const RegisterProviderRoute = RegisterProviderRouteImport.update({
+  id: '/register-provider',
+  path: '/register-provider',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -40,131 +39,57 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
-const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardReportsRoute = DashboardReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardOverviewRoute = DashboardOverviewRouteImport.update({
-  id: '/overview',
-  path: '/overview',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardDocumentsRoute = DashboardDocumentsRouteImport.update({
-  id: '/documents',
-  path: '/documents',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardParticipantsIndexRoute =
-  DashboardParticipantsIndexRouteImport.update({
-    id: '/participants/',
-    path: '/participants/',
-    getParentRoute: () => DashboardRoute,
-  } as any)
-const DashboardParticipantsNewRoute =
-  DashboardParticipantsNewRouteImport.update({
-    id: '/participants/new',
-    path: '/participants/new',
-    getParentRoute: () => DashboardRoute,
-  } as any)
-const DashboardParticipantsParticipantIdRoute =
-  DashboardParticipantsParticipantIdRouteImport.update({
-    id: '/participants/$participantId',
-    path: '/participants/$participantId',
-    getParentRoute: () => DashboardRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/documents': typeof DashboardDocumentsRoute
-  '/overview': typeof DashboardOverviewRoute
-  '/reports': typeof DashboardReportsRoute
-  '/settings': typeof DashboardSettingsRoute
+  '/register-provider': typeof RegisterProviderRoute
   '/': typeof DashboardIndexRoute
-  '/participants/$participantId': typeof DashboardParticipantsParticipantIdRoute
-  '/participants/new': typeof DashboardParticipantsNewRoute
-  '/participants': typeof DashboardParticipantsIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/documents': typeof DashboardDocumentsRoute
-  '/overview': typeof DashboardOverviewRoute
-  '/reports': typeof DashboardReportsRoute
-  '/settings': typeof DashboardSettingsRoute
+  '/register-provider': typeof RegisterProviderRoute
   '/': typeof DashboardIndexRoute
-  '/participants/$participantId': typeof DashboardParticipantsParticipantIdRoute
-  '/participants/new': typeof DashboardParticipantsNewRoute
-  '/participants': typeof DashboardParticipantsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
-  '/_dashboard/documents': typeof DashboardDocumentsRoute
-  '/_dashboard/overview': typeof DashboardOverviewRoute
-  '/_dashboard/reports': typeof DashboardReportsRoute
-  '/_dashboard/settings': typeof DashboardSettingsRoute
+  '/register-provider': typeof RegisterProviderRoute
   '/_dashboard/': typeof DashboardIndexRoute
-  '/_dashboard/participants/$participantId': typeof DashboardParticipantsParticipantIdRoute
-  '/_dashboard/participants/new': typeof DashboardParticipantsNewRoute
-  '/_dashboard/participants/': typeof DashboardParticipantsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/login'
-    | '/register'
-    | '/documents'
-    | '/overview'
-    | '/reports'
-    | '/settings'
-    | '/'
-    | '/participants/$participantId'
-    | '/participants/new'
-    | '/participants'
+  fullPaths: '/login' | '/register' | '/register-provider' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/login'
-    | '/register'
-    | '/documents'
-    | '/overview'
-    | '/reports'
-    | '/settings'
-    | '/'
-    | '/participants/$participantId'
-    | '/participants/new'
-    | '/participants'
+  to: '/login' | '/register' | '/register-provider' | '/'
   id:
     | '__root__'
     | '/_dashboard'
     | '/login'
     | '/register'
-    | '/_dashboard/documents'
-    | '/_dashboard/overview'
-    | '/_dashboard/reports'
-    | '/_dashboard/settings'
+    | '/register-provider'
     | '/_dashboard/'
-    | '/_dashboard/participants/$participantId'
-    | '/_dashboard/participants/new'
-    | '/_dashboard/participants/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRouteWithChildren
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  RegisterProviderRoute: typeof RegisterProviderRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register-provider': {
+      id: '/register-provider'
+      path: '/register-provider'
+      fullPath: '/register-provider'
+      preLoaderRoute: typeof RegisterProviderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -193,79 +118,15 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
-    '/_dashboard/settings': {
-      id: '/_dashboard/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof DashboardSettingsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/_dashboard/reports': {
-      id: '/_dashboard/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof DashboardReportsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/_dashboard/overview': {
-      id: '/_dashboard/overview'
-      path: '/overview'
-      fullPath: '/overview'
-      preLoaderRoute: typeof DashboardOverviewRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/_dashboard/documents': {
-      id: '/_dashboard/documents'
-      path: '/documents'
-      fullPath: '/documents'
-      preLoaderRoute: typeof DashboardDocumentsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/_dashboard/participants/': {
-      id: '/_dashboard/participants/'
-      path: '/participants'
-      fullPath: '/participants'
-      preLoaderRoute: typeof DashboardParticipantsIndexRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/_dashboard/participants/new': {
-      id: '/_dashboard/participants/new'
-      path: '/participants/new'
-      fullPath: '/participants/new'
-      preLoaderRoute: typeof DashboardParticipantsNewRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/_dashboard/participants/$participantId': {
-      id: '/_dashboard/participants/$participantId'
-      path: '/participants/$participantId'
-      fullPath: '/participants/$participantId'
-      preLoaderRoute: typeof DashboardParticipantsParticipantIdRouteImport
-      parentRoute: typeof DashboardRoute
-    }
   }
 }
 
 interface DashboardRouteChildren {
-  DashboardDocumentsRoute: typeof DashboardDocumentsRoute
-  DashboardOverviewRoute: typeof DashboardOverviewRoute
-  DashboardReportsRoute: typeof DashboardReportsRoute
-  DashboardSettingsRoute: typeof DashboardSettingsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
-  DashboardParticipantsParticipantIdRoute: typeof DashboardParticipantsParticipantIdRoute
-  DashboardParticipantsNewRoute: typeof DashboardParticipantsNewRoute
-  DashboardParticipantsIndexRoute: typeof DashboardParticipantsIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
-  DashboardDocumentsRoute: DashboardDocumentsRoute,
-  DashboardOverviewRoute: DashboardOverviewRoute,
-  DashboardReportsRoute: DashboardReportsRoute,
-  DashboardSettingsRoute: DashboardSettingsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
-  DashboardParticipantsParticipantIdRoute:
-    DashboardParticipantsParticipantIdRoute,
-  DashboardParticipantsNewRoute: DashboardParticipantsNewRoute,
-  DashboardParticipantsIndexRoute: DashboardParticipantsIndexRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
@@ -276,6 +137,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRouteWithChildren,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  RegisterProviderRoute: RegisterProviderRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

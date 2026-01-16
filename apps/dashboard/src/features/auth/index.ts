@@ -7,6 +7,8 @@
 export { LoginForm } from './components/LoginForm';
 export { ProtectedRoute } from './components/ProtectedRoute';
 export { RegisterForm } from './components/RegisterForm';
+export { ClientRegisterForm } from './components/ClientRegisterForm';
+export { ProviderRegisterForm } from './components/ProviderRegisterForm';
 
 // Hooks
 export {

@@ -1,11 +1,11 @@
 /**
  * Register Route
- * Public registration page
+ * Client registration page (default sign-up)
  */
 
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { AuthLayout } from '@/components/layouts/AuthLayout';
-import { RegisterForm } from '@/features/auth/components/RegisterForm';
+import { ClientRegisterForm } from '@/features/auth/components/ClientRegisterForm';
 import { useIsAuthenticated } from '@/features/auth';
 
 export const Route = createFileRoute('/register')({
@@ -22,8 +22,7 @@ function RegisterPage() {
 
   return (
     <AuthLayout>
-      <RegisterForm />
+      <ClientRegisterForm />
     </AuthLayout>
   );
 }
-

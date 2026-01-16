@@ -7,7 +7,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 import { authApi } from './auth.api';
 import { setAuthAtom, clearAuthAtom, updateTokensAtom } from '@/stores/auth';
-import { storeTokens, clearStoredTokens, updateAccessToken } from '@/lib/api/token';
 import type { LoginCredentials, RegisterData } from '../types/auth.types';
 
 /** Query keys for auth */
@@ -34,10 +33,8 @@ export function useLogin() {
   return useMutation({
     mutationFn: (credentials: LoginCredentials) => authApi.login(credentials),
     onSuccess: (data) => {
-      // Store in Jotai
+      // Store in Jotai (atomWithStorage automatically syncs to localStorage)
       setAuth({ user: data.user, tokens: data.tokens });
-      // Store tokens in localStorage
-      storeTokens(data.tokens);
       // Update query cache
       queryClient.setQueryData(authKeys.currentUser(), data.user);
     },
@@ -52,8 +49,8 @@ export function useRegister() {
   return useMutation({
     mutationFn: (data: RegisterData) => authApi.register(data),
     onSuccess: (data) => {
+      // Store in Jotai (atomWithStorage automatically syncs to localStorage)
       setAuth({ user: data.user, tokens: data.tokens });
-      storeTokens(data.tokens);
       queryClient.setQueryData(authKeys.currentUser(), data.user);
     },
   });
@@ -67,14 +64,13 @@ export function useLogout() {
   return useMutation({
     mutationFn: () => authApi.logout(),
     onSuccess: () => {
+      // Clear auth state (atomWithStorage automatically syncs to localStorage)
       clearAuth();
-      clearStoredTokens();
       queryClient.clear();
     },
     onError: () => {
       // Still clear local state on error
       clearAuth();
-      clearStoredTokens();
       queryClient.clear();
     },
   });
@@ -87,11 +83,11 @@ export function useRefreshToken() {
   return useMutation({
     mutationFn: (refreshToken: string) => authApi.refresh(refreshToken),
     onSuccess: (data) => {
+      // Update tokens in Jotai (atomWithStorage automatically syncs to localStorage)
       updateTokens({
         accessToken: data.accessToken,
         expiresAt: data.expiresAt,
       });
-      updateAccessToken(data.accessToken, data.expiresAt);
     },
   });
 }
@@ -106,7 +102,6 @@ export function useForgotPassword() {
 /** Reset password mutation */
 export function useResetPassword() {
   return useMutation({
-    mutationFn: ({ token, password }: { token: string; password: string }) =>
-      authApi.resetPassword(token, password),
+    mutationFn: ({ token, password }: { token: string; password: string }) => authApi.resetPassword(token, password),
   });
 }

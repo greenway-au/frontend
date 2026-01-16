@@ -34,13 +34,39 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Greenway NDIS Dashboard',
+        title: 'Greenway Plan Management | NDIS Provider Dashboard',
+      },
+      {
+        name: 'description',
+        content: 'Streamline your NDIS service delivery with Greenway Plan Management. Manage participants, documents, and reports with ease.',
+      },
+      {
+        name: 'theme-color',
+        content: '#1a4d5c',
       },
     ],
     links: [
       {
         rel: 'stylesheet',
         href: appCss,
+      },
+      {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        href: '/favicon.svg',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        href: '/favicon.png',
+      },
+      {
+        rel: 'apple-touch-icon',
+        href: '/favicon.png',
+      },
+      {
+        rel: 'manifest',
+        href: '/manifest.json',
       },
       {
         rel: 'preconnect',
@@ -53,7 +79,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
       },
     ],
   }),
@@ -68,14 +94,6 @@ function RootComponent() {
         <HeadContent />
       </head>
       <body className="font-sans antialiased bg-background text-foreground">
-        {/* Animated blob background */}
-        <div className="fixed inset-0 -z-10 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-primary/5 to-secondary/10" />
-          <div className="absolute top-0 -left-4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
-          <div className="absolute top-0 -right-4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
-          <div className="absolute -bottom-8 left-1/3 w-96 h-96 bg-primary/15 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
-        </div>
-
         <JotaiProvider>
           <Outlet />
         </JotaiProvider>

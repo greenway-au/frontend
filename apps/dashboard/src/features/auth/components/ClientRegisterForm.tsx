@@ -1,6 +1,6 @@
 /**
- * Login Form
- * Email/password login form with TanStack Form
+ * Client Register Form
+ * Registration form for NDIS participants/clients
  * Premium, clean design
  */
 
@@ -9,49 +9,34 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button } from '@workspace/ui/components/button';
 import { Input } from '@workspace/ui/components/input';
 import { FieldWrapper } from '@/components/common/form';
-import { useLogin } from '../api/auth.queries';
-import { loginSchema, type LoginInput } from '../schemas/login.schema';
+import { useRegister } from '../api/auth.queries';
+import { registerSchema, type RegisterInput } from '../schemas/register.schema';
 import { ApiError } from '@/lib/api/errors';
-import { Mail, Lock, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight } from 'lucide-react';
 
-/** Get returnUrl from URL search params directly */
-function getReturnUrl(): string {
-  if (typeof window === 'undefined') return '/';
-  const params = new URLSearchParams(window.location.search);
-  const returnUrl = params.get('returnUrl');
-  if (returnUrl) {
-    try {
-      const decoded = decodeURIComponent(returnUrl);
-      if (decoded.startsWith('/')) {
-        return decoded;
-      }
-    } catch {
-      // Ignore decode errors
-    }
-  }
-  return '/';
-}
-
-export function LoginForm() {
-  const loginMutation = useLogin();
+export function ClientRegisterForm() {
+  const registerMutation = useRegister();
 
   const form = useForm({
     defaultValues: {
       email: '',
       password: '',
-    } satisfies LoginInput,
+      confirmPassword: '',
+      name: '',
+      userType: 'client',
+    } satisfies RegisterInput,
     onSubmit: async ({ value }) => {
       try {
-        await loginMutation.mutateAsync(value);
-        const redirectPath = getReturnUrl();
-        window.location.href = redirectPath;
+        const { confirmPassword, ...registerData } = value;
+        await registerMutation.mutateAsync(registerData);
+        window.location.href = '/';
       } catch {
         // Error is handled by mutation state
       }
     },
     validatorAdapter: zodValidator(),
     validators: {
-      onChange: loginSchema,
+      onChange: registerSchema,
     },
   });
 
@@ -59,9 +44,9 @@ export function LoginForm() {
     <div className="space-y-6">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Create your account</h1>
         <p className="text-muted-foreground">
-          Sign in to your account to continue
+          Sign up to manage your NDIS plan
         </p>
       </div>
 
@@ -74,6 +59,33 @@ export function LoginForm() {
         }}
         className="space-y-4"
       >
+        {/* Name field */}
+        <form.Field name="name">
+          {(field) => (
+            <FieldWrapper
+              label="Full name"
+              htmlFor="name"
+              errors={field.state.meta.errors}
+              touched={field.state.meta.isTouched}
+              required
+            >
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <Input
+                  id="name"
+                  placeholder="John Doe"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  autoComplete="name"
+                  disabled={registerMutation.isPending}
+                  className="pl-10 h-11"
+                />
+              </div>
+            </FieldWrapper>
+          )}
+        </form.Field>
+
         {/* Email field */}
         <form.Field name="email">
           {(field) => (
@@ -94,7 +106,7 @@ export function LoginForm() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   autoComplete="email"
-                  disabled={loginMutation.isPending}
+                  disabled={registerMutation.isPending}
                   className="pl-10 h-11"
                 />
               </div>
@@ -117,12 +129,12 @@ export function LoginForm() {
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Create a password"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  autoComplete="current-password"
-                  disabled={loginMutation.isPending}
+                  autoComplete="new-password"
+                  disabled={registerMutation.isPending}
                   className="pl-10 h-11"
                 />
               </div>
@@ -130,21 +142,39 @@ export function LoginForm() {
           )}
         </form.Field>
 
-        {/* Forgot password link */}
-        <div className="flex justify-end">
-          <a
-            href="/forgot-password"
-            className="text-sm text-muted-foreground hover:text-primary transition-colors"
-          >
-            Forgot password?
-          </a>
-        </div>
+        {/* Confirm Password field */}
+        <form.Field name="confirmPassword">
+          {(field) => (
+            <FieldWrapper
+              label="Confirm password"
+              htmlFor="confirmPassword"
+              errors={field.state.meta.errors}
+              touched={field.state.meta.isTouched}
+              required
+            >
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm your password"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  autoComplete="new-password"
+                  disabled={registerMutation.isPending}
+                  className="pl-10 h-11"
+                />
+              </div>
+            </FieldWrapper>
+          )}
+        </form.Field>
 
         {/* Error message */}
-        {loginMutation.isError && (
+        {registerMutation.isError && (
           <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-3 text-sm text-destructive">
-            {loginMutation.error instanceof ApiError
-              ? loginMutation.error.message
+            {registerMutation.error instanceof ApiError
+              ? registerMutation.error.message
               : 'An error occurred. Please try again.'}
           </div>
         )}
@@ -155,13 +185,13 @@ export function LoginForm() {
             <Button
               type="submit"
               className="w-full h-11 font-medium"
-              disabled={!canSubmit || isSubmitting || loginMutation.isPending}
+              disabled={!canSubmit || isSubmitting || registerMutation.isPending}
             >
-              {loginMutation.isPending ? (
-                'Signing in...'
+              {registerMutation.isPending ? (
+                'Creating account...'
               ) : (
                 <>
-                  Sign in
+                  Create account
                   <ArrowRight className="ml-2 size-4" />
                 </>
               )}
@@ -176,20 +206,28 @@ export function LoginForm() {
           <div className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">New to Greenway?</span>
+          <span className="bg-background px-2 text-muted-foreground">Already have an account?</span>
         </div>
       </div>
 
-      {/* Register link */}
+      {/* Login link */}
       <div className="text-center">
         <a
-          href="/register"
+          href="/login"
           className="inline-flex items-center text-sm font-medium text-primary hover:underline"
         >
-          Create an account
+          Sign in instead
           <ArrowRight className="ml-1 size-3" />
         </a>
       </div>
+
+      {/* Provider link */}
+      <p className="text-center text-xs text-muted-foreground">
+        Are you a service provider?{' '}
+        <a href="/register-provider" className="text-primary hover:underline">
+          Register as a provider
+        </a>
+      </p>
     </div>
   );
 }

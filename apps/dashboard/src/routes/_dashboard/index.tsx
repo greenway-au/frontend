@@ -1,9 +1,10 @@
 /**
  * Dashboard Home Route
- * Main dashboard page with stats and quick actions
+ * Main dashboard page with stats and overview
+ * Premium, clean design
  */
 
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import {
   Card,
   CardContent,
@@ -11,146 +12,177 @@ import {
   CardHeader,
   CardTitle,
 } from '@workspace/ui/components/card';
-import { Button } from '@workspace/ui/components/button';
-import { Users, FileText, DollarSign, TrendingUp, Plus } from 'lucide-react';
+import {
+  Users,
+  FileText,
+  DollarSign,
+  TrendingUp,
+  ArrowUpRight,
+  Clock,
+} from 'lucide-react';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '@/stores/auth';
 
 export const Route = createFileRoute('/_dashboard/')({
   component: DashboardHome,
 });
 
 function DashboardHome() {
+  const user = useAtomValue(userAtom);
+  const firstName = user?.name.split(' ')[0] || 'there';
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      {/* Welcome Section */}
       <div>
-        <h2 className="text-3xl font-bold tracking-tight">Welcome back!</h2>
-        <p className="text-muted-foreground">
-          Here's what's happening with your NDIS platform today.
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Welcome back, {firstName}
+        </h1>
+        <p className="text-muted-foreground mt-1">
+          Here's an overview of your NDIS platform
         </p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           title="Total Participants"
           value="2,350"
-          change="+20.1% from last month"
+          change="+20.1%"
+          trend="up"
           icon={Users}
-          iconBg="bg-primary/10"
-          iconColor="text-primary"
         />
         <StatCard
           title="Active Plans"
           value="1,892"
-          change="+15.3% from last month"
+          change="+15.3%"
+          trend="up"
           icon={FileText}
-          iconBg="bg-secondary/10"
-          iconColor="text-secondary"
         />
         <StatCard
           title="Total Budget"
-          value="$45,231.89"
-          change="+5.2% from last month"
+          value="$45,231"
+          change="+5.2%"
+          trend="up"
           icon={DollarSign}
-          iconBg="bg-primary/10"
-          iconColor="text-primary"
         />
         <StatCard
           title="Growth Rate"
-          value="+12.5%"
-          change="+2.5% from last month"
+          value="12.5%"
+          change="+2.5%"
+          trend="up"
           icon={TrendingUp}
-          iconBg="bg-secondary/10"
-          iconColor="text-secondary"
         />
       </div>
 
       {/* Recent Activity */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>
-              Latest updates from your NDIS platform
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="flex items-center gap-4">
-                  <div className="size-2 rounded-full bg-primary" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">
-                      New participant enrolled
-                    </p>
-                    <p className="text-xs text-muted-foreground">2 hours ago</p>
-                  </div>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base font-semibold">
+            Recent Activity
+          </CardTitle>
+          <CardDescription>
+            Latest updates from your platform
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {activityItems.map((item, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <div
+                  className={`mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full ${item.iconBg}`}
+                >
+                  <item.icon className={`size-4 ${item.iconColor}`} />
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Common tasks and shortcuts</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <Button variant="outline" className="w-full justify-start" asChild>
-                <Link to="/participants/new">
-                  <Plus className="mr-2 size-4" />
-                  Add New Participant
-                </Link>
-              </Button>
-              <Button variant="outline" className="w-full justify-start" asChild>
-                <Link to="/documents">
-                  <FileText className="mr-2 size-4" />
-                  Manage Documents
-                </Link>
-              </Button>
-              <Button variant="outline" className="w-full justify-start" asChild>
-                <Link to="/reports">
-                  <TrendingUp className="mr-2 size-4" />
-                  Generate Report
-                </Link>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+                <div className="flex-1 space-y-1">
+                  <p className="text-sm font-medium leading-none">
+                    {item.title}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+                <div className="flex items-center text-xs text-muted-foreground">
+                  <Clock className="mr-1 size-3" />
+                  {item.time}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
+
+const activityItems = [
+  {
+    icon: Users,
+    iconBg: 'bg-primary/10',
+    iconColor: 'text-primary',
+    title: 'New participant enrolled',
+    description: 'Sarah Johnson was added to the platform',
+    time: '2h ago',
+  },
+  {
+    icon: FileText,
+    iconBg: 'bg-secondary/10',
+    iconColor: 'text-secondary',
+    title: 'Document uploaded',
+    description: 'Service agreement for Michael Chen',
+    time: '4h ago',
+  },
+  {
+    icon: DollarSign,
+    iconBg: 'bg-primary/10',
+    iconColor: 'text-primary',
+    title: 'Plan updated',
+    description: 'Budget allocation for Emma Williams',
+    time: '6h ago',
+  },
+  {
+    icon: TrendingUp,
+    iconBg: 'bg-secondary/10',
+    iconColor: 'text-secondary',
+    title: 'Report generated',
+    description: 'Monthly summary for December 2025',
+    time: '1d ago',
+  },
+];
 
 interface StatCardProps {
   title: string;
   value: string;
   change: string;
+  trend: 'up' | 'down';
   icon: React.ComponentType<{ className?: string }>;
-  iconBg: string;
-  iconColor: string;
 }
 
-function StatCard({
-  title,
-  value,
-  change,
-  icon: Icon,
-  iconBg,
-  iconColor,
-}: StatCardProps) {
+function StatCard({ title, value, change, trend, icon: Icon }: StatCardProps) {
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <div className={`rounded-lg p-2 ${iconBg}`}>
-          <Icon className={`size-4 ${iconColor}`} />
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between">
+          <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10">
+            <Icon className="size-5 text-primary" />
+          </div>
+          <div
+            className={`flex items-center text-sm font-medium ${
+              trend === 'up' ? 'text-green-600' : 'text-red-600'
+            }`}
+          >
+            {change}
+            <ArrowUpRight
+              className={`ml-0.5 size-4 ${
+                trend === 'down' ? 'rotate-180' : ''
+              }`}
+            />
+          </div>
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
-        <p className="text-xs text-muted-foreground">{change}</p>
+        <div className="mt-4">
+          <p className="text-2xl font-semibold">{value}</p>
+          <p className="text-sm text-muted-foreground">{title}</p>
+        </div>
       </CardContent>
     </Card>
   );
