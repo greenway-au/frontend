@@ -7,7 +7,7 @@ import type { ApiErrorResponse } from '@/types/api';
 import { getAccessToken, clearStoredTokens } from './token';
 import { createApiError, NetworkError, AuthenticationError } from './errors';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://ndis-dev-1674998108.ap-southeast-2.elb.amazonaws.com';
 
 /** Request configuration */
 export interface RequestConfig extends Omit<RequestInit, 'body'> {
@@ -165,12 +165,7 @@ class ApiClient {
         // Use default error data
       }
 
-      const error = createApiError(
-        response.status,
-        errorData.message,
-        errorData.code,
-        errorData.details
-      );
+      const error = createApiError(response.status, errorData.message, errorData.code, errorData.details);
 
       // Handle 401 - clear tokens
       if (error instanceof AuthenticationError) {
