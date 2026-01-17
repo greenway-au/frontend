@@ -7,7 +7,7 @@ import type { ApiErrorResponse } from '@/types/api';
 import { getAccessToken, clearStoredTokens } from './token';
 import { createApiError, NetworkError, AuthenticationError } from './errors';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://ndis-dev-1674998108.ap-southeast-2.elb.amazonaws.com';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://dbw1gtfeo534m.cloudfront.net';
 
 /** Request configuration */
 export interface RequestConfig extends Omit<RequestInit, 'body'> {
