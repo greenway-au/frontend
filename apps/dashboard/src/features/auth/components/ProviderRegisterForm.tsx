@@ -12,7 +12,7 @@ import { FieldWrapper } from '@/components/common/form';
 import { useRegister } from '../api/auth.queries';
 import { registerSchema, type RegisterInput } from '../schemas/register.schema';
 import { ApiError } from '@/lib/api/errors';
-import { Mail, Lock, User, Building2, ArrowRight } from 'lucide-react';
+import { Mail, Lock, Building2, ArrowRight, ShieldCheck, Briefcase } from 'lucide-react';
 
 export function ProviderRegisterForm() {
   const registerMutation = useRegister();
@@ -43,17 +43,34 @@ export function ProviderRegisterForm() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="space-y-2">
+      <div className="space-y-3">
         <div className="flex items-center gap-2">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
-            <Building2 className="size-4 text-primary" />
+          <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/10">
+            <Building2 className="size-5 text-primary" />
           </div>
-          <span className="text-xs font-medium text-primary uppercase tracking-wide">Provider Account</span>
+          <div className="flex flex-col">
+            <span className="text-xs font-semibold text-primary uppercase tracking-wide">Service Provider</span>
+            <span className="text-xs text-muted-foreground">NDIS Registration</span>
+          </div>
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight">Register as a provider</h1>
-        <p className="text-muted-foreground">
-          Create your provider account to manage NDIS services
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight">Register your business</h1>
+        <p className="text-muted-foreground">Join our network of trusted NDIS service providers</p>
+
+        {/* Benefits */}
+        <div className="grid grid-cols-2 gap-2 pt-2">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="flex size-5 items-center justify-center rounded-md bg-primary/5">
+              <ShieldCheck className="size-3 text-primary" />
+            </div>
+            <span>Verified provider</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="flex size-5 items-center justify-center rounded-md bg-primary/5">
+              <Briefcase className="size-3 text-primary" />
+            </div>
+            <span>Manage services</span>
+          </div>
+        </div>
       </div>
 
       {/* Form */}
@@ -76,10 +93,10 @@ export function ProviderRegisterForm() {
               required
             >
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                 <Input
                   id="name"
-                  placeholder="Your Business Name"
+                  placeholder="e.g., ABC Care Services Pty Ltd"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -88,6 +105,7 @@ export function ProviderRegisterForm() {
                   className="pl-10 h-11"
                 />
               </div>
+              <p className="mt-1.5 text-xs text-muted-foreground">Your registered business name or trading name</p>
             </FieldWrapper>
           )}
         </form.Field>
@@ -96,7 +114,7 @@ export function ProviderRegisterForm() {
         <form.Field name="email">
           {(field) => (
             <FieldWrapper
-              label="Business email"
+              label="Business email address"
               htmlFor="email"
               errors={field.state.meta.errors}
               touched={field.state.meta.isTouched}
@@ -107,7 +125,7 @@ export function ProviderRegisterForm() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="contact@business.com"
+                  placeholder="admin@yourprovider.com.au"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -116,6 +134,9 @@ export function ProviderRegisterForm() {
                   className="pl-10 h-11"
                 />
               </div>
+              <p className="mt-1.5 text-xs text-muted-foreground">
+                We'll send verification and important updates to this email
+              </p>
             </FieldWrapper>
           )}
         </form.Field>
@@ -124,7 +145,7 @@ export function ProviderRegisterForm() {
         <form.Field name="password">
           {(field) => (
             <FieldWrapper
-              label="Password"
+              label="Create password"
               htmlFor="password"
               errors={field.state.meta.errors}
               touched={field.state.meta.isTouched}
@@ -135,7 +156,7 @@ export function ProviderRegisterForm() {
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Create a password"
+                  placeholder="••••••••"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
@@ -144,6 +165,9 @@ export function ProviderRegisterForm() {
                   className="pl-10 h-11"
                 />
               </div>
+              <p className="mt-1.5 text-xs text-muted-foreground">
+                Must be at least 8 characters with uppercase, lowercase, and number
+              </p>
             </FieldWrapper>
           )}
         </form.Field>
@@ -218,10 +242,7 @@ export function ProviderRegisterForm() {
 
       {/* Login link */}
       <div className="text-center">
-        <a
-          href="/login"
-          className="inline-flex items-center text-sm font-medium text-primary hover:underline"
-        >
+        <a href="/login" className="inline-flex items-center text-sm font-medium text-primary hover:underline">
           Sign in instead
           <ArrowRight className="ml-1 size-3" />
         </a>

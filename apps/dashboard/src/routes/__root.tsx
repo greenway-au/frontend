@@ -3,12 +3,7 @@
  * Application shell with providers
  */
 
-import {
-  HeadContent,
-  Outlet,
-  Scripts,
-  createRootRouteWithContext,
-} from '@tanstack/react-router';
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 
@@ -24,6 +19,7 @@ interface RouterContext {
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
+  notFoundComponent: NotFound,
   head: () => ({
     meta: [
       {
@@ -38,7 +34,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       },
       {
         name: 'description',
-        content: 'Streamline your NDIS service delivery with Greenway Plan Management. Manage participants, documents, and reports with ease.',
+        content:
+          'Streamline your NDIS service delivery with Greenway Plan Management. Manage participants, documents, and reports with ease.',
       },
       {
         name: 'theme-color',
@@ -86,6 +83,23 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
   component: RootComponent,
 });
+
+function NotFound() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="text-center">
+        <h1 className="text-6xl font-bold text-muted-foreground">404</h1>
+        <p className="mt-4 text-xl text-muted-foreground">Page not found</p>
+        <a
+          href="/"
+          className="mt-6 inline-block rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        >
+          Go back home
+        </a>
+      </div>
+    </div>
+  );
+}
 
 function RootComponent() {
   return (

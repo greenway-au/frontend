@@ -107,12 +107,19 @@ class ApiClient {
   private async request<T>(endpoint: string, config: RequestConfig = {}): Promise<T> {
     const { skipAuth = false, params, body, ...fetchConfig } = config;
 
+    // Check if body is FormData
+    const isFormData = body instanceof FormData;
+
     // Build headers
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
       ...(fetchConfig.headers as Record<string, string>),
     };
+
+    // Don't set Content-Type for FormData - browser will set it with boundary
+    if (!isFormData) {
+      headers['Content-Type'] = 'application/json';
+      headers['Accept'] = 'application/json';
+    }
 
     // Add auth token unless skipped
     if (!skipAuth) {
@@ -136,9 +143,19 @@ class ApiClient {
 
     let response: Response;
     try {
+      // Prepare request body - don't stringify FormData
+      let requestBody: BodyInit | undefined;
+      if (finalConfig.body !== undefined) {
+        if (finalConfig.body instanceof FormData) {
+          requestBody = finalConfig.body;
+        } else {
+          requestBody = JSON.stringify(finalConfig.body);
+        }
+      }
+
       response = await fetch(url, {
         ...finalConfig,
-        body: finalConfig.body ? JSON.stringify(finalConfig.body) : undefined,
+        body: requestBody,
       });
     } catch (error) {
       const networkError = new NetworkError();

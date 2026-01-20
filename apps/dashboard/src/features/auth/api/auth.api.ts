@@ -4,13 +4,7 @@
  */
 
 import { api } from '@/lib/api';
-import type {
-  LoginCredentials,
-  RegisterData,
-  LoginResponse,
-  RefreshResponse,
-  User,
-} from '../types/auth.types';
+import type { LoginCredentials, RegisterData, LoginResponse, RefreshResponse, User } from '../types/auth.types';
 
 const AUTH_BASE = '/api/v1/auth';
 
@@ -82,7 +76,14 @@ export const authApi = {
 
   /** Register a new user */
   register: async (data: RegisterData): Promise<LoginResponse> => {
-    const response = await api.post<BackendLoginResponse>(`${AUTH_BASE}/register`, data, {
+    // Transform camelCase to snake_case for backend
+    const payload = {
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      user_type: data.userType, // Convert userType -> user_type
+    };
+    const response = await api.post<BackendLoginResponse>(`${AUTH_BASE}/register`, payload, {
       skipAuth: true,
     });
     return transformLoginResponse(response);
@@ -96,11 +97,7 @@ export const authApi = {
 
   /** Refresh access token */
   refresh: (refreshToken: string): Promise<RefreshResponse> => {
-    return api.post<RefreshResponse>(
-      `${AUTH_BASE}/refresh`,
-      { refresh_token: refreshToken },
-      { skipAuth: true }
-    );
+    return api.post<RefreshResponse>(`${AUTH_BASE}/refresh`, { refresh_token: refreshToken }, { skipAuth: true });
   },
 
   /** Get current user */
@@ -116,11 +113,7 @@ export const authApi = {
 
   /** Reset password with token */
   resetPassword: (token: string, password: string): Promise<{ message: string }> => {
-    return api.post(
-      `${AUTH_BASE}/reset-password`,
-      { token, password },
-      { skipAuth: true }
-    );
+    return api.post(`${AUTH_BASE}/reset-password`, { token, password }, { skipAuth: true });
   },
 
   /** Verify email with token */

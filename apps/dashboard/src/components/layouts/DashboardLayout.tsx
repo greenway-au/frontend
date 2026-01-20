@@ -24,6 +24,7 @@ import {
   LayoutDashboard,
   LogOut,
   ChevronRight,
+  FileText,
 } from 'lucide-react';
 import { Button } from '@workspace/ui/components/button';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -31,7 +32,8 @@ import { userAtom, clearAuthAtom } from '@/stores/auth';
 
 /** Navigation menu items */
 const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', to: '/' },
+  { icon: LayoutDashboard, label: 'Dashboard', to: '/', providerOnly: false },
+  { icon: FileText, label: 'Invoices', to: '/invoices', providerOnly: true },
 ] as const;
 
 export function DashboardLayout() {
@@ -39,6 +41,14 @@ export function DashboardLayout() {
   const clearAuth = useSetAtom(clearAuthAtom);
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
+
+  // Filter menu items based on user type
+  const visibleMenuItems = menuItems.filter((item) => {
+    if (item.providerOnly && user?.userType !== 'provider') {
+      return false;
+    }
+    return true;
+  });
 
   const handleLogout = () => {
     clearAuth();
@@ -65,7 +75,7 @@ export function DashboardLayout() {
             <SidebarGroup className="py-4">
               <SidebarGroupContent>
                 <SidebarMenu className="space-y-1">
-                  {menuItems.map((item) => {
+                  {visibleMenuItems.map((item) => {
                     const isActive =
                       item.to === '/'
                         ? currentPath === '/'

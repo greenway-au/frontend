@@ -14,6 +14,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/_dashboard'
 import { Route as DashboardIndexRouteImport } from './routes/_dashboard/index'
+import { Route as DashboardInvoicesRouteImport } from './routes/_dashboard/invoices'
 
 const RegisterProviderRoute = RegisterProviderRouteImport.update({
   id: '/register-provider',
@@ -39,17 +40,24 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardInvoicesRoute = DashboardInvoicesRouteImport.update({
+  id: '/invoices',
+  path: '/invoices',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/register-provider': typeof RegisterProviderRoute
+  '/invoices': typeof DashboardInvoicesRoute
   '/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/register-provider': typeof RegisterProviderRoute
+  '/invoices': typeof DashboardInvoicesRoute
   '/': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
@@ -58,19 +66,21 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/register-provider': typeof RegisterProviderRoute
+  '/_dashboard/invoices': typeof DashboardInvoicesRoute
   '/_dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/register' | '/register-provider' | '/'
+  fullPaths: '/login' | '/register' | '/register-provider' | '/invoices' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/register' | '/register-provider' | '/'
+  to: '/login' | '/register' | '/register-provider' | '/invoices' | '/'
   id:
     | '__root__'
     | '/_dashboard'
     | '/login'
     | '/register'
     | '/register-provider'
+    | '/_dashboard/invoices'
     | '/_dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -118,14 +128,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/_dashboard/invoices': {
+      id: '/_dashboard/invoices'
+      path: '/invoices'
+      fullPath: '/invoices'
+      preLoaderRoute: typeof DashboardInvoicesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
 interface DashboardRouteChildren {
+  DashboardInvoicesRoute: typeof DashboardInvoicesRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardInvoicesRoute: DashboardInvoicesRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
 
