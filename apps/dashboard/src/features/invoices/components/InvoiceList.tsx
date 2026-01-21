@@ -1,16 +1,21 @@
 /**
  * Invoice List Component
- * Displays a list of user's documents
+ * Displays a list of user's documents with optional status filtering
  */
 
 import { InvoiceCard } from './InvoiceCard';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 import { EmptyState } from '@/components/common/EmptyState';
 import { useDocuments } from '../api/invoices.queries';
-import { FileText } from 'lucide-react';
+import { FileText, Filter } from 'lucide-react';
+import type { DocumentStatus } from '../types/invoice.types';
 
-export function InvoiceList() {
-  const { data, isLoading, error } = useDocuments({ limit: 50 });
+interface InvoiceListProps {
+  statusFilter?: 'completed' | 'processing' | 'failed';
+}
+
+export function InvoiceList({ statusFilter }: InvoiceListProps) {
+  const { data, isLoading, error } = useDocuments({ limit: 100 });
 
   if (isLoading) {
     return (
@@ -28,23 +33,43 @@ export function InvoiceList() {
     );
   }
 
-  if (!data?.data || data.data.length === 0) {
+  let filteredDocuments = data?.documents || [];
+
+  if (statusFilter) {
+    filteredDocuments = filteredDocuments.filter((doc) => {
+      if (statusFilter === 'processing') {
+        return doc.status === 'processing' || doc.status === 'pending';
+      }
+      return doc.status === statusFilter;
+    });
+  }
+
+  if (filteredDocuments.length === 0) {
+    const emptyMessages = {
+      completed: { title: 'No validated invoices', description: 'Completed invoices will appear here' },
+      processing: { title: 'No processing invoices', description: 'Invoices being processed will appear here' },
+      failed: { title: 'No failed invoices', description: 'Failed invoices will appear here' },
+      default: {
+        title: 'No invoices yet',
+        description: 'Upload your first invoice PDF to get started with validation',
+      },
+    };
+
+    const message = statusFilter ? emptyMessages[statusFilter] : emptyMessages.default;
+
     return (
       <EmptyState
         icon={<FileText className="size-6 text-muted-foreground" />}
-        title="No invoices yet"
-        description="Upload your first invoice PDF to get started with validation."
+        title={message.title}
+        description={message.description}
       />
     );
   }
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium text-gray-900">Your Documents ({data.total})</h3>
-      </div>
-      <div className="grid gap-4">
-        {data.data.map((document) => (
+      <div className="grid gap-3">
+        {filteredDocuments.map((document) => (
           <InvoiceCard key={document.id} document={document} />
         ))}
       </div>

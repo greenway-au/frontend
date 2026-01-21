@@ -4,8 +4,7 @@
  */
 
 import { api } from '@/lib/api';
-import type { PaginatedResponse } from '@/types/api';
-import type { Document, DocumentFilters, UploadDocumentPayload } from '../types/invoice.types';
+import type { Document, DocumentFilters, UploadDocumentPayload, DocumentsListResponse } from '../types/invoice.types';
 
 const BASE_PATH = '/api/v1/documents';
 
@@ -20,8 +19,8 @@ export const invoicesApi = {
   },
 
   /** Get list of documents */
-  list: (filters: DocumentFilters = {}): Promise<PaginatedResponse<Document>> => {
-    return api.get<PaginatedResponse<Document>>(BASE_PATH, {
+  list: (filters: DocumentFilters = {}): Promise<DocumentsListResponse> => {
+    return api.get<DocumentsListResponse>(BASE_PATH, {
       params: {
         status: filters.status,
         page: filters.page,

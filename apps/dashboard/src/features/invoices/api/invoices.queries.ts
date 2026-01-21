@@ -5,10 +5,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { invoicesApi } from './invoices.api';
-import type {
-  DocumentFilters,
-  UploadDocumentPayload,
-} from '../types/invoice.types';
+import type { DocumentFilters, UploadDocumentPayload } from '../types/invoice.types';
 
 /** Query key factory for documents */
 export const documentKeys = {
@@ -29,9 +26,7 @@ export function useDocuments(filters: DocumentFilters = {}) {
     refetchInterval: (query) => {
       const data = query.state.data;
       // Only poll if there are pending or processing documents
-      const hasPendingDocs = data?.data?.some(
-        (doc) => doc.status === 'pending' || doc.status === 'processing'
-      );
+      const hasPendingDocs = data?.documents?.some((doc) => doc.status === 'pending' || doc.status === 'processing');
       return hasPendingDocs ? 5000 : false;
     },
     refetchIntervalInBackground: false,

@@ -1,13 +1,11 @@
 /**
  * Invoice Upload Component
- * Dropzone for uploading PDF invoices
+ * Dropzone for uploading PDF invoices with enhanced UX
  */
 
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Upload, FileText, AlertCircle } from 'lucide-react';
-import { Card } from '@workspace/ui/components/card';
-import { Alert, AlertDescription } from '@workspace/ui/components/alert';
+import { Upload, FileText, CheckCircle2, Sparkles } from 'lucide-react';
 import { useUploadDocument } from '../api/invoices.queries';
 import { useToast } from '@/hooks/use-toast';
 
@@ -17,7 +15,6 @@ export function InvoiceUpload() {
 
   const onDrop = useCallback(
     (acceptedFiles: File[], rejectedFiles: any[]) => {
-      // Handle rejected files
       if (rejectedFiles.length > 0) {
         const errors = rejectedFiles.map((f) => f.errors.map((e: any) => e.message).join(', '));
         toast({
@@ -28,7 +25,6 @@ export function InvoiceUpload() {
         return;
       }
 
-      // Upload the first file
       if (acceptedFiles.length > 0) {
         const file = acceptedFiles[0];
         uploadMutation.mutate(
@@ -37,7 +33,7 @@ export function InvoiceUpload() {
             onSuccess: () => {
               toast({
                 title: 'Upload Successful',
-                description: `${file.name} has been uploaded and is being processed.`,
+                description: `${file.name} is being validated by AI`,
               });
             },
             onError: (error: any) => {
@@ -65,46 +61,73 @@ export function InvoiceUpload() {
   });
 
   return (
-    <div className="space-y-4">
-      <Card
-        {...getRootProps()}
-        className={`
-          border-2 border-dashed p-8 transition-colors cursor-pointer
-          ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}
-          ${uploadMutation.isPending ? 'opacity-50 cursor-not-allowed' : ''}
-        `}
-      >
-        <input {...getInputProps()} />
-        <div className="flex flex-col items-center justify-center gap-4 text-center">
-          {uploadMutation.isPending ? (
-            <>
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500" />
-              <p className="text-sm text-gray-600">Uploading...</p>
-            </>
-          ) : (
-            <>
-              {isDragActive ? (
-                <Upload className="h-12 w-12 text-blue-500" />
-              ) : (
-                <FileText className="h-12 w-12 text-gray-400" />
-              )}
-              <div>
-                <p className="text-lg font-medium text-gray-900">
-                  {isDragActive ? 'Drop your PDF here' : 'Upload Invoice PDF'}
-                </p>
-                <p className="text-sm text-gray-500 mt-1">Drag and drop or click to select a PDF file (max 32MB)</p>
-              </div>
-            </>
-          )}
-        </div>
-      </Card>
+    <div
+      {...getRootProps()}
+      className={`
+        relative overflow-hidden
+        border-2 border-dashed rounded-lg p-8
+        transition-all duration-200 cursor-pointer
+        ${
+          isDragActive
+            ? 'border-primary bg-primary/5 scale-[1.02]'
+            : 'border-border hover:border-primary/50 hover:bg-accent/50'
+        }
+        ${uploadMutation.isPending ? 'opacity-60 cursor-not-allowed' : ''}
+      `}
+    >
+      <input {...getInputProps()} />
 
-      {uploadMutation.isError && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>Failed to upload document. Please try again.</AlertDescription>
-        </Alert>
-      )}
+      <div className="flex flex-col items-center justify-center gap-4 text-center">
+        {uploadMutation.isPending ? (
+          <>
+            <div className="relative">
+              <div className="animate-spin rounded-full h-14 w-14 border-4 border-primary/20 border-t-primary" />
+              <Sparkles className="absolute inset-0 m-auto h-6 w-6 text-primary animate-pulse" />
+            </div>
+            <div>
+              <p className="font-medium text-foreground">Processing Upload...</p>
+              <p className="text-sm text-muted-foreground mt-1">AI validation in progress</p>
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              className={`
+              flex size-14 items-center justify-center rounded-full
+              transition-all duration-200
+              ${isDragActive ? 'bg-primary/20 scale-110' : 'bg-primary/10'}
+            `}
+            >
+              {isDragActive ? (
+                <Upload className="h-7 w-7 text-primary" />
+              ) : (
+                <FileText className="h-7 w-7 text-primary" />
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <p className="font-semibold text-foreground">
+                {isDragActive ? 'Drop your invoice here' : 'Upload Invoice'}
+              </p>
+              <p className="text-sm text-muted-foreground">Drag & drop or click to select</p>
+              <p className="text-xs text-muted-foreground">PDF only • Max 32MB</p>
+            </div>
+
+            {/* Feature highlights */}
+            <div className="flex items-center gap-2 pt-2">
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <CheckCircle2 className="h-3.5 w-3.5 text-green-600" />
+                <span>AI Validation</span>
+              </div>
+              <span className="text-muted-foreground">•</span>
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <CheckCircle2 className="h-3.5 w-3.5 text-green-600" />
+                <span>NDIS Compliant</span>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

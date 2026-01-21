@@ -39,3 +39,11 @@ export interface DocumentFilters {
   page?: number;
   limit?: number;
 }
+
+/** Documents list response from API */
+export interface DocumentsListResponse {
+  documents: Document[];
+  total: number;
+  offset: number;
+  limit: number;
+}
