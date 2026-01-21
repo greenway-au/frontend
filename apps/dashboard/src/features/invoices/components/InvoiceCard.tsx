@@ -5,11 +5,22 @@
  */
 
 import { formatDistanceToNow } from 'date-fns';
-import { FileText, Loader2, CheckCircle2, XCircle, Trash2, Download, AlertTriangle, Clock } from 'lucide-react';
+import {
+  FileText,
+  Loader2,
+  CheckCircle2,
+  XCircle,
+  Trash2,
+  Download,
+  AlertTriangle,
+  Clock,
+  ShieldAlert,
+  ShieldCheck,
+} from 'lucide-react';
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { Badge } from '@workspace/ui/components/badge';
 import { Button } from '@workspace/ui/components/button';
-import type { Document, DocumentStatus } from '../types/invoice.types';
+import type { Document, DocumentStatus, ValidationResult } from '../types/invoice.types';
 import { useDeleteDocument } from '../api/invoices.queries';
 import { useToast } from '@/hooks/use-toast';
 
@@ -180,48 +191,7 @@ export function InvoiceCard({ document }: InvoiceCardProps) {
 
         {/* Validation Results */}
         {document.validation_result && document.status === 'completed' && (
-          <div
-            className={`mt-4 p-4 rounded-lg border ${
-              document.validation_result.is_valid ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              {document.validation_result.is_valid ? (
-                <CheckCircle2 className="h-5 w-5 text-green-600" />
-              ) : (
-                <XCircle className="h-5 w-5 text-red-600" />
-              )}
-              <span
-                className={`text-sm font-semibold ${
-                  document.validation_result.is_valid ? 'text-green-900' : 'text-red-900'
-                }`}
-              >
-                {document.validation_result.is_valid ? 'Valid NDIS Invoice' : 'Validation Failed'}
-              </span>
-            </div>
-
-            {document.validation_result.errors && document.validation_result.errors.length > 0 && (
-              <div className="space-y-1.5 text-sm">
-                {document.validation_result.errors.map((error, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-red-700">
-                    <XCircle className="h-4 w-4 mt-0.5 shrink-0" />
-                    <span>{error}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {document.validation_result.warnings && document.validation_result.warnings.length > 0 && (
-              <div className="space-y-1.5 text-sm mt-3">
-                {document.validation_result.warnings.map((warning, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-yellow-700">
-                    <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
-                    <span>{warning}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <ValidationResultDisplay validationResult={document.validation_result} />
         )}
 
         {/* Failed Status Error */}
@@ -240,5 +210,134 @@ export function InvoiceCard({ document }: InvoiceCardProps) {
         )}
       </CardContent>
     </Card>
+  );
+}
+
+/**
+ * ValidationResultDisplay Component
+ * Displays validation results with clear distinction between valid, warnings, and fraud
+ */
+interface ValidationResultDisplayProps {
+  validationResult: ValidationResult;
+}
+
+function ValidationResultDisplay({ validationResult }: ValidationResultDisplayProps) {
+  // Detect fraud by checking if errors contain "FRAUDULENT" keyword
+  const isFraud =
+    validationResult.errors?.some(
+      (error) => error.toUpperCase().includes('FRAUDULENT') || error.toUpperCase().includes('FRAUD'),
+    ) || false;
+
+  // Determine if this is just a warning (agent not configured, etc.)
+  const isWarningOnly =
+    validationResult.warnings &&
+    validationResult.warnings.length > 0 &&
+    (!validationResult.errors || validationResult.errors.length === 0);
+
+  if (isWarningOnly) {
+    // Agent not configured or similar warnings
+    return (
+      <div className="mt-4 p-4 rounded-lg border border-yellow-200 bg-yellow-50">
+        <div className="flex items-center gap-2 mb-3">
+          <AlertTriangle className="h-5 w-5 text-yellow-600" />
+          <span className="text-sm font-semibold text-yellow-900">Validation Warning</span>
+        </div>
+        <div className="space-y-1.5 text-sm">
+          {validationResult.warnings?.map((warning, idx) => (
+            <div key={idx} className="flex items-start gap-2 text-yellow-700">
+              <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+              <span>{warning}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (validationResult.is_valid) {
+    // Valid invoice
+    return (
+      <div className="mt-4 p-4 rounded-lg border border-green-200 bg-green-50">
+        <div className="flex items-center gap-2 mb-2">
+          <ShieldCheck className="h-6 w-6 text-green-600" />
+          <div>
+            <p className="text-sm font-bold text-green-900">Valid NDIS Invoice</p>
+            <p className="text-xs text-green-700">All checks passed</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isFraud) {
+    // Fraudulent invoice detected
+    return (
+      <div className="mt-4 p-4 rounded-lg border-2 border-red-400 bg-red-50">
+        <div className="flex items-start gap-3 mb-4">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-red-100">
+            <ShieldAlert className="h-6 w-6 text-red-600" />
+          </div>
+          <div>
+            <p className="text-base font-bold text-red-900">⚠️ FRAUD DETECTED</p>
+            <p className="text-sm text-red-700 mt-0.5">This invoice has been flagged as fraudulent by AI validation</p>
+          </div>
+        </div>
+
+        {validationResult.errors && validationResult.errors.length > 0 && (
+          <div className="space-y-2 text-sm">
+            <p className="font-semibold text-red-900">Fraud Analysis:</p>
+            {validationResult.errors.map((error, idx) => (
+              <div key={idx} className="pl-4 border-l-2 border-red-300">
+                <div className="text-red-800 whitespace-pre-wrap">{error}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {validationResult.warnings && validationResult.warnings.length > 0 && (
+          <div className="mt-4 pt-3 border-t border-red-200 space-y-1.5 text-sm">
+            <p className="font-semibold text-red-900">Additional Warnings:</p>
+            {validationResult.warnings.map((warning, idx) => (
+              <div key={idx} className="flex items-start gap-2 text-red-700">
+                <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+                <span>{warning}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Invalid but not clearly fraud (other validation errors)
+  return (
+    <div className="mt-4 p-4 rounded-lg border border-red-200 bg-red-50">
+      <div className="flex items-center gap-2 mb-3">
+        <XCircle className="h-5 w-5 text-red-600" />
+        <span className="text-sm font-semibold text-red-900">Validation Failed</span>
+      </div>
+
+      {validationResult.errors && validationResult.errors.length > 0 && (
+        <div className="space-y-1.5 text-sm">
+          {validationResult.errors.map((error, idx) => (
+            <div key={idx} className="flex items-start gap-2 text-red-700">
+              <XCircle className="h-4 w-4 mt-0.5 shrink-0" />
+              <span>{error}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {validationResult.warnings && validationResult.warnings.length > 0 && (
+        <div className="space-y-1.5 text-sm mt-3">
+          {validationResult.warnings.map((warning, idx) => (
+            <div key={idx} className="flex items-start gap-2 text-yellow-700">
+              <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+              <span>{warning}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
