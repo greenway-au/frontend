@@ -195,14 +195,14 @@ export function InvoiceCard({ document }: InvoiceCardProps) {
         )}
 
         {/* Failed Status Error */}
-        {document.status === 'failed' && document.validation_result?.errors && (
+        {document.status === 'failed' && document.validation_result?.reason && (
           <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
             <div className="flex items-start gap-2">
               <XCircle className="h-5 w-5 text-red-600 mt-0.5 shrink-0" />
               <div>
                 <p className="text-sm font-semibold text-red-900 mb-1">Processing Failed</p>
                 <p className="text-sm text-red-700">
-                  {document.validation_result.errors[0] || 'An error occurred during processing'}
+                  {document.validation_result.reason || 'An error occurred during processing'}
                 </p>
               </div>
             </div>
@@ -215,46 +215,25 @@ export function InvoiceCard({ document }: InvoiceCardProps) {
 
 /**
  * ValidationResultDisplay Component
- * Displays validation results with clear distinction between valid, warnings, and fraud
+ * Displays validation results with clear distinction between valid, invalid, and old pricing
  */
 interface ValidationResultDisplayProps {
   validationResult: ValidationResult;
 }
 
 function ValidationResultDisplay({ validationResult }: ValidationResultDisplayProps) {
-  // Detect fraud by checking if errors contain "FRAUDULENT" keyword
-  const isFraud =
-    validationResult.errors?.some(
-      (error) => error.toUpperCase().includes('FRAUDULENT') || error.toUpperCase().includes('FRAUD'),
-    ) || false;
+  const { status, reason, checks } = validationResult;
 
-  // Determine if this is just a warning (agent not configured, etc.)
-  const isWarningOnly =
-    validationResult.warnings &&
-    validationResult.warnings.length > 0 &&
-    (!validationResult.errors || validationResult.errors.length === 0);
+  // Count check results by status
+  const checkStats = checks?.reduce(
+    (acc, check) => {
+      acc[check.status] = (acc[check.status] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
-  if (isWarningOnly) {
-    // Agent not configured or similar warnings
-    return (
-      <div className="mt-4 p-4 rounded-lg border border-yellow-200 bg-yellow-50">
-        <div className="flex items-center gap-2 mb-3">
-          <AlertTriangle className="h-5 w-5 text-yellow-600" />
-          <span className="text-sm font-semibold text-yellow-900">Validation Warning</span>
-        </div>
-        <div className="space-y-1.5 text-sm">
-          {validationResult.warnings?.map((warning, idx) => (
-            <div key={idx} className="flex items-start gap-2 text-yellow-700">
-              <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
-              <span>{warning}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (validationResult.is_valid) {
+  if (status === 'valid') {
     // Valid invoice
     return (
       <div className="mt-4 p-4 rounded-lg border border-green-200 bg-green-50">
@@ -262,82 +241,121 @@ function ValidationResultDisplay({ validationResult }: ValidationResultDisplayPr
           <ShieldCheck className="h-6 w-6 text-green-600" />
           <div>
             <p className="text-sm font-bold text-green-900">Valid NDIS Invoice</p>
-            <p className="text-xs text-green-700">All checks passed</p>
+            <p className="text-xs text-green-700">{reason}</p>
           </div>
         </div>
+
+        {/* Show check details if available */}
+        {checks && checks.length > 0 && (
+          <div className="mt-3 pt-3 border-t border-green-200 space-y-1.5">
+            <p className="text-xs font-semibold text-green-900">Item Checks:</p>
+            {checks.map((check, idx) => (
+              <div key={idx} className="flex items-start gap-2 text-xs">
+                <CheckCircle2 className="h-3.5 w-3.5 text-green-600 mt-0.5 shrink-0" />
+                <div>
+                  <span className="font-medium text-green-900">{check.item_code}:</span>{' '}
+                  <span className="text-green-700">{check.message}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   }
 
-  if (isFraud) {
-    // Fraudulent invoice detected
+  if (status === 'old_pricing') {
+    // Old pricing detected - warning style
     return (
-      <div className="mt-4 p-4 rounded-lg border-2 border-red-400 bg-red-50">
-        <div className="flex items-start gap-3 mb-4">
+      <div className="mt-4 p-4 rounded-lg border border-yellow-200 bg-yellow-50">
+        <div className="flex items-start gap-3 mb-3">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-yellow-100">
+            <AlertTriangle className="h-6 w-6 text-yellow-600" />
+          </div>
+          <div>
+            <p className="text-base font-bold text-yellow-900">Old Pricing Detected</p>
+            <p className="text-sm text-yellow-700 mt-0.5">{reason}</p>
+          </div>
+        </div>
+
+        {/* Show check details */}
+        {checks && checks.length > 0 && (
+          <div className="space-y-2 text-sm">
+            {checks.map((check, idx) => {
+              const isOldPricing = check.status === 'old_pricing';
+              const Icon = isOldPricing ? AlertTriangle : check.status === 'valid' ? CheckCircle2 : XCircle;
+              const colorClass = isOldPricing
+                ? 'text-yellow-700'
+                : check.status === 'valid'
+                  ? 'text-green-700'
+                  : 'text-red-700';
+
+              return (
+                <div key={idx} className="flex items-start gap-2">
+                  <Icon className={`h-4 w-4 mt-0.5 shrink-0 ${colorClass}`} />
+                  <div className={colorClass}>
+                    <span className="font-medium">{check.item_code}:</span> {check.message}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if (status === 'invalid') {
+    // Invalid invoice - could be fraud or validation errors
+    const isFraud = reason.toUpperCase().includes('FRAUD');
+
+    return (
+      <div
+        className={`mt-4 p-4 rounded-lg ${isFraud ? 'border-2 border-red-400 bg-red-50' : 'border border-red-200 bg-red-50'}`}
+      >
+        <div className="flex items-start gap-3 mb-3">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-red-100">
             <ShieldAlert className="h-6 w-6 text-red-600" />
           </div>
           <div>
-            <p className="text-base font-bold text-red-900">⚠️ FRAUD DETECTED</p>
-            <p className="text-sm text-red-700 mt-0.5">This invoice has been flagged as fraudulent by AI validation</p>
+            <p className="text-base font-bold text-red-900">{isFraud ? '⚠️ FRAUD DETECTED' : 'Invalid Invoice'}</p>
+            <p className="text-sm text-red-700 mt-0.5">{reason}</p>
           </div>
         </div>
 
-        {validationResult.errors && validationResult.errors.length > 0 && (
+        {/* Show check details */}
+        {checks && checks.length > 0 && (
           <div className="space-y-2 text-sm">
-            <p className="font-semibold text-red-900">Fraud Analysis:</p>
-            {validationResult.errors.map((error, idx) => (
-              <div key={idx} className="pl-4 border-l-2 border-red-300">
-                <div className="text-red-800 whitespace-pre-wrap">{error}</div>
-              </div>
-            ))}
-          </div>
-        )}
+            <p className="font-semibold text-red-900">Item Checks:</p>
+            {checks.map((check, idx) => {
+              const Icon =
+                check.status === 'valid'
+                  ? CheckCircle2
+                  : check.status === 'not_found'
+                    ? AlertTriangle
+                    : XCircle;
+              const colorClass =
+                check.status === 'valid'
+                  ? 'text-green-700'
+                  : check.status === 'not_found'
+                    ? 'text-yellow-700'
+                    : 'text-red-700';
 
-        {validationResult.warnings && validationResult.warnings.length > 0 && (
-          <div className="mt-4 pt-3 border-t border-red-200 space-y-1.5 text-sm">
-            <p className="font-semibold text-red-900">Additional Warnings:</p>
-            {validationResult.warnings.map((warning, idx) => (
-              <div key={idx} className="flex items-start gap-2 text-red-700">
-                <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
-                <span>{warning}</span>
-              </div>
-            ))}
+              return (
+                <div key={idx} className="flex items-start gap-2">
+                  <Icon className={`h-4 w-4 mt-0.5 shrink-0 ${colorClass}`} />
+                  <div className={colorClass}>
+                    <span className="font-medium">{check.item_code}:</span> {check.message}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
     );
   }
 
-  // Invalid but not clearly fraud (other validation errors)
-  return (
-    <div className="mt-4 p-4 rounded-lg border border-red-200 bg-red-50">
-      <div className="flex items-center gap-2 mb-3">
-        <XCircle className="h-5 w-5 text-red-600" />
-        <span className="text-sm font-semibold text-red-900">Validation Failed</span>
-      </div>
-
-      {validationResult.errors && validationResult.errors.length > 0 && (
-        <div className="space-y-1.5 text-sm">
-          {validationResult.errors.map((error, idx) => (
-            <div key={idx} className="flex items-start gap-2 text-red-700">
-              <XCircle className="h-4 w-4 mt-0.5 shrink-0" />
-              <span>{error}</span>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {validationResult.warnings && validationResult.warnings.length > 0 && (
-        <div className="space-y-1.5 text-sm mt-3">
-          {validationResult.warnings.map((warning, idx) => (
-            <div key={idx} className="flex items-start gap-2 text-yellow-700">
-              <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
-              <span>{warning}</span>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+  // Fallback for unknown status
+  return null;
 }

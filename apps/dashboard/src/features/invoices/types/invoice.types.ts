@@ -8,12 +8,24 @@ import type { BaseEntity } from '@/types/common';
 /** Document processing status */
 export type DocumentStatus = 'pending' | 'processing' | 'completed' | 'failed';
 
+/** Validation status of the invoice */
+export type ValidationStatus = 'valid' | 'invalid' | 'old_pricing';
+
+/** Check status for individual items */
+export type CheckStatus = 'valid' | 'invalid' | 'not_found' | 'old_pricing';
+
+/** Individual item check result */
+export interface CheckResult {
+  item_code: string;
+  status: CheckStatus;
+  message: string;
+}
+
 /** Validation result from AI agent */
 export interface ValidationResult {
-  is_valid: boolean;
-  errors?: string[];
-  warnings?: string[];
-  details?: Record<string, any>;
+  status: ValidationStatus;
+  reason: string;
+  checks?: CheckResult[];
 }
 
 /** Document entity */
