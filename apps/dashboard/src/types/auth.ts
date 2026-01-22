@@ -4,7 +4,7 @@
  */
 
 /** User types in the system */
-export type UserType = 'client' | 'provider';
+export type UserType = 'client' | 'provider' | 'admin';
 
 /** User entity */
 export interface User {

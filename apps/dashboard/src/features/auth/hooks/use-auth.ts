@@ -48,5 +48,10 @@ export function useIsProvider() {
   return useIsUserType('provider');
 }
 
+/** Check if user is an admin */
+export function useIsAdmin() {
+  return useIsUserType('admin');
+}
+
 // Re-export query hooks for convenience
 export { useCurrentUser, useLogin, useLogout, useRegister } from '../api/auth.queries';
