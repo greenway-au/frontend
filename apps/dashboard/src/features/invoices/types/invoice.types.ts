@@ -3,8 +3,6 @@
  * Type definitions for invoice document entities
  */
 
-import type { BaseEntity } from '@/types/common';
-
 /** Document processing status */
 export type DocumentStatus = 'pending' | 'processing' | 'completed' | 'failed';
 
@@ -29,7 +27,8 @@ export interface ValidationResult {
 }
 
 /** Document entity */
-export interface Document extends BaseEntity {
+export interface Document {
+  id: string;
   user_id: string;
   filename: string;
   s3_key: string;
@@ -38,6 +37,8 @@ export interface Document extends BaseEntity {
   status: DocumentStatus;
   validation_result?: ValidationResult;
   processed_at?: string;
+  created_at: string;
+  updated_at: string;
 }
 
 /** Upload document payload */

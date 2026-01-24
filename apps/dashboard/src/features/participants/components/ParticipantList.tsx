@@ -4,7 +4,6 @@
  */
 
 import { useState } from 'react';
-import { Link } from '@tanstack/react-router';
 import { Button } from '@workspace/ui/components/button';
 import { Badge } from '@workspace/ui/components/badge';
 import { useParticipants } from '../api/participants.queries';
@@ -97,14 +96,9 @@ export function ParticipantList() {
                   </Badge>
                 </td>
                 <td className="p-3">
-                  <Link
-                    to="/participants/$participantId"
-                    params={{ participantId: participant.id }}
-                  >
-                    <Button variant="ghost" size="sm">
-                      View
-                    </Button>
-                  </Link>
+                  <Button variant="ghost" size="sm" disabled>
+                    View
+                  </Button>
                 </td>
               </tr>
             ))}

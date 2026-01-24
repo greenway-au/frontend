@@ -5,7 +5,6 @@
 
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { useNavigate } from '@tanstack/react-router';
 import { Button } from '@workspace/ui/components/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@workspace/ui/components/card';
 import { Input } from '@workspace/ui/components/input';
@@ -33,7 +32,6 @@ export function ParticipantForm({
   onSuccess,
   onCancel,
 }: ParticipantFormProps) {
-  const navigate = useNavigate();
   const createMutation = useCreateParticipant();
   const updateMutation = useUpdateParticipant();
 
@@ -73,8 +71,6 @@ export function ParticipantForm({
 
         if (onSuccess) {
           onSuccess(result);
-        } else {
-          navigate({ to: '/participants/$participantId', params: { participantId: result.id } });
         }
       } catch {
         // Error handled by mutation state
@@ -89,8 +85,6 @@ export function ParticipantForm({
   const handleCancel = () => {
     if (onCancel) {
       onCancel();
-    } else {
-      navigate({ to: '/participants' });
     }
   };
 

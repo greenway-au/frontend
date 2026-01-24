@@ -20,7 +20,7 @@ export function InvoiceUpload() {
         toast({
           title: 'Upload Failed',
           description: `Invalid files: ${errors.join(', ')}`,
-          variant: 'destructive',
+          variant: 'error',
         });
         return;
       }
@@ -40,7 +40,7 @@ export function InvoiceUpload() {
               toast({
                 title: 'Upload Failed',
                 description: error?.message || 'Failed to upload document',
-                variant: 'destructive',
+                variant: 'error',
               });
             },
           },

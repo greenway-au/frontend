@@ -89,7 +89,7 @@ export function InvoiceCard({ document }: InvoiceCardProps) {
           toast({
             title: 'Delete Failed',
             description: 'Failed to delete the document. Please try again.',
-            variant: 'destructive',
+            variant: 'error',
           });
         },
       });
@@ -130,7 +130,7 @@ export function InvoiceCard({ document }: InvoiceCardProps) {
       toast({
         title: 'Download Failed',
         description: 'Failed to download the document. Please try again.',
-        variant: 'destructive',
+        variant: 'error',
       });
     }
   };
@@ -223,15 +223,6 @@ interface ValidationResultDisplayProps {
 
 function ValidationResultDisplay({ validationResult }: ValidationResultDisplayProps) {
   const { status, reason, checks } = validationResult;
-
-  // Count check results by status
-  const checkStats = checks?.reduce(
-    (acc, check) => {
-      acc[check.status] = (acc[check.status] || 0) + 1;
-      return acc;
-    },
-    {} as Record<string, number>,
-  );
 
   if (status === 'valid') {
     // Valid invoice
