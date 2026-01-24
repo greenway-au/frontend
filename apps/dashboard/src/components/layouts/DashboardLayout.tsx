@@ -11,6 +11,7 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarInset,
   SidebarMenu,
@@ -20,7 +21,7 @@ import {
   SidebarTrigger,
 } from '@workspace/ui/components/sidebar';
 import { Separator } from '@workspace/ui/components/separator';
-import { LayoutDashboard, LogOut, ChevronRight, FileText } from 'lucide-react';
+import { LayoutDashboard, LogOut, ChevronRight, FileText, Users, Building2, UserCog, Mail } from 'lucide-react';
 import { Button } from '@workspace/ui/components/button';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { userAtom, clearAuthAtom } from '@/stores/auth';
@@ -31,15 +32,25 @@ const menuItems = [
   { icon: FileText, label: 'Invoices', to: '/invoices', adminOnly: true },
 ] as const;
 
+/** Admin menu items */
+const adminMenuItems = [
+  { icon: Users, label: 'Participants', to: '/admin/participants' },
+  { icon: Building2, label: 'Providers', to: '/admin/providers' },
+  { icon: UserCog, label: 'Coordinators', to: '/admin/coordinators' },
+  { icon: Mail, label: 'Invitations', to: '/admin/invitations' },
+] as const;
+
 export function DashboardLayout() {
   const user = useAtomValue(userAtom);
   const clearAuth = useSetAtom(clearAuthAtom);
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
 
+  const isAdmin = user?.userType === 'admin';
+
   // Filter menu items based on user type
   const visibleMenuItems = menuItems.filter((item) => {
-    if (item.adminOnly && user?.userType !== 'admin') {
+    if (item.adminOnly && !isAdmin) {
       return false;
     }
     return true;
@@ -84,6 +95,34 @@ export function DashboardLayout() {
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
+
+            {/* Admin Section */}
+            {isAdmin && (
+              <SidebarGroup className="py-4 border-t border-sidebar-border">
+                <SidebarGroupLabel className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Admin
+                </SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu className="space-y-1">
+                    {adminMenuItems.map((item) => {
+                      const isActive = currentPath.startsWith(item.to);
+
+                      return (
+                        <SidebarMenuItem key={item.to}>
+                          <SidebarMenuButton asChild isActive={isActive} className="h-10 px-3">
+                            <Link to={item.to}>
+                              <item.icon className="size-4" />
+                              <span className="font-medium">{item.label}</span>
+                              {isActive && <ChevronRight className="ml-auto size-4 opacity-50" />}
+                            </Link>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      );
+                    })}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            )}
           </SidebarContent>
 
           <SidebarFooter className="border-t border-sidebar-border p-4">

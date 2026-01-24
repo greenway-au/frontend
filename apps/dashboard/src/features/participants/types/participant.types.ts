@@ -5,7 +5,7 @@ export interface BaseEntity {
 }
 
 export interface Participant extends BaseEntity {
-  user_id: string;
+  user_id?: string | null; // Nullable - set when invitation is accepted
   full_name?: string | null;
   ndis_number?: string | null;
   plan_start_date?: string | null; // ISO date (YYYY-MM-DD)

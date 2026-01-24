@@ -15,6 +15,10 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/_dashboard'
 import { Route as DashboardIndexRouteImport } from './routes/_dashboard/index'
 import { Route as DashboardInvoicesRouteImport } from './routes/_dashboard/invoices'
+import { Route as DashboardAdminProvidersRouteImport } from './routes/_dashboard/admin/providers'
+import { Route as DashboardAdminParticipantsRouteImport } from './routes/_dashboard/admin/participants'
+import { Route as DashboardAdminInvitationsRouteImport } from './routes/_dashboard/admin/invitations'
+import { Route as DashboardAdminCoordinatorsRouteImport } from './routes/_dashboard/admin/coordinators'
 
 const RegisterProviderRoute = RegisterProviderRouteImport.update({
   id: '/register-provider',
@@ -45,6 +49,29 @@ const DashboardInvoicesRoute = DashboardInvoicesRouteImport.update({
   path: '/invoices',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardAdminProvidersRoute = DashboardAdminProvidersRouteImport.update({
+  id: '/admin/providers',
+  path: '/admin/providers',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAdminParticipantsRoute =
+  DashboardAdminParticipantsRouteImport.update({
+    id: '/admin/participants',
+    path: '/admin/participants',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardAdminInvitationsRoute =
+  DashboardAdminInvitationsRouteImport.update({
+    id: '/admin/invitations',
+    path: '/admin/invitations',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardAdminCoordinatorsRoute =
+  DashboardAdminCoordinatorsRouteImport.update({
+    id: '/admin/coordinators',
+    path: '/admin/coordinators',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
@@ -52,6 +79,10 @@ export interface FileRoutesByFullPath {
   '/register-provider': typeof RegisterProviderRoute
   '/invoices': typeof DashboardInvoicesRoute
   '/': typeof DashboardIndexRoute
+  '/admin/coordinators': typeof DashboardAdminCoordinatorsRoute
+  '/admin/invitations': typeof DashboardAdminInvitationsRoute
+  '/admin/participants': typeof DashboardAdminParticipantsRoute
+  '/admin/providers': typeof DashboardAdminProvidersRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -59,6 +90,10 @@ export interface FileRoutesByTo {
   '/register-provider': typeof RegisterProviderRoute
   '/invoices': typeof DashboardInvoicesRoute
   '/': typeof DashboardIndexRoute
+  '/admin/coordinators': typeof DashboardAdminCoordinatorsRoute
+  '/admin/invitations': typeof DashboardAdminInvitationsRoute
+  '/admin/participants': typeof DashboardAdminParticipantsRoute
+  '/admin/providers': typeof DashboardAdminProvidersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +103,34 @@ export interface FileRoutesById {
   '/register-provider': typeof RegisterProviderRoute
   '/_dashboard/invoices': typeof DashboardInvoicesRoute
   '/_dashboard/': typeof DashboardIndexRoute
+  '/_dashboard/admin/coordinators': typeof DashboardAdminCoordinatorsRoute
+  '/_dashboard/admin/invitations': typeof DashboardAdminInvitationsRoute
+  '/_dashboard/admin/participants': typeof DashboardAdminParticipantsRoute
+  '/_dashboard/admin/providers': typeof DashboardAdminProvidersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/register' | '/register-provider' | '/invoices' | '/'
+  fullPaths:
+    | '/login'
+    | '/register'
+    | '/register-provider'
+    | '/invoices'
+    | '/'
+    | '/admin/coordinators'
+    | '/admin/invitations'
+    | '/admin/participants'
+    | '/admin/providers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/register' | '/register-provider' | '/invoices' | '/'
+  to:
+    | '/login'
+    | '/register'
+    | '/register-provider'
+    | '/invoices'
+    | '/'
+    | '/admin/coordinators'
+    | '/admin/invitations'
+    | '/admin/participants'
+    | '/admin/providers'
   id:
     | '__root__'
     | '/_dashboard'
@@ -82,6 +139,10 @@ export interface FileRouteTypes {
     | '/register-provider'
     | '/_dashboard/invoices'
     | '/_dashboard/'
+    | '/_dashboard/admin/coordinators'
+    | '/_dashboard/admin/invitations'
+    | '/_dashboard/admin/participants'
+    | '/_dashboard/admin/providers'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,17 +196,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInvoicesRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/_dashboard/admin/providers': {
+      id: '/_dashboard/admin/providers'
+      path: '/admin/providers'
+      fullPath: '/admin/providers'
+      preLoaderRoute: typeof DashboardAdminProvidersRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/admin/participants': {
+      id: '/_dashboard/admin/participants'
+      path: '/admin/participants'
+      fullPath: '/admin/participants'
+      preLoaderRoute: typeof DashboardAdminParticipantsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/admin/invitations': {
+      id: '/_dashboard/admin/invitations'
+      path: '/admin/invitations'
+      fullPath: '/admin/invitations'
+      preLoaderRoute: typeof DashboardAdminInvitationsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/admin/coordinators': {
+      id: '/_dashboard/admin/coordinators'
+      path: '/admin/coordinators'
+      fullPath: '/admin/coordinators'
+      preLoaderRoute: typeof DashboardAdminCoordinatorsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
 interface DashboardRouteChildren {
   DashboardInvoicesRoute: typeof DashboardInvoicesRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardAdminCoordinatorsRoute: typeof DashboardAdminCoordinatorsRoute
+  DashboardAdminInvitationsRoute: typeof DashboardAdminInvitationsRoute
+  DashboardAdminParticipantsRoute: typeof DashboardAdminParticipantsRoute
+  DashboardAdminProvidersRoute: typeof DashboardAdminProvidersRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardInvoicesRoute: DashboardInvoicesRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardAdminCoordinatorsRoute: DashboardAdminCoordinatorsRoute,
+  DashboardAdminInvitationsRoute: DashboardAdminInvitationsRoute,
+  DashboardAdminParticipantsRoute: DashboardAdminParticipantsRoute,
+  DashboardAdminProvidersRoute: DashboardAdminProvidersRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
