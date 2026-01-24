@@ -9,12 +9,12 @@ import { useNavigate } from '@tanstack/react-router';
 import { Button } from '@workspace/ui/components/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@workspace/ui/components/card';
 import { Input } from '@workspace/ui/components/input';
-import { Textarea } from '@workspace/ui/components/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@workspace/ui/components/select';
 import { FieldWrapper } from '@/components/common/form';
 import { useCreateParticipant, useUpdateParticipant } from '../api/participants.queries';
 import {
   createParticipantSchema,
-  type CreateParticipantInput,
+  type CreateParticipantFormData,
 } from '../schemas/participant.schema';
 import type { Participant } from '../types/participant.types';
 import { ApiError } from '@/lib/api/errors';
@@ -42,30 +42,33 @@ export function ParticipantForm({
 
   const form = useForm({
     defaultValues: {
-      ndisNumber: participant?.ndisNumber ?? '',
-      firstName: participant?.firstName ?? '',
-      lastName: participant?.lastName ?? '',
-      dateOfBirth: participant?.dateOfBirth ?? '',
-      email: participant?.email ?? '',
-      phone: participant?.phone ?? '',
-      address: {
-        street: participant?.address.street ?? '',
-        suburb: participant?.address.suburb ?? '',
-        state: participant?.address.state ?? '',
-        postcode: participant?.address.postcode ?? '',
-      },
-      notes: participant?.notes ?? '',
-    } satisfies CreateParticipantInput,
+      full_name: participant?.full_name ?? '',
+      ndis_number: participant?.ndis_number ?? '',
+      plan_start_date: participant?.plan_start_date ?? '',
+      plan_end_date: participant?.plan_end_date ?? '',
+      starting_funding_amount: participant?.starting_funding_amount ?? undefined,
+      status: participant?.status ?? 'active',
+    } satisfies CreateParticipantFormData,
     onSubmit: async ({ value }) => {
       try {
+        // Clean empty strings to undefined
+        const cleanedValue = {
+          full_name: value.full_name || undefined,
+          ndis_number: value.ndis_number || undefined,
+          plan_start_date: value.plan_start_date || undefined,
+          plan_end_date: value.plan_end_date || undefined,
+          starting_funding_amount: value.starting_funding_amount,
+          status: value.status,
+        };
+
         let result: Participant;
         if (isEditing) {
           result = await updateMutation.mutateAsync({
             id: participant.id,
-            data: value,
+            data: cleanedValue,
           });
         } else {
-          result = await createMutation.mutateAsync(value);
+          result = await createMutation.mutateAsync(cleanedValue);
         }
 
         if (onSuccess) {
@@ -107,19 +110,39 @@ export function ParticipantForm({
           }}
           className="space-y-6"
         >
-          {/* Basic Info */}
+          {/* Participant Info */}
           <div className="grid gap-4 sm:grid-cols-2">
-            <form.Field name="ndisNumber">
+            <form.Field name="full_name">
+              {(field) => (
+                <FieldWrapper
+                  label="Full Name"
+                  htmlFor="full_name"
+                  errors={field.state.meta.errors}
+                  touched={field.state.meta.isTouched}
+                  className="sm:col-span-2"
+                >
+                  <Input
+                    id="full_name"
+                    placeholder="John Doe"
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    disabled={mutation.isPending}
+                  />
+                </FieldWrapper>
+              )}
+            </form.Field>
+
+            <form.Field name="ndis_number">
               {(field) => (
                 <FieldWrapper
                   label="NDIS Number"
-                  htmlFor="ndisNumber"
+                  htmlFor="ndis_number"
                   errors={field.state.meta.errors}
                   touched={field.state.meta.isTouched}
-                  required
                 >
                   <Input
-                    id="ndisNumber"
+                    id="ndis_number"
                     placeholder="123456789"
                     value={field.state.value}
                     onBlur={field.handleBlur}
@@ -130,194 +153,97 @@ export function ParticipantForm({
               )}
             </form.Field>
 
-            <form.Field name="dateOfBirth">
+            <form.Field name="status">
               {(field) => (
                 <FieldWrapper
-                  label="Date of Birth"
-                  htmlFor="dateOfBirth"
-                  errors={field.state.meta.errors}
-                  touched={field.state.meta.isTouched}
-                  required
-                >
-                  <Input
-                    id="dateOfBirth"
-                    type="date"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    disabled={mutation.isPending}
-                  />
-                </FieldWrapper>
-              )}
-            </form.Field>
-
-            <form.Field name="firstName">
-              {(field) => (
-                <FieldWrapper
-                  label="First Name"
-                  htmlFor="firstName"
-                  errors={field.state.meta.errors}
-                  touched={field.state.meta.isTouched}
-                  required
-                >
-                  <Input
-                    id="firstName"
-                    placeholder="John"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    disabled={mutation.isPending}
-                  />
-                </FieldWrapper>
-              )}
-            </form.Field>
-
-            <form.Field name="lastName">
-              {(field) => (
-                <FieldWrapper
-                  label="Last Name"
-                  htmlFor="lastName"
-                  errors={field.state.meta.errors}
-                  touched={field.state.meta.isTouched}
-                  required
-                >
-                  <Input
-                    id="lastName"
-                    placeholder="Doe"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    disabled={mutation.isPending}
-                  />
-                </FieldWrapper>
-              )}
-            </form.Field>
-
-            <form.Field name="email">
-              {(field) => (
-                <FieldWrapper
-                  label="Email"
-                  htmlFor="email"
+                  label="Status"
+                  htmlFor="status"
                   errors={field.state.meta.errors}
                   touched={field.state.meta.isTouched}
                 >
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="john@example.com"
+                  <Select
                     value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onValueChange={(value) => field.handleChange(value as 'active' | 'inactive')}
                     disabled={mutation.isPending}
-                  />
-                </FieldWrapper>
-              )}
-            </form.Field>
-
-            <form.Field name="phone">
-              {(field) => (
-                <FieldWrapper
-                  label="Phone"
-                  htmlFor="phone"
-                  errors={field.state.meta.errors}
-                  touched={field.state.meta.isTouched}
-                >
-                  <Input
-                    id="phone"
-                    placeholder="0400 000 000"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    disabled={mutation.isPending}
-                  />
+                  >
+                    <SelectTrigger id="status">
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="inactive">Inactive</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </FieldWrapper>
               )}
             </form.Field>
           </div>
 
-          {/* Address */}
+          {/* Plan Info */}
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Address</h3>
+            <h3 className="text-lg font-medium">Plan Details</h3>
             <div className="grid gap-4 sm:grid-cols-2">
-              <form.Field name="address.street">
+              <form.Field name="plan_start_date">
                 {(field) => (
                   <FieldWrapper
-                    label="Street"
-                    htmlFor="address.street"
+                    label="Plan Start Date"
+                    htmlFor="plan_start_date"
                     errors={field.state.meta.errors}
                     touched={field.state.meta.isTouched}
-                    required
+                  >
+                    <Input
+                      id="plan_start_date"
+                      type="date"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      disabled={mutation.isPending}
+                    />
+                  </FieldWrapper>
+                )}
+              </form.Field>
+
+              <form.Field name="plan_end_date">
+                {(field) => (
+                  <FieldWrapper
+                    label="Plan End Date"
+                    htmlFor="plan_end_date"
+                    errors={field.state.meta.errors}
+                    touched={field.state.meta.isTouched}
+                  >
+                    <Input
+                      id="plan_end_date"
+                      type="date"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      disabled={mutation.isPending}
+                    />
+                  </FieldWrapper>
+                )}
+              </form.Field>
+
+              <form.Field name="starting_funding_amount">
+                {(field) => (
+                  <FieldWrapper
+                    label="Starting Funding Amount"
+                    htmlFor="starting_funding_amount"
+                    errors={field.state.meta.errors}
+                    touched={field.state.meta.isTouched}
                     className="sm:col-span-2"
                   >
                     <Input
-                      id="address.street"
-                      placeholder="123 Main St"
-                      value={field.state.value}
+                      id="starting_funding_amount"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      placeholder="50000.00"
+                      value={field.state.value ?? ''}
                       onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      disabled={mutation.isPending}
-                    />
-                  </FieldWrapper>
-                )}
-              </form.Field>
-
-              <form.Field name="address.suburb">
-                {(field) => (
-                  <FieldWrapper
-                    label="Suburb"
-                    htmlFor="address.suburb"
-                    errors={field.state.meta.errors}
-                    touched={field.state.meta.isTouched}
-                    required
-                  >
-                    <Input
-                      id="address.suburb"
-                      placeholder="Sydney"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      disabled={mutation.isPending}
-                    />
-                  </FieldWrapper>
-                )}
-              </form.Field>
-
-              <form.Field name="address.state">
-                {(field) => (
-                  <FieldWrapper
-                    label="State"
-                    htmlFor="address.state"
-                    errors={field.state.meta.errors}
-                    touched={field.state.meta.isTouched}
-                    required
-                  >
-                    <Input
-                      id="address.state"
-                      placeholder="NSW"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      disabled={mutation.isPending}
-                    />
-                  </FieldWrapper>
-                )}
-              </form.Field>
-
-              <form.Field name="address.postcode">
-                {(field) => (
-                  <FieldWrapper
-                    label="Postcode"
-                    htmlFor="address.postcode"
-                    errors={field.state.meta.errors}
-                    touched={field.state.meta.isTouched}
-                    required
-                  >
-                    <Input
-                      id="address.postcode"
-                      placeholder="2000"
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
+                      onChange={(e) => {
+                        const value = e.target.value === '' ? undefined : parseFloat(e.target.value);
+                        field.handleChange(value);
+                      }}
                       disabled={mutation.isPending}
                     />
                   </FieldWrapper>
@@ -325,28 +251,6 @@ export function ParticipantForm({
               </form.Field>
             </div>
           </div>
-
-          {/* Notes */}
-          <form.Field name="notes">
-            {(field) => (
-              <FieldWrapper
-                label="Notes"
-                htmlFor="notes"
-                errors={field.state.meta.errors}
-                touched={field.state.meta.isTouched}
-              >
-                <Textarea
-                  id="notes"
-                  placeholder="Additional notes..."
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  disabled={mutation.isPending}
-                  rows={4}
-                />
-              </FieldWrapper>
-            )}
-          </form.Field>
 
           {/* Error message */}
           {mutation.isError && (

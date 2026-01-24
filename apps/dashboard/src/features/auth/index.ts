@@ -19,6 +19,7 @@ export {
   useIsUserType,
   useIsClient,
   useIsProvider,
+  useIsAdmin,
   useCurrentUser,
   useLogin,
   useLogout,
@@ -26,12 +27,7 @@ export {
 } from './hooks/use-auth';
 
 // Query hooks
-export {
-  authKeys,
-  useForgotPassword,
-  useResetPassword,
-  useRefreshToken,
-} from './api/auth.queries';
+export { authKeys, useForgotPassword, useResetPassword, useRefreshToken } from './api/auth.queries';
 
 // Schemas
 export {
@@ -42,10 +38,7 @@ export {
   type ForgotPasswordInput,
   type ResetPasswordInput,
 } from './schemas/login.schema';
-export {
-  registerSchema,
-  type RegisterInput,
-} from './schemas/register.schema';
+export { registerSchema, type RegisterInput } from './schemas/register.schema';
 
 // Types
 export type * from './types/auth.types';

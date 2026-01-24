@@ -4,90 +4,57 @@
  */
 
 import { Link } from '@tanstack/react-router';
-import { Card, CardContent, CardHeader } from '@workspace/ui/components/card';
-import { Button } from '@workspace/ui/components/button';
-import { User, Mail, Phone, ChevronRight } from 'lucide-react';
-import { cn } from '@workspace/ui/lib/utils';
-import type { ParticipantListItem } from '../types/participant.types';
+import { Card, CardContent, CardHeader, CardTitle } from '@workspace/ui/components/card';
+import { Badge } from '@workspace/ui/components/badge';
+import type { Participant } from '../types/participant.types';
 
 interface ParticipantCardProps {
-  participant: ParticipantListItem;
+  participant: Participant;
   onMouseEnter?: () => void;
 }
 
-const statusStyles = {
-  active: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-  inactive: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400',
-  pending_approval: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
-};
-
-const statusLabels = {
-  active: 'Active',
-  inactive: 'Inactive',
-  pending_approval: 'Pending',
-};
-
 export function ParticipantCard({ participant, onMouseEnter }: ParticipantCardProps) {
   return (
-    <Card
-      className="group transition-shadow hover:shadow-md"
+    <Link
+      to="/participants/$participantId"
+      params={{ participantId: participant.id }}
       onMouseEnter={onMouseEnter}
     >
-      <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
-        <div className="flex items-center gap-3">
-          <div className="flex size-10 items-center justify-center rounded-full bg-muted">
-            <User className="size-5 text-muted-foreground" />
+      <Card className="h-full transition-colors hover:bg-muted/50">
+        <CardHeader>
+          <div className="flex items-start justify-between">
+            <CardTitle className="text-lg">{participant.full_name || 'N/A'}</CardTitle>
+            <Badge variant={participant.status === 'active' ? 'default' : 'secondary'}>
+              {participant.status}
+            </Badge>
           </div>
-          <div>
-            <h3 className="font-semibold">
-              {participant.firstName} {participant.lastName}
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              NDIS: {participant.ndisNumber}
-            </p>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">NDIS Number</span>
+            <span className="font-mono">{participant.ndis_number || 'N/A'}</span>
           </div>
-        </div>
-        <span
-          className={cn(
-            'rounded-full px-2 py-1 text-xs font-medium',
-            statusStyles[participant.status]
-          )}
-        >
-          {statusLabels[participant.status]}
-        </span>
-      </CardHeader>
-
-      <CardContent className="space-y-3">
-        {participant.email && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Mail className="size-4" />
-            <span className="truncate">{participant.email}</span>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Plan Period</span>
+            <span className="font-medium">
+              {participant.plan_start_date && participant.plan_end_date
+                ? `${participant.plan_start_date} to ${participant.plan_end_date}`
+                : 'N/A'}
+            </span>
           </div>
-        )}
-
-        {participant.phone && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Phone className="size-4" />
-            <span>{participant.phone}</span>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Starting Funding</span>
+            <span className="font-medium">
+              {participant.starting_funding_amount != null
+                ? `$${participant.starting_funding_amount.toLocaleString('en-AU', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}`
+                : 'N/A'}
+            </span>
           </div>
-        )}
-
-        {participant.activePlanBudget !== undefined && (
-          <div className="rounded-lg bg-muted p-3">
-            <p className="text-xs text-muted-foreground">Active Plan Budget</p>
-            <p className="text-lg font-semibold">
-              ${participant.activePlanBudget.toLocaleString()}
-            </p>
-          </div>
-        )}
-
-        <Button variant="ghost" className="w-full justify-between" asChild>
-          <Link to="/participants/$participantId" params={{ participantId: participant.id }}>
-            View Details
-            <ChevronRight className="size-4" />
-          </Link>
-        </Button>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }

@@ -1,11 +1,11 @@
 /**
  * Protected Route
- * Wrapper component that redirects unauthenticated users
+ * Wrapper component that redirects unauthenticated users and enforces role-based access
  */
 
 import { useEffect, useState } from 'react';
-import { Outlet, useLocation } from '@tanstack/react-router';
-import { useIsAuthenticated } from '../hooks/use-auth';
+import { Outlet, useLocation, useNavigate } from '@tanstack/react-router';
+import { useIsAuthenticated, useUserType } from '../hooks/use-auth';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 import { useAtomValue } from 'jotai';
 import { authLoadingAtom } from '@/stores/auth';
@@ -17,13 +17,12 @@ interface ProtectedRouteProps {
   roles?: string[];
 }
 
-export function ProtectedRoute({
-  children,
-  roles: _roles,
-}: ProtectedRouteProps) {
+export function ProtectedRoute({ children, roles }: ProtectedRouteProps) {
   const isAuthenticated = useIsAuthenticated();
   const isLoading = useAtomValue(authLoadingAtom);
+  const userType = useUserType();
   const location = useLocation();
+  const navigate = useNavigate();
   const [isHydrated, setIsHydrated] = useState(false);
 
   // Wait for hydration on client-side
@@ -42,9 +41,28 @@ export function ProtectedRoute({
     }
   }, [isHydrated, isLoading, isAuthenticated, location.href, location.pathname]);
 
+  // Check role-based access
+  useEffect(() => {
+    if (isHydrated && !isLoading && isAuthenticated && roles && roles.length > 0) {
+      const hasRequiredRole = userType && roles.includes(userType);
+      if (!hasRequiredRole) {
+        // Redirect to dashboard if user doesn't have required role
+        navigate({ to: '/' });
+      }
+    }
+  }, [isHydrated, isLoading, isAuthenticated, userType, roles, navigate]);
+
   // Show loading while hydrating, loading, or redirecting
   if (!isHydrated || isLoading || !isAuthenticated) {
     return <LoadingSpinner centered label="Checking authentication..." />;
+  }
+
+  // Show loading while checking roles
+  if (roles && roles.length > 0) {
+    const hasRequiredRole = userType && roles.includes(userType);
+    if (!hasRequiredRole) {
+      return <LoadingSpinner centered label="Verifying permissions..." />;
+    }
   }
 
   return children ?? <Outlet />;

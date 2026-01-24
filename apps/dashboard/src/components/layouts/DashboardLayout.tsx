@@ -20,20 +20,15 @@ import {
   SidebarTrigger,
 } from '@workspace/ui/components/sidebar';
 import { Separator } from '@workspace/ui/components/separator';
-import {
-  LayoutDashboard,
-  LogOut,
-  ChevronRight,
-  FileText,
-} from 'lucide-react';
+import { LayoutDashboard, LogOut, ChevronRight, FileText } from 'lucide-react';
 import { Button } from '@workspace/ui/components/button';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { userAtom, clearAuthAtom } from '@/stores/auth';
 
 /** Navigation menu items */
 const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', to: '/', providerOnly: false },
-  { icon: FileText, label: 'Invoices', to: '/invoices', providerOnly: true },
+  { icon: LayoutDashboard, label: 'Dashboard', to: '/', adminOnly: false },
+  { icon: FileText, label: 'Invoices', to: '/invoices', adminOnly: true },
 ] as const;
 
 export function DashboardLayout() {
@@ -44,7 +39,7 @@ export function DashboardLayout() {
 
   // Filter menu items based on user type
   const visibleMenuItems = menuItems.filter((item) => {
-    if (item.providerOnly && user?.userType !== 'provider') {
+    if (item.adminOnly && user?.userType !== 'admin') {
       return false;
     }
     return true;
@@ -62,11 +57,7 @@ export function DashboardLayout() {
           <SidebarHeader className="border-b border-sidebar-border">
             <div className="px-2 py-4">
               <Link to="/" className="block">
-                <img
-                  src="/logos/logo_full.svg"
-                  alt="Greenway Plan Management"
-                  className="h-8 w-auto"
-                />
+                <img src="/logos/logo_full.svg" alt="Greenway Plan Management" className="h-8 w-auto" />
               </Link>
             </div>
           </SidebarHeader>
@@ -76,24 +67,15 @@ export function DashboardLayout() {
               <SidebarGroupContent>
                 <SidebarMenu className="space-y-1">
                   {visibleMenuItems.map((item) => {
-                    const isActive =
-                      item.to === '/'
-                        ? currentPath === '/'
-                        : currentPath.startsWith(item.to);
+                    const isActive = item.to === '/' ? currentPath === '/' : currentPath.startsWith(item.to);
 
                     return (
                       <SidebarMenuItem key={item.to}>
-                        <SidebarMenuButton
-                          asChild
-                          isActive={isActive}
-                          className="h-10 px-3"
-                        >
+                        <SidebarMenuButton asChild isActive={isActive} className="h-10 px-3">
                           <Link to={item.to}>
                             <item.icon className="size-4" />
                             <span className="font-medium">{item.label}</span>
-                            {isActive && (
-                              <ChevronRight className="ml-auto size-4 opacity-50" />
-                            )}
+                            {isActive && <ChevronRight className="ml-auto size-4 opacity-50" />}
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -112,9 +94,7 @@ export function DashboardLayout() {
                 </div>
                 <div className="flex flex-col overflow-hidden flex-1">
                   <span className="truncate text-sm font-medium">{user.name}</span>
-                  <span className="truncate text-xs text-muted-foreground">
-                    {user.email}
-                  </span>
+                  <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                 </div>
               </div>
             )}
@@ -134,9 +114,7 @@ export function DashboardLayout() {
           <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6">
             <SidebarTrigger className="-ml-2" />
             <Separator orientation="vertical" className="h-6" />
-            <div className="flex-1">
-              {/* Breadcrumb could go here */}
-            </div>
+            <div className="flex-1">{/* Breadcrumb could go here */}</div>
           </header>
 
           <main className="flex-1 p-6">
