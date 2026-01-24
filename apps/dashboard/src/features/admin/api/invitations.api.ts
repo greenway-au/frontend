@@ -22,6 +22,9 @@ interface BackendAcceptResponse {
     email: string;
     name: string;
     user_type: string;
+    provider_id?: string;
+    participant_id?: string;
+    coordinator_id?: string;
     created_at: string;
     updated_at: string;
   };
@@ -41,6 +44,9 @@ function transformAcceptResponse(data: BackendAcceptResponse): LoginResponse {
       email: data.user.email,
       name: data.user.name,
       userType: data.user.user_type as 'client' | 'provider' | 'admin' | 'coordinator',
+      providerId: data.user.provider_id,
+      participantId: data.user.participant_id,
+      coordinatorId: data.user.coordinator_id,
       createdAt: data.user.created_at,
       updatedAt: data.user.updated_at,
     },

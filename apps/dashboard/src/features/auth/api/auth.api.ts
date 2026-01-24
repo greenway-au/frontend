@@ -21,6 +21,9 @@ interface BackendLoginResponse {
     email: string;
     name: string;
     user_type: string;
+    provider_id?: string;
+    participant_id?: string;
+    coordinator_id?: string;
   };
 }
 
@@ -30,6 +33,9 @@ interface BackendUserResponse {
   email: string;
   name: string;
   user_type: string;
+  provider_id?: string;
+  participant_id?: string;
+  coordinator_id?: string;
   created_at?: string;
   updated_at?: string;
 }
@@ -42,6 +48,9 @@ function transformLoginResponse(data: BackendLoginResponse): LoginResponse {
       email: data.user.email,
       name: data.user.name,
       userType: data.user.user_type as 'client' | 'provider' | 'admin' | 'coordinator',
+      providerId: data.user.provider_id,
+      participantId: data.user.participant_id,
+      coordinatorId: data.user.coordinator_id,
       createdAt: '',
       updatedAt: '',
     },
@@ -60,6 +69,9 @@ function transformUserResponse(data: BackendUserResponse): User {
     email: data.email,
     name: data.name,
     userType: data.user_type as 'client' | 'provider' | 'admin' | 'coordinator',
+    providerId: data.provider_id,
+    participantId: data.participant_id,
+    coordinatorId: data.coordinator_id,
     createdAt: data.created_at || '',
     updatedAt: data.updated_at || '',
   };
