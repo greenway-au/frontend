@@ -25,12 +25,40 @@ import { LayoutDashboard, LogOut, ChevronRight, FileText, Users, Building2, User
 import { Button } from '@workspace/ui/components/button';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { userAtom, clearAuthAtom } from '@/stores/auth';
+import type { UserType } from '@/types/auth';
 
-/** Navigation menu items */
-const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', to: '/', adminOnly: false },
-  { icon: FileText, label: 'Invoices', to: '/invoices', adminOnly: true },
-] as const;
+/** Get menu items based on user type */
+function getMenuItems(userType?: UserType) {
+  const baseItems = [
+    { icon: LayoutDashboard, label: 'Dashboard', to: '/' },
+  ];
+
+  switch (userType) {
+    case 'admin':
+      return [
+        ...baseItems,
+        { icon: FileText, label: 'All Invoices', to: '/invoices' },
+      ];
+    case 'provider':
+      return [
+        ...baseItems,
+        { icon: FileText, label: 'My Invoices', to: '/invoices' },
+      ];
+    case 'coordinator':
+      return [
+        ...baseItems,
+        // Coordinators view invoices of their assigned participants
+        // { icon: FileText, label: 'Invoices', to: '/invoices' },
+      ];
+    case 'client':
+    default:
+      return [
+        ...baseItems,
+        // Clients can view invoices sent to them (read-only)
+        // { icon: FileText, label: 'My Invoices', to: '/invoices' },
+      ];
+  }
+}
 
 /** Admin menu items */
 const adminMenuItems = [
@@ -47,14 +75,7 @@ export function DashboardLayout() {
   const currentPath = routerState.location.pathname;
 
   const isAdmin = user?.userType === 'admin';
-
-  // Filter menu items based on user type
-  const visibleMenuItems = menuItems.filter((item) => {
-    if (item.adminOnly && !isAdmin) {
-      return false;
-    }
-    return true;
-  });
+  const menuItems = getMenuItems(user?.userType);
 
   const handleLogout = () => {
     clearAuth();
@@ -77,7 +98,7 @@ export function DashboardLayout() {
             <SidebarGroup className="py-4">
               <SidebarGroupContent>
                 <SidebarMenu className="space-y-1">
-                  {visibleMenuItems.map((item) => {
+                  {menuItems.map((item) => {
                     const isActive = item.to === '/' ? currentPath === '/' : currentPath.startsWith(item.to);
 
                     return (
