@@ -41,7 +41,7 @@ function transformLoginResponse(data: BackendLoginResponse): LoginResponse {
       id: data.user.id,
       email: data.user.email,
       name: data.user.name,
-      userType: data.user.user_type as 'client' | 'provider',
+      userType: data.user.user_type as 'client' | 'provider' | 'admin' | 'coordinator',
       createdAt: '',
       updatedAt: '',
     },
@@ -59,7 +59,7 @@ function transformUserResponse(data: BackendUserResponse): User {
     id: data.id,
     email: data.email,
     name: data.name,
-    userType: data.user_type as 'client' | 'provider',
+    userType: data.user_type as 'client' | 'provider' | 'admin' | 'coordinator',
     createdAt: data.created_at || '',
     updatedAt: data.updated_at || '',
   };
