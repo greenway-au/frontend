@@ -1,76 +1,105 @@
 /**
  * Invoices Route
- * Admin-only invoice upload and validation page
- * Modern, professional design with improved UX
+ * Invoice management page with role-based content
+ * - Admin: View all invoices, approve/reject, upload
+ * - Provider: View and create invoices
+ * - Client: View invoices (read-only)
  */
 
 import { createFileRoute } from '@tanstack/react-router';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '@/stores/auth';
 import { PageHeader } from '@/components/common/PageHeader';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@workspace/ui/components/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@workspace/ui/components/tabs';
-import { Upload, FileText, CheckCircle2, Clock, XCircle } from 'lucide-react';
-import { ProtectedRoute } from '@/features/auth';
-import { InvoiceUpload, InvoiceList } from '@/features/invoices';
-import { useDocuments } from '@/features/invoices/api/invoices.queries';
+import { Upload, FileText, CheckCircle2, Clock, XCircle, DollarSign } from 'lucide-react';
+import { InvoiceUpload, InvoiceTable, useInvoices } from '@/features/invoices';
 
 export const Route = createFileRoute('/_dashboard/invoices')({
   component: InvoicesPage,
 });
 
 function InvoicesPage() {
-  const { data: documentsData } = useDocuments({ limit: 100 });
+  const user = useAtomValue(userAtom);
+  const { data: invoicesData, isLoading } = useInvoices({ limit: 100 });
 
+  const isAdmin = user?.userType === 'admin';
+  const isProvider = user?.userType === 'provider';
+  const isClient = user?.userType === 'client';
+
+  // Calculate stats from invoice data
   const stats = {
-    total: documentsData?.total || 0,
-    completed: documentsData?.documents?.filter((d) => d.status === 'completed').length || 0,
-    processing:
-      documentsData?.documents?.filter((d) => d.status === 'processing' || d.status === 'pending').length || 0,
-    failed: documentsData?.documents?.filter((d) => d.status === 'failed').length || 0,
+    total: invoicesData?.total || 0,
+    pending: invoicesData?.invoices?.filter((i) => i.status === 'pending').length || 0,
+    approved: invoicesData?.invoices?.filter((i) => i.status === 'approved').length || 0,
+    paid: invoicesData?.invoices?.filter((i) => i.status === 'paid').length || 0,
+    rejected: invoicesData?.invoices?.filter((i) => i.status === 'rejected').length || 0,
+  };
+
+  // Filter invoices by status for tabs
+  const allInvoices = invoicesData?.invoices || [];
+  const pendingInvoices = allInvoices.filter((i) => i.status === 'pending');
+  const approvedInvoices = allInvoices.filter((i) => i.status === 'approved');
+  const paidInvoices = allInvoices.filter((i) => i.status === 'paid');
+  const rejectedInvoices = allInvoices.filter((i) => i.status === 'rejected');
+
+  const getPageDescription = () => {
+    if (isAdmin) return 'View all invoices, approve, reject, or mark as paid';
+    if (isProvider) return 'View and manage your submitted invoices';
+    if (isClient) return 'View invoices from your service providers';
+    return 'Manage your invoices';
   };
 
   return (
-    <ProtectedRoute roles={['admin']}>
-      <div className="space-y-6">
-        <PageHeader
-          title="Invoice Management"
-          description="Upload and validate NDIS invoices automatically with AI-powered validation"
+    <div className="space-y-6">
+      <PageHeader
+        title="Invoices"
+        description={getPageDescription()}
+      />
+
+      {/* Stats Overview */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <StatCard
+          icon={FileText}
+          label="Total"
+          value={stats.total}
+          iconClassName="text-primary"
+          bgClassName="bg-primary/10"
         />
+        <StatCard
+          icon={Clock}
+          label="Pending"
+          value={stats.pending}
+          iconClassName="text-yellow-600"
+          bgClassName="bg-yellow-50"
+        />
+        <StatCard
+          icon={CheckCircle2}
+          label="Approved"
+          value={stats.approved}
+          iconClassName="text-green-600"
+          bgClassName="bg-green-50"
+        />
+        <StatCard
+          icon={DollarSign}
+          label="Paid"
+          value={stats.paid}
+          iconClassName="text-blue-600"
+          bgClassName="bg-blue-50"
+        />
+        <StatCard
+          icon={XCircle}
+          label="Rejected"
+          value={stats.rejected}
+          iconClassName="text-red-600"
+          bgClassName="bg-red-50"
+        />
+      </div>
 
-        {/* Stats Overview */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard
-            icon={FileText}
-            label="Total Invoices"
-            value={stats.total}
-            iconClassName="text-primary"
-            bgClassName="bg-primary/10"
-          />
-          <StatCard
-            icon={CheckCircle2}
-            label="Validated"
-            value={stats.completed}
-            iconClassName="text-green-600"
-            bgClassName="bg-green-50"
-          />
-          <StatCard
-            icon={Clock}
-            label="Processing"
-            value={stats.processing}
-            iconClassName="text-yellow-600"
-            bgClassName="bg-yellow-50"
-          />
-          <StatCard
-            icon={XCircle}
-            label="Failed"
-            value={stats.failed}
-            iconClassName="text-red-600"
-            bgClassName="bg-red-50"
-          />
-        </div>
-
-        {/* Main Content */}
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Upload Section - Takes 1 column */}
+      {/* Main Content */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Upload Section - Only for admins and providers */}
+        {(isAdmin || isProvider) && (
           <div className="lg:col-span-1">
             <Card className="sticky top-6">
               <CardHeader>
@@ -78,52 +107,64 @@ function InvoicesPage() {
                   <Upload className="size-5" />
                   Upload Invoice
                 </CardTitle>
-                <CardDescription>Upload PDF invoices for automatic NDIS compliance validation</CardDescription>
+                <CardDescription>
+                  Upload PDF invoices for automatic NDIS compliance validation
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <InvoiceUpload />
               </CardContent>
             </Card>
           </div>
+        )}
 
-          {/* Documents List - Takes 2 columns */}
-          <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="size-5" />
-                  Your Invoices
-                </CardTitle>
-                <CardDescription>View and manage your uploaded invoices</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Tabs defaultValue="all" className="w-full">
-                  <TabsList className="grid w-full grid-cols-4">
-                    <TabsTrigger value="all">All ({stats.total})</TabsTrigger>
-                    <TabsTrigger value="completed">Validated ({stats.completed})</TabsTrigger>
-                    <TabsTrigger value="processing">Processing ({stats.processing})</TabsTrigger>
-                    <TabsTrigger value="failed">Failed ({stats.failed})</TabsTrigger>
-                  </TabsList>
+        {/* Invoices List */}
+        <div className={isAdmin || isProvider ? 'lg:col-span-2' : 'lg:col-span-3'}>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="size-5" />
+                {isAdmin ? 'All Invoices' : isProvider ? 'My Invoices' : 'My Invoices'}
+              </CardTitle>
+              <CardDescription>
+                {isAdmin
+                  ? 'Manage and review all invoices in the system'
+                  : isProvider
+                    ? 'Track the status of your submitted invoices'
+                    : 'View invoices submitted by your providers'}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Tabs defaultValue="all" className="w-full">
+                <TabsList className="grid w-full grid-cols-5">
+                  <TabsTrigger value="all">All ({stats.total})</TabsTrigger>
+                  <TabsTrigger value="pending">Pending ({stats.pending})</TabsTrigger>
+                  <TabsTrigger value="approved">Approved ({stats.approved})</TabsTrigger>
+                  <TabsTrigger value="paid">Paid ({stats.paid})</TabsTrigger>
+                  <TabsTrigger value="rejected">Rejected ({stats.rejected})</TabsTrigger>
+                </TabsList>
 
-                  <TabsContent value="all" className="mt-6">
-                    <InvoiceList />
-                  </TabsContent>
-                  <TabsContent value="completed" className="mt-6">
-                    <InvoiceList statusFilter="completed" />
-                  </TabsContent>
-                  <TabsContent value="processing" className="mt-6">
-                    <InvoiceList statusFilter="processing" />
-                  </TabsContent>
-                  <TabsContent value="failed" className="mt-6">
-                    <InvoiceList statusFilter="failed" />
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
-          </div>
+                <TabsContent value="all" className="mt-6">
+                  <InvoiceTable invoices={allInvoices} isLoading={isLoading} />
+                </TabsContent>
+                <TabsContent value="pending" className="mt-6">
+                  <InvoiceTable invoices={pendingInvoices} isLoading={isLoading} />
+                </TabsContent>
+                <TabsContent value="approved" className="mt-6">
+                  <InvoiceTable invoices={approvedInvoices} isLoading={isLoading} />
+                </TabsContent>
+                <TabsContent value="paid" className="mt-6">
+                  <InvoiceTable invoices={paidInvoices} isLoading={isLoading} />
+                </TabsContent>
+                <TabsContent value="rejected" className="mt-6">
+                  <InvoiceTable invoices={rejectedInvoices} isLoading={isLoading} />
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
         </div>
       </div>
-    </ProtectedRoute>
+    </div>
   );
 }
 
@@ -138,14 +179,14 @@ interface StatCardProps {
 function StatCard({ icon: Icon, label, value, iconClassName, bgClassName }: StatCardProps) {
   return (
     <Card>
-      <CardContent className="p-6">
-        <div className="flex items-center gap-4">
-          <div className={`flex size-12 shrink-0 items-center justify-center rounded-lg ${bgClassName}`}>
-            <Icon className={`size-6 ${iconClassName}`} />
+      <CardContent className="p-4">
+        <div className="flex items-center gap-3">
+          <div className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${bgClassName}`}>
+            <Icon className={`size-5 ${iconClassName}`} />
           </div>
           <div>
-            <p className="text-2xl font-bold">{value}</p>
-            <p className="text-sm text-muted-foreground">{label}</p>
+            <p className="text-xl font-bold">{value}</p>
+            <p className="text-xs text-muted-foreground">{label}</p>
           </div>
         </div>
       </CardContent>

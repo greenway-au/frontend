@@ -47,15 +47,13 @@ function getMenuItems(userType?: UserType) {
     case 'coordinator':
       return [
         ...baseItems,
-        // Coordinators view invoices of their assigned participants
-        // { icon: FileText, label: 'Invoices', to: '/invoices' },
+        { icon: FileText, label: 'Invoices', to: '/invoices' },
       ];
     case 'client':
     default:
       return [
         ...baseItems,
-        // Clients can view invoices sent to them (read-only)
-        // { icon: FileText, label: 'My Invoices', to: '/invoices' },
+        { icon: FileText, label: 'My Invoices', to: '/invoices' },
       ];
   }
 }
