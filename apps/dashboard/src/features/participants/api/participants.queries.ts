@@ -1,12 +1,6 @@
-/**
- * Participant Query Hooks
- * TanStack Query hooks for participant operations
- */
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { participantsApi } from './participants.api';
 import type {
-  ParticipantFilters,
   CreateParticipantPayload,
   UpdateParticipantPayload,
 } from '../types/participant.types';
@@ -15,17 +9,16 @@ import type {
 export const participantKeys = {
   all: ['participants'] as const,
   lists: () => [...participantKeys.all, 'list'] as const,
-  list: (filters: ParticipantFilters) => [...participantKeys.lists(), filters] as const,
+  list: (params?: { limit?: number; offset?: number }) => [...participantKeys.lists(), params] as const,
   details: () => [...participantKeys.all, 'detail'] as const,
   detail: (id: string) => [...participantKeys.details(), id] as const,
 } as const;
 
 /** Get paginated participants list */
-export function useParticipants(filters: ParticipantFilters = {}) {
+export function useParticipants(params?: { limit?: number; offset?: number }) {
   return useQuery({
-    queryKey: participantKeys.list(filters),
-    queryFn: () => participantsApi.list(filters),
-    placeholderData: (previousData) => previousData,
+    queryKey: participantKeys.list(params),
+    queryFn: () => participantsApi.list(params),
   });
 }
 
@@ -83,17 +76,4 @@ export function useDeleteParticipant() {
       queryClient.invalidateQueries({ queryKey: participantKeys.lists() });
     },
   });
-}
-
-/** Prefetch participant detail */
-export function usePrefetchParticipant() {
-  const queryClient = useQueryClient();
-
-  return (id: string) => {
-    queryClient.prefetchQuery({
-      queryKey: participantKeys.detail(id),
-      queryFn: () => participantsApi.get(id),
-      staleTime: 5 * 60 * 1000, // 5 minutes
-    });
-  };
 }

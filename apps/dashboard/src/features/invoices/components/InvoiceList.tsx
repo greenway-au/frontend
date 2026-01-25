@@ -7,8 +7,7 @@ import { InvoiceCard } from './InvoiceCard';
 import { LoadingSpinner } from '@/components/common/LoadingSpinner';
 import { EmptyState } from '@/components/common/EmptyState';
 import { useDocuments } from '../api/invoices.queries';
-import { FileText, Filter } from 'lucide-react';
-import type { DocumentStatus } from '../types/invoice.types';
+import { FileText } from 'lucide-react';
 
 interface InvoiceListProps {
   statusFilter?: 'completed' | 'processing' | 'failed';

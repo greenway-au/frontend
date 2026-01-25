@@ -11,6 +11,7 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarInset,
   SidebarMenu,
@@ -20,20 +21,49 @@ import {
   SidebarTrigger,
 } from '@workspace/ui/components/sidebar';
 import { Separator } from '@workspace/ui/components/separator';
-import {
-  LayoutDashboard,
-  LogOut,
-  ChevronRight,
-  FileText,
-} from 'lucide-react';
+import { LayoutDashboard, LogOut, ChevronRight, FileText, Users, Building2, UserCog, Mail } from 'lucide-react';
 import { Button } from '@workspace/ui/components/button';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { userAtom, clearAuthAtom } from '@/stores/auth';
+import type { UserType } from '@/types/auth';
 
-/** Navigation menu items */
-const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', to: '/', providerOnly: false },
-  { icon: FileText, label: 'Invoices', to: '/invoices', providerOnly: true },
+/** Get menu items based on user type */
+function getMenuItems(userType?: UserType) {
+  const baseItems = [
+    { icon: LayoutDashboard, label: 'Dashboard', to: '/' },
+  ];
+
+  switch (userType) {
+    case 'admin':
+      return [
+        ...baseItems,
+        { icon: FileText, label: 'All Invoices', to: '/invoices' },
+      ];
+    case 'provider':
+      return [
+        ...baseItems,
+        { icon: FileText, label: 'My Invoices', to: '/invoices' },
+      ];
+    case 'coordinator':
+      return [
+        ...baseItems,
+        { icon: FileText, label: 'Invoices', to: '/invoices' },
+      ];
+    case 'client':
+    default:
+      return [
+        ...baseItems,
+        { icon: FileText, label: 'My Invoices', to: '/invoices' },
+      ];
+  }
+}
+
+/** Admin menu items */
+const adminMenuItems = [
+  { icon: Users, label: 'Participants', to: '/admin/participants' },
+  { icon: Building2, label: 'Providers', to: '/admin/providers' },
+  { icon: UserCog, label: 'Coordinators', to: '/admin/coordinators' },
+  { icon: Mail, label: 'Invitations', to: '/admin/invitations' },
 ] as const;
 
 export function DashboardLayout() {
@@ -42,13 +72,8 @@ export function DashboardLayout() {
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
 
-  // Filter menu items based on user type
-  const visibleMenuItems = menuItems.filter((item) => {
-    if (item.providerOnly && user?.userType !== 'provider') {
-      return false;
-    }
-    return true;
-  });
+  const isAdmin = user?.userType === 'admin';
+  const menuItems = getMenuItems(user?.userType);
 
   const handleLogout = () => {
     clearAuth();
@@ -62,11 +87,7 @@ export function DashboardLayout() {
           <SidebarHeader className="border-b border-sidebar-border">
             <div className="px-2 py-4">
               <Link to="/" className="block">
-                <img
-                  src="/logos/logo_full.svg"
-                  alt="Greenway Plan Management"
-                  className="h-8 w-auto"
-                />
+                <img src="/logos/logo_full.svg" alt="Greenway Plan Management" className="h-8 w-auto" />
               </Link>
             </div>
           </SidebarHeader>
@@ -75,25 +96,16 @@ export function DashboardLayout() {
             <SidebarGroup className="py-4">
               <SidebarGroupContent>
                 <SidebarMenu className="space-y-1">
-                  {visibleMenuItems.map((item) => {
-                    const isActive =
-                      item.to === '/'
-                        ? currentPath === '/'
-                        : currentPath.startsWith(item.to);
+                  {menuItems.map((item) => {
+                    const isActive = item.to === '/' ? currentPath === '/' : currentPath.startsWith(item.to);
 
                     return (
                       <SidebarMenuItem key={item.to}>
-                        <SidebarMenuButton
-                          asChild
-                          isActive={isActive}
-                          className="h-10 px-3"
-                        >
+                        <SidebarMenuButton asChild isActive={isActive} className="h-10 px-3">
                           <Link to={item.to}>
                             <item.icon className="size-4" />
                             <span className="font-medium">{item.label}</span>
-                            {isActive && (
-                              <ChevronRight className="ml-auto size-4 opacity-50" />
-                            )}
+                            {isActive && <ChevronRight className="ml-auto size-4 opacity-50" />}
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -102,6 +114,34 @@ export function DashboardLayout() {
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
+
+            {/* Admin Section */}
+            {isAdmin && (
+              <SidebarGroup className="py-4 border-t border-sidebar-border">
+                <SidebarGroupLabel className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Admin
+                </SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu className="space-y-1">
+                    {adminMenuItems.map((item) => {
+                      const isActive = currentPath.startsWith(item.to);
+
+                      return (
+                        <SidebarMenuItem key={item.to}>
+                          <SidebarMenuButton asChild isActive={isActive} className="h-10 px-3">
+                            <Link to={item.to}>
+                              <item.icon className="size-4" />
+                              <span className="font-medium">{item.label}</span>
+                              {isActive && <ChevronRight className="ml-auto size-4 opacity-50" />}
+                            </Link>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      );
+                    })}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            )}
           </SidebarContent>
 
           <SidebarFooter className="border-t border-sidebar-border p-4">
@@ -112,9 +152,7 @@ export function DashboardLayout() {
                 </div>
                 <div className="flex flex-col overflow-hidden flex-1">
                   <span className="truncate text-sm font-medium">{user.name}</span>
-                  <span className="truncate text-xs text-muted-foreground">
-                    {user.email}
-                  </span>
+                  <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                 </div>
               </div>
             )}
@@ -134,9 +172,7 @@ export function DashboardLayout() {
           <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6">
             <SidebarTrigger className="-ml-2" />
             <Separator orientation="vertical" className="h-6" />
-            <div className="flex-1">
-              {/* Breadcrumb could go here */}
-            </div>
+            <div className="flex-1">{/* Breadcrumb could go here */}</div>
           </header>
 
           <main className="flex-1 p-6">
