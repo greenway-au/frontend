@@ -4,20 +4,29 @@
  */
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@workspace/ui/components/card';
-import { Users, Calendar, FileText, CheckCircle2, Clock, Sparkles } from 'lucide-react';
+import { Users, Calendar, FileText, CheckCircle2, Clock, Sparkles, AlertCircle, Loader2 } from 'lucide-react';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '@/stores/auth';
+import { useMyParticipantsAsCoordinator } from '@/features/admin/api/relationships.queries';
+import { Badge } from '@workspace/ui/components/badge';
 
 export function CoordinatorDashboard() {
   const user = useAtomValue(userAtom);
 
-  // In the future, we'll fetch assigned participants
-  // using user.coordinatorId and the relationships table
+  // Fetch assigned participants using the role-specific "me" endpoint
+  const {
+    data: assignments,
+    isLoading,
+    isError,
+    error,
+  } = useMyParticipantsAsCoordinator();
+
+  // Calculate stats from assignments
   const stats = {
-    assignedParticipants: 0,
-    activePlans: 0,
-    pendingReviews: 0,
-    upcomingRenewals: 0,
+    assignedParticipants: assignments?.length ?? 0,
+    activePlans: assignments?.filter(a => a.status === 'active').length ?? 0,
+    pendingReviews: 0, // TODO: Integrate with invoices
+    upcomingRenewals: 0, // TODO: Calculate from plan end dates
   };
 
   return (
@@ -62,15 +71,66 @@ export function CoordinatorDashboard() {
           <CardDescription>Participants assigned to your care</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="flex size-12 items-center justify-center rounded-full bg-muted mb-4">
-              <Users className="size-6 text-muted-foreground" />
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <Loader2 className="size-8 animate-spin text-muted-foreground mb-4" />
+              <p className="text-sm text-muted-foreground">Loading participants...</p>
             </div>
-            <p className="text-sm font-medium text-muted-foreground">No participants assigned</p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Participants will appear here when assigned by an admin
-            </p>
-          </div>
+          ) : isError ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <div className="flex size-12 items-center justify-center rounded-full bg-red-100 mb-4">
+                <AlertCircle className="size-6 text-red-600" />
+              </div>
+              <p className="text-sm font-medium text-red-600">Failed to load participants</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {error instanceof Error ? error.message : 'Please try again later'}
+              </p>
+            </div>
+          ) : assignments && assignments.length > 0 ? (
+            <div className="space-y-3">
+              {assignments.map((assignment) => (
+                <div
+                  key={assignment.id}
+                  className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-muted/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 items-center justify-center rounded-full bg-primary/10">
+                      <Users className="size-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Participant</p>
+                      <p className="text-xs text-muted-foreground">
+                        ID: {assignment.participant_id.slice(0, 8)}...
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {assignment.is_primary && (
+                      <Badge variant="secondary" className="text-xs">
+                        Primary
+                      </Badge>
+                    )}
+                    <Badge
+                      variant={assignment.status === 'active' ? 'default' : 'secondary'}
+                      className="text-xs"
+                    >
+                      {assignment.status}
+                    </Badge>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <div className="flex size-12 items-center justify-center rounded-full bg-muted mb-4">
+                <Users className="size-6 text-muted-foreground" />
+              </div>
+              <p className="text-sm font-medium text-muted-foreground">No participants assigned</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Participants will appear here when assigned by an admin
+              </p>
+            </div>
+          )}
         </CardContent>
       </Card>
 

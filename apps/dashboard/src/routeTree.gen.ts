@@ -16,6 +16,7 @@ import { Route as InviteRouteImport } from './routes/invite'
 import { Route as DashboardRouteImport } from './routes/_dashboard'
 import { Route as DashboardIndexRouteImport } from './routes/_dashboard/index'
 import { Route as DashboardInvoicesRouteImport } from './routes/_dashboard/invoices'
+import { Route as DashboardAdminRelationshipsRouteImport } from './routes/_dashboard/admin/relationships'
 import { Route as DashboardAdminProvidersRouteImport } from './routes/_dashboard/admin/providers'
 import { Route as DashboardAdminParticipantsRouteImport } from './routes/_dashboard/admin/participants'
 import { Route as DashboardAdminInvitationsRouteImport } from './routes/_dashboard/admin/invitations'
@@ -55,6 +56,12 @@ const DashboardInvoicesRoute = DashboardInvoicesRouteImport.update({
   path: '/invoices',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardAdminRelationshipsRoute =
+  DashboardAdminRelationshipsRouteImport.update({
+    id: '/admin/relationships',
+    path: '/admin/relationships',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardAdminProvidersRoute = DashboardAdminProvidersRouteImport.update({
   id: '/admin/providers',
   path: '/admin/providers',
@@ -90,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/admin/invitations': typeof DashboardAdminInvitationsRoute
   '/admin/participants': typeof DashboardAdminParticipantsRoute
   '/admin/providers': typeof DashboardAdminProvidersRoute
+  '/admin/relationships': typeof DashboardAdminRelationshipsRoute
 }
 export interface FileRoutesByTo {
   '/invite': typeof InviteRoute
@@ -102,6 +110,7 @@ export interface FileRoutesByTo {
   '/admin/invitations': typeof DashboardAdminInvitationsRoute
   '/admin/participants': typeof DashboardAdminParticipantsRoute
   '/admin/providers': typeof DashboardAdminProvidersRoute
+  '/admin/relationships': typeof DashboardAdminRelationshipsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +125,7 @@ export interface FileRoutesById {
   '/_dashboard/admin/invitations': typeof DashboardAdminInvitationsRoute
   '/_dashboard/admin/participants': typeof DashboardAdminParticipantsRoute
   '/_dashboard/admin/providers': typeof DashboardAdminProvidersRoute
+  '/_dashboard/admin/relationships': typeof DashboardAdminRelationshipsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/admin/invitations'
     | '/admin/participants'
     | '/admin/providers'
+    | '/admin/relationships'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/invite'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/admin/invitations'
     | '/admin/participants'
     | '/admin/providers'
+    | '/admin/relationships'
   id:
     | '__root__'
     | '/_dashboard'
@@ -155,6 +167,7 @@ export interface FileRouteTypes {
     | '/_dashboard/admin/invitations'
     | '/_dashboard/admin/participants'
     | '/_dashboard/admin/providers'
+    | '/_dashboard/admin/relationships'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -216,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInvoicesRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/_dashboard/admin/relationships': {
+      id: '/_dashboard/admin/relationships'
+      path: '/admin/relationships'
+      fullPath: '/admin/relationships'
+      preLoaderRoute: typeof DashboardAdminRelationshipsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/_dashboard/admin/providers': {
       id: '/_dashboard/admin/providers'
       path: '/admin/providers'
@@ -254,6 +274,7 @@ interface DashboardRouteChildren {
   DashboardAdminInvitationsRoute: typeof DashboardAdminInvitationsRoute
   DashboardAdminParticipantsRoute: typeof DashboardAdminParticipantsRoute
   DashboardAdminProvidersRoute: typeof DashboardAdminProvidersRoute
+  DashboardAdminRelationshipsRoute: typeof DashboardAdminRelationshipsRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
@@ -263,6 +284,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAdminInvitationsRoute: DashboardAdminInvitationsRoute,
   DashboardAdminParticipantsRoute: DashboardAdminParticipantsRoute,
   DashboardAdminProvidersRoute: DashboardAdminProvidersRoute,
+  DashboardAdminRelationshipsRoute: DashboardAdminRelationshipsRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(

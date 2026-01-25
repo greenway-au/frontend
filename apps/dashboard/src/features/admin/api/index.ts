@@ -46,3 +46,26 @@ export {
   useUpdateProvider,
   useDeleteProvider,
 } from '@/features/providers/api/providers.queries';
+
+// Relationships
+export { relationshipsApi } from './relationships.api';
+export {
+  relationshipKeys,
+  // Admin hooks
+  useProvidersByParticipant,
+  useParticipantsByProvider,
+  useCreateClientProvider,
+  useUpdateClientProvider,
+  useDeleteClientProvider,
+  useCoordinatorForParticipant,
+  useParticipantsByCoordinator,
+  useAssignCoordinator,
+  useUpdateCoordinatorAssignment,
+  useDeleteCoordinatorAssignment,
+  // Role-specific "me" hooks
+  useMyParticipantsAsCoordinator,
+  useMyParticipantsAsProvider,
+  useMyProvidersAsClient,
+  useMyCoordinatorAsClient,
+} from './relationships.queries';
+

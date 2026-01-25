@@ -6,26 +6,42 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@workspace/ui/components/card';
 import { Button } from '@workspace/ui/components/button';
 import { Link } from '@tanstack/react-router';
-import { FileText, Upload, DollarSign, Clock, CheckCircle2, TrendingUp } from 'lucide-react';
+import { FileText, Upload, DollarSign, Clock, CheckCircle2, TrendingUp, Users, AlertCircle, Loader2 } from 'lucide-react';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '@/stores/auth';
+import { useMyParticipantsAsProvider } from '@/features/admin/api/relationships.queries';
+import { Badge } from '@workspace/ui/components/badge';
 
 export function ProviderDashboard() {
   const user = useAtomValue(userAtom);
 
-  // In the future, we'll fetch invoices for this provider using user.providerId
-  // For now, show placeholder stats
+  // Fetch linked participants using the role-specific "me" endpoint
+  const {
+    data: relationships,
+    isLoading: isLoadingParticipants,
+    isError: isParticipantsError,
+    error: participantsError,
+  } = useMyParticipantsAsProvider();
+
+  // Calculate stats
   const stats = {
-    totalInvoices: 0,
+    totalInvoices: 0, // TODO: Integrate with invoices
     pendingInvoices: 0,
     approvedInvoices: 0,
     paidAmount: 0,
+    linkedParticipants: relationships?.length ?? 0,
   };
 
   return (
     <div className="space-y-8">
       {/* Stats Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <StatCard
+          title="Linked Participants"
+          value={stats.linkedParticipants.toString()}
+          icon={Users}
+          description="Participants you serve"
+        />
         <StatCard
           title="Total Invoices"
           value={stats.totalInvoices.toString()}
@@ -53,6 +69,72 @@ export function ProviderDashboard() {
           description="This month"
         />
       </div>
+
+      {/* Linked Participants */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base flex items-center gap-2">
+            <Users className="size-4" />
+            Your Participants
+          </CardTitle>
+          <CardDescription>Participants you are linked to provide services for</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {isLoadingParticipants ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <Loader2 className="size-8 animate-spin text-muted-foreground mb-4" />
+              <p className="text-sm text-muted-foreground">Loading participants...</p>
+            </div>
+          ) : isParticipantsError ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <div className="flex size-12 items-center justify-center rounded-full bg-red-100 mb-4">
+                <AlertCircle className="size-6 text-red-600" />
+              </div>
+              <p className="text-sm font-medium text-red-600">Failed to load participants</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {participantsError instanceof Error ? participantsError.message : 'Please try again later'}
+              </p>
+            </div>
+          ) : relationships && relationships.length > 0 ? (
+            <div className="space-y-3">
+              {relationships.map((relationship) => (
+                <div
+                  key={relationship.id}
+                  className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-muted/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 items-center justify-center rounded-full bg-primary/10">
+                      <Users className="size-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium">Participant</p>
+                      <p className="text-xs text-muted-foreground">
+                        ID: {relationship.participant_id.slice(0, 8)}...
+                      </p>
+                    </div>
+                  </div>
+                  <Badge
+                    variant={relationship.status === 'active' ? 'default' : 'secondary'}
+                    className="text-xs"
+                  >
+                    {relationship.status}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <div className="flex size-12 items-center justify-center rounded-full bg-muted mb-4">
+                <Users className="size-6 text-muted-foreground" />
+              </div>
+              <p className="text-sm font-medium text-muted-foreground">No participants linked</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Participants will appear here when linked by an admin
+              </p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Quick Actions */}
       <div className="grid gap-4 md:grid-cols-2">
@@ -138,7 +220,7 @@ export function ProviderDashboard() {
               <div className="space-y-1">
                 <p className="text-sm font-medium">Provider Account Active</p>
                 <p className="text-sm text-muted-foreground">
-                  Your provider account is linked and ready. You can submit invoices for your participants.
+                  Your provider account is linked and ready. You can submit invoices for your linked participants.
                 </p>
               </div>
             </div>

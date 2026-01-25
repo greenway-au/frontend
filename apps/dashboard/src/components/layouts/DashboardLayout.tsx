@@ -21,7 +21,7 @@ import {
   SidebarTrigger,
 } from '@workspace/ui/components/sidebar';
 import { Separator } from '@workspace/ui/components/separator';
-import { LayoutDashboard, LogOut, ChevronRight, FileText, Users, Building2, UserCog, Mail } from 'lucide-react';
+import { LayoutDashboard, LogOut, ChevronRight, FileText, Users, Building2, UserCog, Mail, Link2 } from 'lucide-react';
 import { Button } from '@workspace/ui/components/button';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { userAtom, clearAuthAtom } from '@/stores/auth';
@@ -63,6 +63,7 @@ const adminMenuItems = [
   { icon: Users, label: 'Participants', to: '/admin/participants' },
   { icon: Building2, label: 'Providers', to: '/admin/providers' },
   { icon: UserCog, label: 'Coordinators', to: '/admin/coordinators' },
+  { icon: Link2, label: 'Relationships', to: '/admin/relationships' },
   { icon: Mail, label: 'Invitations', to: '/admin/invitations' },
 ] as const;
 
