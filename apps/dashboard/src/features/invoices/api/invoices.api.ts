@@ -18,13 +18,14 @@ import type {
 
 const DOCUMENTS_PATH = '/api/v1/documents';
 const INVOICES_PATH = '/api/v1/invoices';
+const ADMIN_INVOICES_PATH = '/api/v1/admin/invoices';
 
 // ============================================
 // Invoice API (new invoice model)
 // ============================================
 
 export const invoiceApi = {
-  /** Get list of invoices with optional filtering */
+  /** Get list of invoices with optional filtering (authenticated users) */
   list: (filters: InvoiceFilters = {}): Promise<InvoicesListResponse> => {
     return api.get<InvoicesListResponse>(INVOICES_PATH, {
       params: {
@@ -37,29 +38,43 @@ export const invoiceApi = {
     });
   },
 
-  /** Get single invoice by ID */
+  /** Get single invoice by ID (authenticated users) */
   get: (id: string): Promise<Invoice> => {
     return api.get<Invoice>(`${INVOICES_PATH}/${id}`);
   },
 
-  /** Create new invoice */
+  /** Create new invoice (providers) */
   create: (data: CreateInvoicePayload): Promise<Invoice> => {
     return api.post<Invoice>(INVOICES_PATH, data);
   },
 
+  // Admin-only operations
+  /** Get all invoices (admin only) */
+  listAll: (filters: InvoiceFilters = {}): Promise<InvoicesListResponse> => {
+    return api.get<InvoicesListResponse>(ADMIN_INVOICES_PATH, {
+      params: {
+        provider_id: filters.provider_id,
+        participant_id: filters.participant_id,
+        status: filters.status,
+        limit: filters.limit,
+        offset: filters.offset,
+      },
+    });
+  },
+
   /** Update invoice status (admin only) */
   updateStatus: (id: string, data: UpdateInvoiceStatusPayload): Promise<Invoice> => {
-    return api.patch<Invoice>(`${INVOICES_PATH}/${id}/status`, data);
+    return api.patch<Invoice>(`${ADMIN_INVOICES_PATH}/${id}/status`, data);
   },
 
   /** Trigger revalidation of invoice (admin only) */
   revalidate: (id: string): Promise<Invoice> => {
-    return api.post<Invoice>(`${INVOICES_PATH}/${id}/revalidate`, {});
+    return api.post<Invoice>(`${ADMIN_INVOICES_PATH}/${id}/revalidate`, {});
   },
 
-  /** Delete invoice */
+  /** Delete invoice (admin only) */
   delete: (id: string): Promise<void> => {
-    return api.delete(`${INVOICES_PATH}/${id}`);
+    return api.delete(`${ADMIN_INVOICES_PATH}/${id}`);
   },
 } as const;
 

@@ -14,6 +14,7 @@ import type {
 import type { LoginResponse } from '@/types/auth';
 
 const BASE_PATH = '/api/v1/invitations';
+const ADMIN_PATH = '/api/v1/admin/invitations';
 
 /** Backend response shape for accept invitation (snake_case from Go) */
 interface BackendAcceptResponse {
@@ -61,22 +62,22 @@ function transformAcceptResponse(data: BackendAcceptResponse): LoginResponse {
 export const invitationsApi = {
   /** Get paginated list of invitations (admin only) */
   list: (params?: { limit?: number; offset?: number }): Promise<InvitationsListResponse> => {
-    return api.get<InvitationsListResponse>(BASE_PATH, { params });
+    return api.get<InvitationsListResponse>(ADMIN_PATH, { params });
   },
 
   /** Get single invitation by ID (admin only) */
   get: (id: string): Promise<Invitation> => {
-    return api.get<Invitation>(`${BASE_PATH}/${id}`);
+    return api.get<Invitation>(`${ADMIN_PATH}/${id}`);
   },
 
   /** Create new invitation (admin only) */
   create: (data: CreateInvitationPayload): Promise<Invitation> => {
-    return api.post<Invitation>(BASE_PATH, data);
+    return api.post<Invitation>(ADMIN_PATH, data);
   },
 
   /** Revoke invitation (admin only) */
   revoke: (id: string): Promise<void> => {
-    return api.delete(`${BASE_PATH}/${id}`);
+    return api.delete(`${ADMIN_PATH}/${id}`);
   },
 
   /** Validate invitation token (public) */
