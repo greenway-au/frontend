@@ -176,7 +176,9 @@ export function DashboardLayout() {
           </header>
 
           <main className="flex-1 p-6">
-            <Outlet />
+            <div className="mx-auto w-full max-w-7xl">
+              <Outlet />
+            </div>
           </main>
         </SidebarInset>
       </div>
