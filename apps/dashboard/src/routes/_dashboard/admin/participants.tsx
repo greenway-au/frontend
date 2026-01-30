@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { PageHeader } from '@/components/common/PageHeader';
 import { Card, CardContent, CardHeader, CardTitle } from '@workspace/ui/components/card';
 import { Button } from '@workspace/ui/components/button';
@@ -146,7 +146,7 @@ function ParticipantsPage() {
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">With Account</CardTitle>
+              <CardTitle className="text-sm font-medium">Active</CardTitle>
               <UserCheck className="h-4 w-4 text-green-600" />
             </CardHeader>
             <CardContent>
@@ -175,6 +175,8 @@ function ParticipantsPage() {
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>NDIS Number</TableHead>
+                  <TableHead>Plan Start</TableHead>
+                  <TableHead>Plan Expiry</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Account</TableHead>
                   <TableHead>Funding</TableHead>
@@ -184,13 +186,13 @@ function ParticipantsPage() {
               <TableBody>
                 {isLoading ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8">
+                    <TableCell colSpan={8} className="text-center py-8">
                       Loading...
                     </TableCell>
                   </TableRow>
                 ) : !data?.participants?.length ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
                       No participants yet. Create one to get started.
                     </TableCell>
                   </TableRow>
@@ -198,9 +200,25 @@ function ParticipantsPage() {
                   data.participants.map((participant) => (
                     <TableRow key={participant.id}>
                       <TableCell className="font-medium">
-                        {participant.full_name || 'Unnamed'}
+                        <Link
+                          to="/admin/participants/$participantId"
+                          params={{ participantId: participant.id }}
+                          className="text-primary hover:underline"
+                        >
+                          {participant.full_name || 'Unnamed'}
+                        </Link>
                       </TableCell>
                       <TableCell>{participant.ndis_number || '-'}</TableCell>
+                      <TableCell>
+                        {participant.plan_start_date
+                          ? new Date(participant.plan_start_date).toLocaleDateString()
+                          : '-'}
+                      </TableCell>
+                      <TableCell>
+                        {participant.plan_end_date
+                          ? new Date(participant.plan_end_date).toLocaleDateString()
+                          : '-'}
+                      </TableCell>
                       <TableCell>
                         <Badge variant={participant.status === 'active' ? 'default' : 'secondary'}>
                           {participant.status}
@@ -291,7 +309,7 @@ function ParticipantsPage() {
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="plan_end_date">Plan End Date</Label>
+                  <Label htmlFor="plan_end_date">NDIS Plan Expiry</Label>
                   <Input
                     id="plan_end_date"
                     type="date"

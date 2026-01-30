@@ -21,6 +21,7 @@ import { Route as DashboardAdminProvidersRouteImport } from './routes/_dashboard
 import { Route as DashboardAdminParticipantsRouteImport } from './routes/_dashboard/admin/participants'
 import { Route as DashboardAdminInvitationsRouteImport } from './routes/_dashboard/admin/invitations'
 import { Route as DashboardAdminCoordinatorsRouteImport } from './routes/_dashboard/admin/coordinators'
+import { Route as DashboardAdminParticipantsParticipantIdRouteImport } from './routes/_dashboard/admin/participants/$participantId'
 
 const RegisterProviderRoute = RegisterProviderRouteImport.update({
   id: '/register-provider',
@@ -85,6 +86,12 @@ const DashboardAdminCoordinatorsRoute =
     path: '/admin/coordinators',
     getParentRoute: () => DashboardRoute,
   } as any)
+const DashboardAdminParticipantsParticipantIdRoute =
+  DashboardAdminParticipantsParticipantIdRouteImport.update({
+    id: '/$participantId',
+    path: '/$participantId',
+    getParentRoute: () => DashboardAdminParticipantsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/invite': typeof InviteRoute
@@ -95,9 +102,10 @@ export interface FileRoutesByFullPath {
   '/': typeof DashboardIndexRoute
   '/admin/coordinators': typeof DashboardAdminCoordinatorsRoute
   '/admin/invitations': typeof DashboardAdminInvitationsRoute
-  '/admin/participants': typeof DashboardAdminParticipantsRoute
+  '/admin/participants': typeof DashboardAdminParticipantsRouteWithChildren
   '/admin/providers': typeof DashboardAdminProvidersRoute
   '/admin/relationships': typeof DashboardAdminRelationshipsRoute
+  '/admin/participants/$participantId': typeof DashboardAdminParticipantsParticipantIdRoute
 }
 export interface FileRoutesByTo {
   '/invite': typeof InviteRoute
@@ -108,9 +116,10 @@ export interface FileRoutesByTo {
   '/': typeof DashboardIndexRoute
   '/admin/coordinators': typeof DashboardAdminCoordinatorsRoute
   '/admin/invitations': typeof DashboardAdminInvitationsRoute
-  '/admin/participants': typeof DashboardAdminParticipantsRoute
+  '/admin/participants': typeof DashboardAdminParticipantsRouteWithChildren
   '/admin/providers': typeof DashboardAdminProvidersRoute
   '/admin/relationships': typeof DashboardAdminRelationshipsRoute
+  '/admin/participants/$participantId': typeof DashboardAdminParticipantsParticipantIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -123,9 +132,10 @@ export interface FileRoutesById {
   '/_dashboard/': typeof DashboardIndexRoute
   '/_dashboard/admin/coordinators': typeof DashboardAdminCoordinatorsRoute
   '/_dashboard/admin/invitations': typeof DashboardAdminInvitationsRoute
-  '/_dashboard/admin/participants': typeof DashboardAdminParticipantsRoute
+  '/_dashboard/admin/participants': typeof DashboardAdminParticipantsRouteWithChildren
   '/_dashboard/admin/providers': typeof DashboardAdminProvidersRoute
   '/_dashboard/admin/relationships': typeof DashboardAdminRelationshipsRoute
+  '/_dashboard/admin/participants/$participantId': typeof DashboardAdminParticipantsParticipantIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/admin/participants'
     | '/admin/providers'
     | '/admin/relationships'
+    | '/admin/participants/$participantId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/invite'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/admin/participants'
     | '/admin/providers'
     | '/admin/relationships'
+    | '/admin/participants/$participantId'
   id:
     | '__root__'
     | '/_dashboard'
@@ -168,6 +180,7 @@ export interface FileRouteTypes {
     | '/_dashboard/admin/participants'
     | '/_dashboard/admin/providers'
     | '/_dashboard/admin/relationships'
+    | '/_dashboard/admin/participants/$participantId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -264,15 +277,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAdminCoordinatorsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/_dashboard/admin/participants/$participantId': {
+      id: '/_dashboard/admin/participants/$participantId'
+      path: '/$participantId'
+      fullPath: '/admin/participants/$participantId'
+      preLoaderRoute: typeof DashboardAdminParticipantsParticipantIdRouteImport
+      parentRoute: typeof DashboardAdminParticipantsRoute
+    }
   }
 }
+
+interface DashboardAdminParticipantsRouteChildren {
+  DashboardAdminParticipantsParticipantIdRoute: typeof DashboardAdminParticipantsParticipantIdRoute
+}
+
+const DashboardAdminParticipantsRouteChildren: DashboardAdminParticipantsRouteChildren =
+  {
+    DashboardAdminParticipantsParticipantIdRoute:
+      DashboardAdminParticipantsParticipantIdRoute,
+  }
+
+const DashboardAdminParticipantsRouteWithChildren =
+  DashboardAdminParticipantsRoute._addFileChildren(
+    DashboardAdminParticipantsRouteChildren,
+  )
 
 interface DashboardRouteChildren {
   DashboardInvoicesRoute: typeof DashboardInvoicesRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardAdminCoordinatorsRoute: typeof DashboardAdminCoordinatorsRoute
   DashboardAdminInvitationsRoute: typeof DashboardAdminInvitationsRoute
-  DashboardAdminParticipantsRoute: typeof DashboardAdminParticipantsRoute
+  DashboardAdminParticipantsRoute: typeof DashboardAdminParticipantsRouteWithChildren
   DashboardAdminProvidersRoute: typeof DashboardAdminProvidersRoute
   DashboardAdminRelationshipsRoute: typeof DashboardAdminRelationshipsRoute
 }
@@ -282,7 +317,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardAdminCoordinatorsRoute: DashboardAdminCoordinatorsRoute,
   DashboardAdminInvitationsRoute: DashboardAdminInvitationsRoute,
-  DashboardAdminParticipantsRoute: DashboardAdminParticipantsRoute,
+  DashboardAdminParticipantsRoute: DashboardAdminParticipantsRouteWithChildren,
   DashboardAdminProvidersRoute: DashboardAdminProvidersRoute,
   DashboardAdminRelationshipsRoute: DashboardAdminRelationshipsRoute,
 }
