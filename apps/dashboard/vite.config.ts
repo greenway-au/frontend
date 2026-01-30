@@ -14,12 +14,7 @@ const config = defineConfig({
     }),
     tailwindcss(),
     tanstackStart(),
-    nitro({
-      preset: 'vercel',
-      output: {
-        dir: '.vercel',
-      },
-    }),
+    nitro(),
     viteReact(),
     devtools(),
   ],
