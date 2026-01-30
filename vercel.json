@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "pnpm install",
-  "buildCommand": "pnpm turbo run build --filter=dashboard",
+  "buildCommand": "pnpm turbo run build --filter=dashboard && mkdir -p .vercel && cp -r apps/dashboard/.vercel .vercel/output",
   "framework": null
 }
