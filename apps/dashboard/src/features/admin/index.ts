@@ -9,5 +9,5 @@ export * from './types';
 // API and Queries
 export * from './api';
 
-// Components will be exported from here as well
-// export * from './components';
+// Components
+export * from './components';

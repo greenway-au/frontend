@@ -9,6 +9,7 @@ import { useAtomValue } from 'jotai';
 import { userAtom } from '@/stores/auth';
 import { useMyProvidersAsClient, useMyCoordinatorAsClient } from '@/features/admin/api/relationships.queries';
 import { Badge } from '@workspace/ui/components/badge';
+import { ActivePlanWidget } from '@/features/ndis-plans';
 
 export function ClientDashboard() {
   const user = useAtomValue(userAtom);
@@ -43,6 +44,11 @@ export function ClientDashboard() {
 
   return (
     <div className="space-y-8">
+      {/* Active Plan Widget */}
+      {user?.participantId && (
+        <ActivePlanWidget participantId={user.participantId} />
+      )}
+
       {/* Budget Overview */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <StatCard

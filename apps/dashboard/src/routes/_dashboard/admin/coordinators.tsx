@@ -4,7 +4,7 @@
  */
 
 import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { PageHeader } from '@/components/common/PageHeader';
 import { Card, CardContent, CardHeader, CardTitle } from '@workspace/ui/components/card';
 import { Button } from '@workspace/ui/components/button';
@@ -34,7 +34,7 @@ import {
   SelectValue,
 } from '@workspace/ui/components/select';
 import { Badge } from '@workspace/ui/components/badge';
-import { Plus, UserCog, Mail, Trash2, UserCheck, UserX } from 'lucide-react';
+import { Plus, UserCog, Mail, Trash2, UserCheck, UserX, Eye } from 'lucide-react';
 import { ProtectedRoute } from '@/features/auth';
 import {
   useCoordinators,
@@ -161,7 +161,7 @@ function CoordinatorsPage() {
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">With Account</CardTitle>
+              <CardTitle className="text-sm font-medium">Active</CardTitle>
               <UserCheck className="h-4 w-4 text-green-600" />
             </CardHeader>
             <CardContent>
@@ -241,6 +241,12 @@ function CoordinatorsPage() {
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
+                          <Button variant="ghost" size="sm" asChild>
+                            <Link to={`/admin/coordinators/${coordinator.id}`}>
+                              <Eye className="size-4 mr-1" />
+                              View
+                            </Link>
+                          </Button>
                           {!coordinator.user_id && (
                             <Button
                               variant="outline"
