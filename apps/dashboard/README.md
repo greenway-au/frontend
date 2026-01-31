@@ -17,6 +17,44 @@ To build this application for production:
 pnpm build
 ```
 
+# Deploying to Vercel
+
+This app is configured to deploy to Vercel using the TanStack Start framework with Nitro's Vercel preset.
+
+## GitHub Integration (Recommended)
+
+For automatic deployments via GitHub:
+
+1. **Configure Vercel Project Settings:**
+   - Framework Preset: `TanStack Start` (or auto-detect)
+   - Root Directory: `apps/dashboard`
+   - Build Command: Let Vercel auto-detect (uses Turborepo integration)
+   - Output Directory: Leave empty (Nitro handles this automatically)
+   - Install Command: `pnpm install`
+
+2. **Push to GitHub:**
+   - Vercel will automatically deploy when you push to your main branch
+   - The build uses Turborepo to efficiently build only changed packages
+   - Nitro generates the output in `.vercel/output/` format (Build Output API v3)
+
+## Manual Deployment
+
+For manual deployments using the Vercel CLI:
+
+```bash
+# From the monorepo root
+./deploy.sh
+```
+
+**Note:** The `deploy.sh` script is for manual CLI deployments only. GitHub-based deployments should use the Vercel UI project settings instead.
+
+## Important Configuration Notes
+
+- **Do NOT add a `vercel.json` file** - Nitro's Vercel preset handles all configuration automatically
+- The `nitro.config.ts` uses `preset: 'vercel'` for zero-config deployment
+- The `app.config.ts` also specifies `preset: 'vercel'` for server configuration
+- Output directory is automatically managed by Nitro - do not override it
+
 ## Testing
 
 This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
