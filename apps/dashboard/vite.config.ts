@@ -12,11 +12,7 @@ const config = defineConfig({
       projects: ['./tsconfig.json'],
     }),
     tailwindcss(),
-    tanstackStart({
-      deployment: {
-        preset: 'vercel',
-      },
-    }),
+    tanstackStart(),
     viteReact(),
     devtools(),
   ],
